@@ -1,0 +1,15 @@
+site_name: My Docs
+theme:
+  name: material
+  features:
+    - content.mermaid
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.details
+nav:
+  - Home: index.md
+  - Activity Diagram: Voicememo-activity.md
+  - Use Case Diagram: voicememo-usecase.md
