@@ -4,6 +4,8 @@ site_url: https://assari-harassment.github.io/voicebooklm-docs/
 repo_url: https://github.com/assari-harassment/voicebooklm-docs
 theme:
   name: material
+  features:
+    - content.mermaid
 markdown_extensions:
   - pymdownx.superfences
   - pymdownx.highlight
