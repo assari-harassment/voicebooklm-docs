@@ -1,5 +1,5 @@
 site_name: My Docs
-use_directory_urls: false
+use_directory_urls: true
 site_url: https://assari-harassment.github.io/voicebooklm-docs/
 repo_url: https://github.com/assari-harassment/voicebooklm-docs
 
