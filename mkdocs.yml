@@ -2,16 +2,23 @@ site_name: My Docs
 use_directory_urls: false
 site_url: https://assari-harassment.github.io/voicebooklm-docs/
 repo_url: https://github.com/assari-harassment/voicebooklm-docs
+
 theme:
   name: material
   features:
     - content.mermaid
+
 markdown_extensions:
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.highlight
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.details
+
 nav:
   - Home: index.md
   - Activity Diagram: Voicememo-activity.md
