@@ -1,3 +1,6 @@
 [book]
 authors = []
 language = "en"
+
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
