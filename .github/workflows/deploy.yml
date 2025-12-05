@@ -18,33 +18,6 @@ jobs:
           curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.37/mdbook-v0.4.37-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=./mdbook
           echo "$(pwd)/mdbook" >> $GITHUB_PATH
 
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Install mdbook-mermaid
-        run: cargo install mdbook-mermaid
-
-      - name: Install Puppeteer Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libgtk-3-0 \
-            libgbm-dev \
-            libnss3 \
-            libxss1 \
-            libasound2t64 \
-            libxtst6
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install mermaid-cli
-        run: |
-          npm install -g @mermaid-js/mermaid-cli
-          echo "$(npm bin -g)" >> $GITHUB_PATH
-
       - name: Build book
         run: mdbook build
 
