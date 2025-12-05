@@ -36,10 +36,10 @@ flowchart TD
 
     %% 分岐処理
     %% ケース1：メモ一覧ボタンを押した時（利用者側へ遷移）
-    Branch -- "<<メモ一覧ボタンを押した時>>" --> MemoView
+    Branch -- "メモ一覧ボタンを押した時" --> MemoView
     
     %% ケース2：録音ボタンを押した時（システム側で処理継続）
-    Branch -- "<<録音ボタンを押した時>>" --> RecStart
+    Branch -- "録音ボタンを押した時" --> RecStart
 
     %% 録音フロー
     RecStart --> RecIng
