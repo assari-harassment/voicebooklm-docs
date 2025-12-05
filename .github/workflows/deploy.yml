@@ -24,6 +24,17 @@ jobs:
       - name: Install mdbook-mermaid
         run: cargo install mdbook-mermaid
 
+      - name: Install Puppeteer Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libgtk-3-0 \
+            libgbm-dev \
+            libnss3 \
+            libxss1 \
+            libasound2 \
+            libxtst6
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
