@@ -4,25 +4,4 @@ language = "en"
 title = "ボイスメモアプリのシステムドキュメント" # 適切なタイトルを設定
 
 [output.html]
-# Mermaid のコードブロックを図に変換するためのスクリプトを読み込み
-additional-head-content = """
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const codeBlocks = document.querySelectorAll("pre code.language-mermaid, pre code.language-mermaid-diagram");
-
-  codeBlocks.forEach(function(codeBlock) {
-    const pre = codeBlock.parentElement;
-    const mermaidContainer = document.createElement("div");
-    mermaidContainer.classList.add("mermaid");
-    mermaidContainer.textContent = codeBlock.textContent;
-    pre.replaceWith(mermaidContainer);
-  });
-
-  if (codeBlocks.length > 0) {
-    mermaid.initialize({ startOnLoad: false });
-    mermaid.init(undefined, ".mermaid");
-  }
-});
-</script>
-"""
+additional-js = ["src/mermaid-init.js"]
