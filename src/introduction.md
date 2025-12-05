@@ -1,6 +1,4 @@
-# Introduction
-
-このドキュメントはmdbookで作成されています。
+# このドキュメントはmdbookで作成されています。
 
 ## mdbook を始めるには
 
