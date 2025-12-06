@@ -1,34 +1,58 @@
+# ボイスメモ ユースケース図
 
 ```mermaid
 flowchart LR
-    classDef actor fill:#ffffff,stroke:#111,stroke-width:1px,color:#111;
-    classDef usecase fill:#f7f9fb,stroke:#6a7b8c,stroke-width:1px,rx:16px,ry:16px;
+    User((ユーザー))
 
-    %% アクター
-    User[/ユーザー/]
-    class User actor;
-
-    %% システム境界（ボイスメモアプリ）
-    subgraph App [ボイスメモアプリ]
-        direction TB
-        UC_Record([ボイスメモを録音する])
-        UC_Transcribe([文字起こしする])
-        UC_Summarize([要約する])
-        UC_Sort([ファイルを自動振り分け])
-        UC_ViewList([メモ一覧を閲覧する])
-        UC_Search([メモを検索する])
-        UC_Edit([タイトル・タグを編集する])
+    subgraph VoiceBookLM
+        Login([Google でログイン])
+        Record([ボイスメモを録音])
+        ViewList([メモ一覧を閲覧])
+        Search([メモを検索])
+        Edit([タイトル・タグを編集])
     end
-    class UC_Record,UC_Transcribe,UC_Summarize,UC_Sort,UC_ViewList,UC_Search,UC_Edit usecase;
 
-    %% 関連（実線）
-    User --> UC_Record
-    User --> UC_ViewList
-    User --> UC_Search
-    User --> UC_Edit
-
-    %% インクルード関係（破線）
-    UC_Record -.->|<<include>>| UC_Transcribe
-    UC_Transcribe -.->|<<include>>| UC_Summarize
-    UC_Summarize -.->|<<include>>| UC_Sort
+    User --> Login
+    User --> Record
+    User --> ViewList
+    User --> Search
+    User --> Edit
 ```
+
+## ユースケース一覧
+
+### MVP 機能（実装対象）
+
+| ユースケース | 説明 | アクター |
+|-------------|------|---------|
+| Google でログインする | Google OAuth で認証し、JWT トークンを取得 | ユーザー |
+| ボイスメモを録音する | ワンタップで録音開始・停止 | ユーザー |
+| 音声をストリーミング送信する | WebSocket 経由で音声データをリアルタイム送信 | システム |
+| リアルタイム文字起こしする | ストリーミング ASR で話しながらテキスト化 | システム |
+| AI でメモを整理する | タイトル・本文・タグを自動生成 | システム |
+| クラウドに保存する | AI 整形済みメモのみを永続化 | システム |
+| メモ一覧を閲覧する | 日付ソートでメモを表示 | ユーザー |
+| メモを検索する | 全文検索でメモを検索 | ユーザー |
+| タグでフィルタする | タグ指定でメモを絞り込み | ユーザー |
+| タイトル・タグを編集する | AI 生成結果を手動で修正 | ユーザー |
+
+### MVP 対象外
+
+| ユースケース | 理由 |
+|-------------|------|
+| 音声を永続保存する | プライバシー重視設計により永久に含まない |
+| 要約を生成する | MVP スコープ外 |
+| 複数発話者を判定する | 個人メモ特化のため対象外 |
+| Apple/メールでログインする | MVP では Google 認証のみ |
+| オフラインで録音する | リアルタイムストリーミング設計のため対象外 |
+
+## データポリシー
+
+| データ種別 | 永続保存 | 説明 |
+|-----------|---------|------|
+| AI 整形済みメモ本文 | ✓ | メモの主内容として保存 |
+| タイトル | ✓ | AI 生成または編集結果 |
+| タグ | ✓ | AI 生成または編集結果 |
+| タイムスタンプ | ✓ | 録音開始/終了の情報 |
+| 音声データ | ✗ | 処理完了後に削除 |
+| 生文字起こし | ✗ | AI 整形前の生データは破棄 |
