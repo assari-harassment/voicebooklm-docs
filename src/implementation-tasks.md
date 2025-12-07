@@ -90,7 +90,7 @@ flowchart LR
 | レイヤー | 実装内容 |
 |----------|----------|
 | **Domain** | User, RefreshToken エンティティ、Repository IF |
-| **Infrastructure** | JPA Entity/Mapper, GoogleOAuthClient, JwtTokenProvider |
+| **Infrastructure** | JPA Entity, GoogleOAuthClient, JwtTokenProvider |
 | **UseCase** | AuthUseCase, RefreshTokenUseCase, LogoutUseCase |
 | **Presentation** | /auth/google, /auth/refresh, /auth/logout |
 | **Security** | SecurityConfig (JWT フィルタ, CORS) |

@@ -81,7 +81,7 @@ voicebooklm-backend/src/main/kotlin/com/assari/voicebooklm/
 │   └── service/         # ドメインサービス
 ├── usecase/             # ユースケース層
 ├── infrastructure/      # インフラストラクチャ層
-│   ├── jpa/             # JPA実装・Entity・Mapper
+│   ├── jpa/             # JPA実装・Entity
 │   ├── api/             # 外部APIクライアント
 │   └── config/          # Spring設定
 └── presentation/        # プレゼンテーション層
