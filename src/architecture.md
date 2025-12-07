@@ -116,4 +116,4 @@ voicebooklm-frontend/
 | 言語 | TypeScript 5.9 |
 | フレームワーク | React Native 0.81 + Expo ~54 |
 | ルーティング | Expo Router 6 |
-| 音声録音 | expo-av |
+| 音声録音 | expo-audio |

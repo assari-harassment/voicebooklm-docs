@@ -23,14 +23,14 @@ graph LR
 
 ## 主な技術選定
 
-### 音声録音: expo-av vs expo-audio-stream
+### 音声録音: expo-audio vs expo-audio-stream
 
 | 選択肢 | 特徴 | 判断 |
 |--------|------|------|
-| **expo-av** | Expo公式、安定性高 | ✅ 採用 |
+| **expo-audio** | Expo公式、安定性高 | ✅ 採用 |
 | expo-audio-stream | サードパーティ、リアルタイム対応 | Phase 2で検討 |
 
-> **MVP では安定性を優先**し、expo-av を採用。リアルタイム機能は Phase 2 で検討。
+> **MVP では安定性を優先**し、expo-audio を採用。リアルタイム機能は Phase 2 で検討。
 
 ---
 
@@ -93,7 +93,6 @@ graph LR
 | リスク | 対策 |
 |--------|------|
 | Google Cloud ASR コスト増加 | 月間使用量監視、録音時間制限 |
-| WebSocket 同時接続数 | 負荷テストで100接続検証 |
 | pg_bigm 検索精度 | 2文字以上推奨、将来OpenSearch移行 |
 | リフレッシュトークン実装ミス | Token Family管理、自動リユース検出 |
 
@@ -103,7 +102,7 @@ graph LR
 
 | 機能 | 現状 | Phase 2 |
 |------|------|---------|
-| 音声送信 | REST API 一括送信 | WebSocket ストリーミング |
-| 文字起こし | 録音完了後に一括処理 | gRPC リアルタイム |
+| 音声送信 | REST API 一括送信 | - |
+| 文字起こし | 録音完了後に一括処理 | - |
 | JWT署名 | HS256 | RS256（マイクロサービス化時） |
 | 検索 | pg_bigm | OpenSearch（大規模化時） |

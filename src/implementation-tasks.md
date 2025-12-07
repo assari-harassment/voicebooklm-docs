@@ -38,7 +38,7 @@ gantt
 - [ ] application.yml 設定（JWT, PostgreSQL, Google Cloud, CORS）
 
 ### Frontend
-- [ ] package.json 依存関係追加（expo-av, expo-secure-store, axios）
+- [ ] package.json 依存関係追加（expo-audio, expo-secure-store, axios）
 - [ ] マイク権限設定（app.json）
 
 ### Database
