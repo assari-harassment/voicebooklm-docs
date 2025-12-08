@@ -5,7 +5,6 @@ erDiagram
         string google_sub "GoogleのUser ID"
         string email "Googleアカウントのメール"
         string display_name "Google表示名"
-        string avatar_url "プロフィール画像URL"
         datetime created_at
         datetime updated_at
     }
@@ -30,11 +29,10 @@ erDiagram
         int memo_id FK
         string process_step "文字起こし/整形/構造化"
         datetime process_time
-        string status "Success/Failure"
+        boolean success_flag "処理成功(true)/失敗(false)"
     }
     
-    USER ||--o{ MEMO : "記録する"
-    CLASSIFICATION ||--o{ MEMO : "分類される"
-    MEMO }o--o{ KEYWORD : "持つ"
-    MEMO ||--o{ AI_PROCESS_LOG : "処理履歴を持つ"
+    USERS ||--o{ MEMOS : "記録する"
+    MEMO_TAGS ||--o{ MEMOS : "分類される"
+    MEMOS ||--o{ AI_PROCESS_LOGS : "処理履歴を持つ"
 ```
