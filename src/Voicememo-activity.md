@@ -1,55 +1,46 @@
+# ボイスメモ アクティビティ図
+
+## メインフロー（録音〜保存）
+
 ```mermaid
-%% グラフの方向を上から下へ指定
 flowchart TD
-
-    %% スイムレーン：利用者
-    subgraph User [利用者]
-        direction TB
-        Start((開始))
-        Launch[アプリを起動]
-        MemoView[メモ一覧を閲覧]
-    end
-
-    %% スイムレーン：システム
-    subgraph System [システム]
-        direction TB
-        
-        %% 条件分岐（ひし形）
-        Branch{ホーム画面を表示}
-        
-        RecStart[録音開始]
-        RecIng[録音中]
-        RecStop[録音停止]
-        Transcribe[文字起こし生成]
-        Summarize[要約生成]
-        AddTitle[タイトル・ジャンル付与]
-        SaveMarkdown[マークダウン形式でメモを保存]
-        
-        End(((終了)))
-    end
-
-    %% 処理の流れ（フロー）の定義
-    
-    %% 開始 -> アプリ起動 -> ホーム画面表示
-    Start --> Launch
-    Launch --> Branch
-
-    %% 分岐処理
-    %% ケース1：メモ一覧ボタンを押した時（利用者側へ遷移）
-    Branch -- "メモ一覧ボタンを押した時" --> MemoView
-    
-    %% ケース2：録音ボタンを押した時（システム側で処理継続）
-    Branch -- "録音ボタンを押した時" --> RecStart
-
-    %% 録音フロー
-    RecStart --> RecIng
-    RecIng --> RecStop
-    RecStop --> Transcribe
-    Transcribe --> Summarize
-    Summarize --> AddTitle
-    AddTitle --> SaveMarkdown
-
-    %% 終了処理への合流
-    MemoView --> End
-    SaveMarkdown --> End
+    Start((開始))
+    Start --> Login[Google ログイン]
+    Login --> Home[ホーム画面]
+    Home --> Record[録音ボタンをタップ]
+    Record --> Speaking[話す]
+    Speaking --> Stop[録音停止]
+    Stop --> Upload[音声ファイル送信]
+    Upload --> Transcribe[文字起こし]
+    Stop --> AI[AI でタイトル・本文・タグ生成]
+    AI --> Save[クラウドに保存]
+    Save --> Done((完了))
 ```
+
+## メモ閲覧フロー
+
+```mermaid
+flowchart TD
+    Home((ホーム画面))
+    Home --> List[メモ一覧を表示]
+    Home --> Search[キーワード検索]
+    Search --> List
+    List --> Detail[メモを選択して閲覧]
+```
+
+## フローの説明
+
+### 録音フロー
+1. **Google ログイン** → JWT トークン取得
+2. **録音ボタンをタップ** → 録音開始
+3. **話す** → 音声を端末に一時保存
+4. **録音停止** → 音声ファイル確定
+5. **音声ファイル送信** → REST API 経由でサーバーに送信
+6. **文字起こし** → ASR で一括テキスト化
+6. **AI 処理** → タイトル・本文・タグを自動生成
+7. **クラウドに保存** → AI 整形済みメモのみ永続化
+
+### メモ閲覧フロー
+- **一覧表示**: 日付ソートでメモを表示
+- **検索**: キーワードやタグで絞り込み
+- **閲覧**: メモを選択して内容を確認
