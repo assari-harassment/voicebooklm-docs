@@ -25,12 +25,6 @@ erDiagram
         string name "アイデア/仕事/TODOなど"
     }
 
-    KEYWORDS {
-        int id PK
-        string name "AI生成キーワード"
-        text embedding_vector "意味検索用ベクトル"
-    }
-
     AI_PROCESS_LOGS {
         int id PK
         int memo_id FK
