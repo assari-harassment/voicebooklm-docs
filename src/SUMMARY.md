@@ -22,5 +22,3 @@
 
 - [ユースケース図](./voicememo-usecase.md)
 - [アクティビティ図](./voicememo-activity.md)
-
-
