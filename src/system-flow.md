@@ -15,25 +15,25 @@ sequenceDiagram
 
     User->>App: 🔴 録音開始
     App->>App: マイク権限確認
-    
+
     loop 録音中
         App->>App: 音声を一時ファイルに保存
         App->>App: 録音時間表示
     end
-    
+
     User->>App: ⏹️ 録音停止
     App->>App: ⏳ 処理中表示
-    
+
     App->>API: POST /voice/memos<br/>(音声ファイル + JWT)
     API->>ASR: 音声送信
     ASR-->>API: 文字起こし結果
-    
+
     API->>AI: メモ整形リクエスト
     AI-->>API: タイトル・本文・タグ
-    
+
     API->>DB: メモ保存
     API->>API: 音声ファイル削除
-    
+
     API-->>App: 201 Created + メモデータ
     App->>App: ローカル音声削除
     App->>User: ✅ メモ詳細画面表示
@@ -57,11 +57,11 @@ sequenceDiagram
     Google-->>User: アカウント選択
     User->>Google: 認証許可
     Google-->>App: 認証コード
-    
+
     App->>Backend: POST /auth/google
     Backend->>Google: コード検証
     Google-->>Backend: ユーザー情報
-    
+
     Backend->>Backend: JWT 生成<br/>(Access: 15分 / Refresh: 7日)
     Backend-->>App: {accessToken, refreshToken}
     App->>App: SecureStore に保存
@@ -76,13 +76,13 @@ sequenceDiagram
     participant DB as 🗄️ DB
 
     Note over App,Backend: アクセストークン期限切れ
-    
+
     App->>Backend: GET /memos (期限切れToken)
     Backend-->>App: 401 Unauthorized
-    
+
     App->>Backend: POST /auth/refresh
     Backend->>DB: リフレッシュトークン検証
-    
+
     alt トークン有効
         Backend->>Backend: 新トークンペア生成
         Backend->>DB: 旧トークン無効化
@@ -170,11 +170,11 @@ graph TB
     VoiceCtrl --> CreateMemo
     MemoCtrl --> SearchMemo
     AuthCtrl --> AuthUC
-    
+
     CreateMemo --> Memo
     CreateMemo --> MemoRepo
     CreateMemo --> GoogleClient
     CreateMemo --> AIClient
-    
+
     JpaMemoRepo -.->|implements| MemoRepo
 ```

@@ -9,11 +9,8 @@ AI ボイスメモアプリケーション（Kotlin Spring Boot Backend）
 ### **1. 必須要件**
 
 - **JDK 21**
-    
 - **Docker / Docker Compose**
-    
 - **PostgreSQL 16**（ローカルは Docker Compose を使用）
-    
 
 ### **2. クイックスタート**
 
@@ -37,59 +34,38 @@ docker compose up -d
 ### **Backend**
 
 - Kotlin **2.0.21**
-    
 - Spring Boot **3.4.12**
-    
 - Gradle **8.5**（Kotlin DSL）
-    
 - JDK **21 (LTS)**
-    
 - PostgreSQL **16**
-    
 - Docker Compose（開発環境）
-    
 - Testcontainers（テスト用 PostgreSQL）
-    
 
 ### **Spring Boot Modules**
 
 - Web（REST API）
-    
 - WebFlux（AI API 向け非同期処理）
-    
 - Data JPA
-    
 - Security
-    
 - Actuator
-    
 - DevTools
-    
 
 ### **Authentication**
 
 - JWT（io.jsonwebtoken:jjwt）
-    
 
 ### **Kotlin**
 
 - Coroutines
-    
 - Jackson
-    
 
 ### **Testing**
 
 - Spring Boot Test
-    
 - Spring Security Test
-    
 - MockK
-    
 - Coroutines Test
-    
 - Testcontainers (PostgreSQL)
-    
 
 ---
 
@@ -121,25 +97,20 @@ npx @openapitools/openapi-generator-cli generate \
 ### **CORS 設定**
 
 - 開発環境
-    
-    - `localhost:*`
-        
-    - `192.168.*.*:*`（実機テスト）
-        
+  - `localhost:*`
+  - `192.168.*.*:*`（実機テスト）
 - 本番環境
-    
-    - `https://*.example.com`（適宜変更）
-        
+  - `https://*.example.com`（適宜変更）
 
 ---
 
 ## 🌏 アプリケーション設定
 
-|項目|値|
-|---|---|
-|ロケール|日本語 (ja_JP)|
-|タイムゾーン|Asia/Tokyo|
-|エンコーディング|UTF-8|
+| 項目             | 値             |
+| ---------------- | -------------- |
+| ロケール         | 日本語 (ja_JP) |
+| タイムゾーン     | Asia/Tokyo     |
+| エンコーディング | UTF-8          |
 
 ---
 
@@ -150,11 +121,8 @@ npx @openapitools/openapi-generator-cli generate \
 ### **Testcontainers 利点**
 
 - 環境差異ゼロ（開発・テスト・本番すべて PostgreSQL）
-    
 - 完全一致の SQL / 型 / 制約
-    
 - 早期バグ検出
-    
 
 ### **テスト実行方法**
 
@@ -188,7 +156,5 @@ class UserRepositoryTest : AbstractIntegrationTest() {
 ## 👥 チーム開発ガイドライン
 
 - コーディング規約に準拠
-    
 - コントリビューションガイドラインを遵守
-    
 - Kotlin / Spring Boot のベストプラクティスを推奨

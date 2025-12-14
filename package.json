@@ -1,0 +1,25 @@
+{
+  "name": "voicebooklm-docs",
+  "version": "1.0.0",
+  "description": "This is the documentation for voicebooklm, built with mdbook.",
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier --write \"**/*.md\"",
+    "format:check": "prettier --check \"**/*.md\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/assari-harassment/voicebooklm-docs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/assari-harassment/voicebooklm-docs/issues"
+  },
+  "homepage": "https://github.com/assari-harassment/voicebooklm-docs#readme",
+  "devDependencies": {
+    "prettier": "^3.7.4"
+  }
+}
