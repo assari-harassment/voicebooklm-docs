@@ -1,7 +1,7 @@
 # Summary
 
 - [Introduction](./overview/introduction.md)
-- [Voicememo PRD](./overview/PRD.md)
+- [VoiceBookLM PRD](./overview/PRD.md)
 
 ---
 
