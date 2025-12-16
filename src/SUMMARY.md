@@ -1,24 +1,24 @@
 # Summary
 
-- [Introduction](./overview/introduction.md)
-- [VoiceBookLM PRD](./overview/PRD.md)
+- [Introduction](./introduction.md)
 
 ---
 
 # 概要・設計
 
-- [プロダクト概要](./design/product.md)
-- [アーキテクチャ](./design/architecture.md)
-- [技術的意思決定](./design/technical-decisions.md)
+- [VoiceBookLM PRD](./概要・設計/PRD.md)
+- [プロダクト概要](./概要・設計/product.md)
+- [アーキテクチャ](./概要・設計/architecture.md)
+- [技術的意思決定](./概要・設計/technical-decisions.md)
 
 ---
 
-# UML ダイアグラム
+# UML図
 
-- [ユースケース図](./diagrams/usecase.md)
-- [アクティビティ図](./diagrams/activity.md)
-- [ER図](./diagrams/er.md)
+- [ユースケース図](./UML図/usecase.md)
+- [アクティビティ図](./UML図/activity.md)
+- [ER図](./UML図/er.md)
 
 # バックエンド
 
-- [認証](./backend/auth.md)
+- [認証](./バックエンド/auth.md)
