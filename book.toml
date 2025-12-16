@@ -4,4 +4,4 @@ language = "en"
 title = "ボイスメモアプリのシステムドキュメント" # 適切なタイトルを設定
 
 [output.html]
-additional-js = ["src/mermaid-init.js"]
+additional-js = ["./mermaid-init.js"]
