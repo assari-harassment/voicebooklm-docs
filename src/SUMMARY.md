@@ -17,6 +17,8 @@
 
 - [ユースケース図](./UML図/usecase.md)
 - [アクティビティ図](./UML図/activity.md)
+- [シーケンス図](./UML図/sequence.md)
+- [画面遷移図](./UML図/screen-transition.md)
 - [ER図](./UML図/er.md)
 
 # バックエンド
