@@ -12,9 +12,9 @@ flowchart TD
     Speaking --> Stop[録音停止]
     Stop --> Upload[音声ファイル送信]
     Upload --> Transcribe[文字起こし]
-    Stop --> AI[AI でタイトル・本文・タグ生成]
     AI --> Save[クラウドに保存]
     Save --> Done((完了))
+    Transcribe --> AI[AI でタイトル・本文・タグ生成]
 ```
 
 ## メモ閲覧フロー
@@ -22,10 +22,11 @@ flowchart TD
 ```mermaid
 flowchart TD
     Home((ホーム画面))
-    Home --> List[メモ一覧を表示]
+    Home --> Directory[ディレクトリ構造]
     Home --> Search[キーワード検索]
-    Search --> List
-    List --> Detail[メモを選択して閲覧]
+    Directory --> Detail[メモを選択して閲覧]
+    Search --> List[メモ一覧を表示]
+    List --> Detail
 ```
 
 ## フローの説明
