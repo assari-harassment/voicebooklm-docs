@@ -40,6 +40,7 @@ VoiceBookLM バックエンド REST API の全体像です。
 | 🚧 | PATCH | `/api/memos/{id}` | メモ更新 | 必須 |
 | 🚧 | DELETE | `/api/memos/{id}` | メモ削除 | 必須 |
 | 🚧 | POST | `/api/memos/{id}/resummarize` | 再要約 | 必須 |
+| 🚧 | GET | `/api/memos/{id}/transcription` | 文字起こしテキスト取得 | 必須 |
 | 🔮 | POST | `/api/memos/search/semantic` | 意味検索 | 必須 |
 
 ### フォルダ API (`/api/folders`)
@@ -67,10 +68,10 @@ VoiceBookLM バックエンド REST API の全体像です。
 |---------|:------:|------|
 | 認証 API | 5 | ✅ 全て実装済み |
 | 音声メモ API | 1 | ✅ 実装済み |
-| メモ API | 6 | 🚧 5つ未実装 |
+| メモ API | 7 | 🚧 6つ未実装 |
 | フォルダ API | 4 | 🚧 全て未実装 |
 | タグ API | 3 | 📋 全て未実装 |
-| **合計** | **19** | 実装済み 6 / 未実装 13 |
+| **合計** | **20** | 実装済み 6 / 未実装 14 |
 
 ---
 
