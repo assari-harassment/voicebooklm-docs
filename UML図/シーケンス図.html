@@ -1,0 +1,545 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>シーケンス図 - ボイスメモアプリのシステムドキュメント</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../はじめに.html">はじめに</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">概要・設計</li><li class="chapter-item expanded "><a href="../概要・設計/PRD.html"><strong aria-hidden="true">1.</strong> VoiceBookLM PRD</a></li><li class="chapter-item expanded "><a href="../概要・設計/プロダクト概要.html"><strong aria-hidden="true">2.</strong> プロダクト概要</a></li><li class="chapter-item expanded "><a href="../概要・設計/アーキテクチャ.html"><strong aria-hidden="true">3.</strong> アーキテクチャ</a></li><li class="chapter-item expanded "><a href="../概要・設計/技術的意思決定.html"><strong aria-hidden="true">4.</strong> 技術的意思決定</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">UML図</li><li class="chapter-item expanded "><a href="../UML図/ユースケース図.html"><strong aria-hidden="true">5.</strong> ユースケース図</a></li><li class="chapter-item expanded "><a href="../UML図/アクティビティ図.html"><strong aria-hidden="true">6.</strong> アクティビティ図</a></li><li class="chapter-item expanded "><a href="../UML図/シーケンス図.html" class="active"><strong aria-hidden="true">7.</strong> シーケンス図</a></li><li class="chapter-item expanded "><a href="../UML図/画面遷移図.html"><strong aria-hidden="true">8.</strong> 画面遷移図</a></li><li class="chapter-item expanded "><a href="../UML図/ER図.html"><strong aria-hidden="true">9.</strong> ER図</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">バックエンド</li><li class="chapter-item expanded "><a href="../バックエンド/認証.html"><strong aria-hidden="true">10.</strong> 認証</a></li><li class="chapter-item expanded "><a href="../バックエンド/API.html"><strong aria-hidden="true">11.</strong> API</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../バックエンド/APIリファレンス.html"><strong aria-hidden="true">11.1.</strong> API リファレンス</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><li class="part-title">検証</li><li class="chapter-item expanded "><a href="../検証/文字起こし動作確認_12月17日.html"><strong aria-hidden="true">12.</strong> 文字起こし動作確認 (12月17日)</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">発表資料</li><li class="chapter-item expanded "><a href="../発表/中間発表_詳細_12月18日.html"><strong aria-hidden="true">13.</strong> 中間発表（詳細）</a></li><li class="chapter-item expanded "><a href="../発表/中間発表_スライド用_12月18日.html"><strong aria-hidden="true">14.</strong> 中間発表（スライド用）</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ボイスメモアプリのシステムドキュメント</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="シーケンス図"><a class="header" href="#シーケンス図">シーケンス図</a></h1>
+<p>システムの主要なフローを時系列で図示したシーケンス図です。</p>
+<hr />
+<h2 id="1-音声メモ生成フローメインフロー"><a class="header" href="#1-音声メモ生成フローメインフロー">1. 音声メモ生成フロー（メインフロー）</a></h2>
+<p>アプリのコア機能「音声 → 文字起こし → AI整形 → 保存」の全体フローです。</p>
+<pre><code class="language-mermaid">sequenceDiagram
+    autonumber
+    participant App as 📱 Mobile App
+    participant API as 🖥️ Backend API
+    participant STT as 🎤 Google Speech-to-Text
+    participant AI as 🤖 Gemini AI
+    participant DB as 🗄️ PostgreSQL
+
+    Note over App: ユーザーが録音完了
+
+    App-&gt;&gt;API: POST /api/voice/memos&lt;br/&gt;multipart/form-data&lt;br/&gt;(file, language)
+    activate API
+
+    Note over API: JWT検証
+
+    API-&gt;&gt;STT: 音声ファイル送信
+    activate STT
+    STT--&gt;&gt;API: 文字起こしテキスト
+    deactivate STT
+
+    alt 文字起こし成功
+        API-&gt;&gt;AI: 文字起こしテキスト送信
+        activate AI
+        Note over AI: タイトル生成&lt;br/&gt;本文整形&lt;br/&gt;タグ抽出
+        AI--&gt;&gt;API: 整形結果&lt;br/&gt;(title, content, tags)
+        deactivate AI
+
+        alt AI整形成功
+            API-&gt;&gt;DB: メモ保存
+            activate DB
+            DB--&gt;&gt;API: 保存完了
+            deactivate DB
+            API--&gt;&gt;App: 201 Created&lt;br/&gt;{memoId, title, content, tags, ...}
+        else AI整形失敗
+            Note over API: フォールバック処理&lt;br/&gt;文字起こしテキストをそのまま使用
+            API-&gt;&gt;DB: メモ保存（フォールバック）
+            DB--&gt;&gt;API: 保存完了
+            API--&gt;&gt;App: 201 Created&lt;br/&gt;{..., fallback: {formatting: true}}
+        end
+    else 文字起こし失敗
+        API--&gt;&gt;App: 500 Internal Server Error
+    end
+
+    deactivate API
+</code></pre>
+<h3 id="フローの詳細"><a class="header" href="#フローの詳細">フローの詳細</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>ステップ</th><th>処理内容</th><th>処理時間目安</th></tr></thead><tbody>
+<tr><td>1</td><td>音声ファイルアップロード</td><td>ファイルサイズ依存</td></tr>
+<tr><td>2-3</td><td>JWT認証 + 文字起こし</td><td>2-10秒</td></tr>
+<tr><td>4-5</td><td>AI整形処理</td><td>1-3秒</td></tr>
+<tr><td>6-7</td><td>DB保存</td><td>100ms以下</td></tr>
+</tbody></table>
+</div>
+<h3 id="エラーハンドリング"><a class="header" href="#エラーハンドリング">エラーハンドリング</a></h3>
+<ul>
+<li><strong>文字起こし失敗</strong>: 500エラーを返却</li>
+<li><strong>AI整形失敗</strong>: フォールバックモードで文字起こしテキストをそのまま保存</li>
+<li><strong>DB保存失敗</strong>: 500エラーを返却</li>
+</ul>
+<hr />
+<h2 id="2-google-oauth-ログインフロー"><a class="header" href="#2-google-oauth-ログインフロー">2. Google OAuth ログインフロー</a></h2>
+<p>Google Sign-In を使用した認証フローです。</p>
+<pre><code class="language-mermaid">sequenceDiagram
+    autonumber
+    participant App as 📱 Mobile App
+    participant Google as 🌐 Google OAuth
+    participant API as 🖥️ Backend API
+    participant DB as 🗄️ PostgreSQL
+
+    App-&gt;&gt;Google: Google Sign-In 開始
+    activate Google
+    Note over Google: ユーザー認証&lt;br/&gt;同意画面
+    Google--&gt;&gt;App: ID Token
+    deactivate Google
+
+    App-&gt;&gt;API: POST /api/auth/google&lt;br/&gt;{idToken}
+    activate API
+
+    API-&gt;&gt;Google: ID Token 検証&lt;br/&gt;/tokeninfo
+    activate Google
+    Google--&gt;&gt;API: Token Info&lt;br/&gt;(sub, email, name, ...)
+    deactivate Google
+
+    alt トークン検証成功
+        API-&gt;&gt;DB: ユーザー検索&lt;br/&gt;(googleSub)
+        activate DB
+
+        alt 既存ユーザー
+            DB--&gt;&gt;API: User
+        else 新規ユーザー
+            API-&gt;&gt;DB: ユーザー作成
+            DB--&gt;&gt;API: User
+        end
+
+        Note over API: JWT生成&lt;br/&gt;・accessToken (1日)&lt;br/&gt;・refreshToken (180日)
+
+        API-&gt;&gt;DB: RefreshToken 保存
+        DB--&gt;&gt;API: 保存完了
+        deactivate DB
+
+        API--&gt;&gt;App: 200 OK&lt;br/&gt;{accessToken, refreshToken}
+    else トークン検証失敗
+        API--&gt;&gt;App: 401 Unauthorized
+    end
+
+    deactivate API
+</code></pre>
+<h3 id="セキュリティポイント"><a class="header" href="#セキュリティポイント">セキュリティポイント</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody>
+<tr><td>ID Token 検証</td><td>Google の <code>/tokeninfo</code> エンドポイントで検証</td></tr>
+<tr><td>aud クレーム確認</td><td>クライアントIDとの一致を確認</td></tr>
+<tr><td>メール検証確認</td><td><code>email_verified: true</code> を確認</td></tr>
+<tr><td>UUIDv7 使用</td><td>時系列順でソート可能なID</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="3-トークンリフレッシュフロー"><a class="header" href="#3-トークンリフレッシュフロー">3. トークンリフレッシュフロー</a></h2>
+<p>アクセストークン更新時のトークンローテーションフローです。</p>
+<pre><code class="language-mermaid">sequenceDiagram
+    autonumber
+    participant App as 📱 Mobile App
+    participant API as 🖥️ Backend API
+    participant DB as 🗄️ PostgreSQL
+
+    Note over App: accessToken 期限切れ検知
+
+    App-&gt;&gt;API: POST /api/auth/refresh&lt;br/&gt;{refreshToken}
+    activate API
+
+    API-&gt;&gt;DB: RefreshToken 検証&lt;br/&gt;(token, revoked=false, expires &gt; now)
+    activate DB
+    DB--&gt;&gt;API: RefreshToken (valid/invalid)
+    deactivate DB
+
+    alt トークン有効
+        API-&gt;&gt;DB: ユーザー取得
+        activate DB
+        DB--&gt;&gt;API: User
+        deactivate DB
+
+        API-&gt;&gt;DB: 旧 RefreshToken 無効化&lt;br/&gt;(revoked = true)
+        activate DB
+        DB--&gt;&gt;API: 更新完了
+        deactivate DB
+
+        Note over API: 新規JWT生成&lt;br/&gt;・accessToken&lt;br/&gt;・refreshToken
+
+        API-&gt;&gt;DB: 新 RefreshToken 保存
+        activate DB
+        DB--&gt;&gt;API: 保存完了
+        deactivate DB
+
+        API--&gt;&gt;App: 200 OK&lt;br/&gt;{accessToken, refreshToken}
+    else トークン無効/期限切れ
+        API--&gt;&gt;App: 401 Unauthorized
+        Note over App: 再ログイン必要
+    end
+
+    deactivate API
+</code></pre>
+<h3 id="トークンローテーションの意義"><a class="header" href="#トークンローテーションの意義">トークンローテーションの意義</a></h3>
+<pre><code>旧トークン使用 → 無効化 → 新トークン発行
+</code></pre>
+<ul>
+<li><strong>リプレイ攻撃防止</strong>: 古いトークンは使えなくなる</li>
+<li><strong>トークン漏洩検知</strong>: 無効化済みトークンの使用で検知可能</li>
+<li><strong>セッション管理</strong>: アクティブなセッションのみ有効</li>
+</ul>
+<hr />
+<h2 id="4-認証付きapi呼び出しフロー"><a class="header" href="#4-認証付きapi呼び出しフロー">4. 認証付きAPI呼び出しフロー</a></h2>
+<p>JWT認証が必要なAPIの共通フローです。</p>
+<pre><code class="language-mermaid">sequenceDiagram
+    autonumber
+    participant App as 📱 Mobile App
+    participant Filter as 🔐 JwtAuthFilter
+    participant Controller as 📋 Controller
+    participant UseCase as ⚙️ UseCase
+
+    App-&gt;&gt;Filter: API Request&lt;br/&gt;Authorization: Bearer {token}
+    activate Filter
+
+    Filter-&gt;&gt;Filter: JWT検証
+
+    alt 有効なアクセストークン
+        Filter-&gt;&gt;Filter: SecurityContext設定&lt;br/&gt;(userId, email)
+        Filter-&gt;&gt;Controller: Request継続
+        activate Controller
+        Controller-&gt;&gt;UseCase: ビジネスロジック実行
+        activate UseCase
+        UseCase--&gt;&gt;Controller: 結果
+        deactivate UseCase
+        Controller--&gt;&gt;App: 200 OK / 201 Created
+        deactivate Controller
+    else 無効/期限切れトークン
+        Filter--&gt;&gt;App: 401 Unauthorized
+    else リフレッシュトークン使用
+        Filter--&gt;&gt;App: 401 Unauthorized&lt;br/&gt;(アクセストークンが必要)
+    end
+
+    deactivate Filter
+</code></pre>
+<hr />
+<h2 id="5-ログアウトフロー"><a class="header" href="#5-ログアウトフロー">5. ログアウトフロー</a></h2>
+<pre><code class="language-mermaid">sequenceDiagram
+    autonumber
+    participant App as 📱 Mobile App
+    participant API as 🖥️ Backend API
+    participant DB as 🗄️ PostgreSQL
+
+    App-&gt;&gt;API: POST /api/auth/logout&lt;br/&gt;{refreshToken}
+    activate API
+
+    API-&gt;&gt;DB: RefreshToken 無効化&lt;br/&gt;(revoked = true)
+    activate DB
+    DB--&gt;&gt;API: 更新完了
+    deactivate DB
+
+    API--&gt;&gt;App: 204 No Content
+    deactivate API
+
+    Note over App: ローカルトークン削除
+</code></pre>
+<hr />
+<h2 id="6-アカウント削除フロー"><a class="header" href="#6-アカウント削除フロー">6. アカウント削除フロー</a></h2>
+<pre><code class="language-mermaid">sequenceDiagram
+    autonumber
+    participant App as 📱 Mobile App
+    participant API as 🖥️ Backend API
+    participant DB as 🗄️ PostgreSQL
+
+    App-&gt;&gt;API: DELETE /api/auth/account&lt;br/&gt;Authorization: Bearer {token}
+    activate API
+
+    Note over API: JWT検証（userId取得）
+
+    API-&gt;&gt;DB: メモ削除&lt;br/&gt;(user_id = ?)
+    activate DB
+    DB--&gt;&gt;API: 削除完了
+    deactivate DB
+
+    API-&gt;&gt;DB: RefreshToken 削除&lt;br/&gt;(user_id = ?)
+    activate DB
+    DB--&gt;&gt;API: 削除完了
+    deactivate DB
+
+    API-&gt;&gt;DB: User 削除&lt;br/&gt;(id = ?)
+    activate DB
+    DB--&gt;&gt;API: 削除完了
+    deactivate DB
+
+    API--&gt;&gt;App: 204 No Content
+    deactivate API
+
+    Note over App: ログイン画面へ遷移
+</code></pre>
+<h3 id="削除順序の重要性"><a class="header" href="#削除順序の重要性">削除順序の重要性</a></h3>
+<p>外部キー制約を考慮し、以下の順序で削除:</p>
+<ol>
+<li><strong>VoiceMemo</strong> (user_id 参照)</li>
+<li><strong>RefreshToken</strong> (user_id 参照)</li>
+<li><strong>User</strong> (親テーブル)</li>
+</ol>
+<hr />
+<h2 id="7-エラーハンドリング全体像"><a class="header" href="#7-エラーハンドリング全体像">7. エラーハンドリング全体像</a></h2>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant App as 📱 Mobile App
+    participant API as 🖥️ Backend API
+
+    Note over App,API: 想定されるエラーパターン
+
+    rect rgb(255, 230, 230)
+        Note right of App: 認証エラー
+        App-&gt;&gt;API: 無効なJWT
+        API--&gt;&gt;App: 401 Unauthorized&lt;br/&gt;{error, code: "UNAUTHORIZED"}
+    end
+
+    rect rgb(255, 245, 230)
+        Note right of App: 入力エラー
+        App-&gt;&gt;API: 不正なリクエスト
+        API--&gt;&gt;App: 400 Bad Request&lt;br/&gt;{error, code: "BAD_REQUEST"}
+    end
+
+    rect rgb(255, 230, 245)
+        Note right of App: リソースエラー
+        App-&gt;&gt;API: 存在しないリソース
+        API--&gt;&gt;App: 404 Not Found&lt;br/&gt;{error, code: "NOT_FOUND"}
+    end
+
+    rect rgb(230, 230, 255)
+        Note right of App: サーバーエラー
+        App-&gt;&gt;API: 外部API障害
+        API--&gt;&gt;App: 500 Internal Server Error&lt;br/&gt;{error, code: "INTERNAL_SERVER_ERROR"}
+    end
+</code></pre>
+<hr />
+<h2 id="処理時間の目安"><a class="header" href="#処理時間の目安">処理時間の目安</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>フロー</th><th>想定処理時間</th><th>ボトルネック</th></tr></thead><tbody>
+<tr><td>ログイン</td><td>500ms - 1s</td><td>Google Token検証</td></tr>
+<tr><td>トークンリフレッシュ</td><td>100ms - 200ms</td><td>DB操作</td></tr>
+<tr><td>音声メモ生成</td><td>3s - 15s</td><td>Speech-to-Text + AI整形</td></tr>
+<tr><td>ログアウト</td><td>50ms - 100ms</td><td>DB操作</td></tr>
+<tr><td>アカウント削除</td><td>200ms - 500ms</td><td>複数テーブル削除</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="関連ドキュメント"><a class="header" href="#関連ドキュメント">関連ドキュメント</a></h2>
+<ul>
+<li><a href="../%E6%A6%82%E8%A6%81%E3%83%BB%E8%A8%AD%E8%A8%88/architecture.html">アーキテクチャ</a> - システム全体構成</li>
+<li><a href="../%E3%83%90%E3%83%83%E3%82%AF%E3%82%A8%E3%83%B3%E3%83%89/auth.html">認証</a> - 認証システム詳細</li>
+<li><a href="../%E3%83%90%E3%83%83%E3%82%AF%E3%82%A8%E3%83%B3%E3%83%89/api-reference.html">API リファレンス</a> - API仕様詳細</li>
+<li><a href="./activity.html">アクティビティ図</a> - ユーザー操作フロー</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../UML図/アクティビティ図.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../UML図/画面遷移図.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../UML図/アクティビティ図.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../UML図/画面遷移図.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src=".././mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>
