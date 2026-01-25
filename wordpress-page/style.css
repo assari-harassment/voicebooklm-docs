@@ -1,0 +1,449 @@
+/* ======================================
+   リセット & ベーススタイル
+====================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  line-height: 1.8;
+  color: #333;
+  background-color: #fff;
+}
+
+/* ======================================
+   ヒーローセクション
+====================================== */
+.hero {
+  background: #fff !important;
+  color: #333 !important;
+  padding: 80px 20px 60px !important;
+  text-align: center !important;
+  border-bottom: 1px solid #eee !important;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-icon {
+  width: 100px !important;
+  height: 100px !important;
+  border-radius: 20px !important;
+  margin-bottom: 20px !important;
+}
+
+.hero h1 {
+  font-size: 2.2em !important;
+  margin-bottom: 15px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  background: none !important;
+  color: #333 !important;
+  padding: 0 !important;
+  border: none !important;
+  text-align: center !important;
+}
+
+.hero h1::before,
+.hero h1::after {
+  display: none !important;
+  content: none !important;
+}
+
+.hero .tagline {
+  font-size: 1.2em !important;
+  color: #666 !important;
+}
+
+/* ======================================
+   セクション共通
+====================================== */
+.section {
+  padding: 50px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 1.5em;
+  color: #333;
+  text-align: center;
+  margin-bottom: 35px;
+  font-weight: 600;
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: #5ECECE;
+  margin: 12px auto 0;
+}
+
+/* ======================================
+   スクリーンショットセクション
+====================================== */
+.screenshots {
+  background-color: #fafafa;
+}
+
+.screenshots-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.screenshot-item {
+  text-align: center;
+  max-width: 200px;
+}
+
+.screenshot-item img {
+  width: 100% !important;
+  max-width: 200px !important;
+  height: auto !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
+}
+
+.screenshot-caption {
+  margin-top: 12px !important;
+  font-size: 0.9em !important;
+  color: #666 !important;
+  font-weight: 500 !important;
+}
+
+/* ======================================
+   課題セクション
+====================================== */
+.problems {
+  background-color: #fafafa;
+}
+
+.problem-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.problem-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  width: 280px;
+  border: 1px solid #eee;
+}
+
+.problem-card h3 {
+  color: #333;
+  font-size: 1em;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.problem-card p {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.problem-summary {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 1.1em;
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+/* ======================================
+   ソリューションセクション
+====================================== */
+.solution-box {
+  background: #fafafa;
+  color: #333;
+  border-radius: 12px;
+  padding: 35px;
+  text-align: center;
+  border: 1px solid #eee;
+}
+
+.solution-box h3 {
+  font-size: 1.3em;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.solution-box p {
+  font-size: 1em;
+  color: #666;
+}
+
+/* ======================================
+   機能セクション
+====================================== */
+.features-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 8px;
+  padding: 25px;
+  width: 280px;
+  border: 1px solid #eee;
+  text-align: center;
+}
+
+.feature-card:hover {
+  border-color: #ddd;
+}
+
+.feature-card h3 {
+  color: #333;
+  font-size: 1em;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.feature-card p {
+  color: #666;
+  font-size: 0.9em;
+}
+
+/* ======================================
+   フローセクション
+====================================== */
+.flow {
+  background-color: #fafafa;
+}
+
+.flow-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.flow-step {
+  background: white;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #eee;
+  text-align: center;
+}
+
+.flow-step .step-text {
+  font-size: 0.9em;
+  color: #333;
+  font-weight: 500;
+}
+
+.flow-arrow {
+  font-size: 1.5em;
+  color: #ccc;
+}
+
+/* ======================================
+   ユースケースセクション
+====================================== */
+.usecase-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.usecase-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  width: 280px;
+  border: 1px solid #eee;
+}
+
+.usecase-card h3 {
+  color: #333;
+  font-size: 1em;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.usecase-card p {
+  color: #666;
+  font-size: 0.9em;
+}
+
+/* ======================================
+   技術セクション
+====================================== */
+.tech {
+  background-color: #fafafa;
+}
+
+.tech-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.tech-item {
+  background: white;
+  border-radius: 6px;
+  padding: 15px 25px;
+  text-align: center;
+  border: 1px solid #eee;
+}
+
+.tech-item .tech-label {
+  font-size: 0.8em;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+.tech-item .tech-name {
+  font-size: 0.95em;
+  color: #333;
+  font-weight: 500;
+}
+
+/* ======================================
+   ソースコードセクション
+====================================== */
+.repo-links {
+  text-align: center;
+}
+
+.repo-link {
+  display: block;
+  color: #5ECECE !important;
+  text-decoration: none;
+  margin-bottom: 10px;
+  font-size: 1em;
+}
+
+.repo-link:hover {
+  text-decoration: underline;
+}
+
+/* ======================================
+   チームセクション
+====================================== */
+.team-info {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 30px;
+}
+
+.team-name {
+  font-size: 1.3em;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.team-description {
+  color: #666;
+  font-size: 0.95em;
+}
+
+.members-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.member-card {
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 15px 20px;
+  min-width: 160px;
+  text-align: center;
+}
+
+.member-role {
+  font-size: 0.8em;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.member-name {
+  font-size: 1em;
+  color: #333;
+  font-weight: 500;
+}
+
+.member-github {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.8em;
+  color: #5ECECE !important;
+  text-decoration: none;
+}
+
+.member-github:hover {
+  text-decoration: underline;
+}
+/* ======================================
+   フッター
+====================================== */
+.footer {
+  background: #fafafa;
+  color: #999;
+  text-align: center;
+  padding: 25px 20px;
+  border-top: 1px solid #eee;
+}
+
+.footer p {
+  font-size: 0.85em;
+}
+
+/* ======================================
+   レスポンシブ
+====================================== */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 1.8em;
+  }
+
+  .section {
+    padding: 40px 15px;
+  }
+
+  .section-title {
+    font-size: 1.3em;
+  }
+
+  .problem-card,
+  .feature-card,
+  .usecase-card {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .flow-arrow {
+    transform: rotate(90deg);
+  }
+
+  .flow-steps {
+    flex-direction: column;
+  }
+}
