@@ -1,0 +1,3410 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>ボイスメモアプリのシステムドキュメント</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="はじめに.html">はじめに</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">概要・設計</li><li class="chapter-item expanded "><a href="概要・設計/PRD.html"><strong aria-hidden="true">1.</strong> VoiceBookLM PRD</a></li><li class="chapter-item expanded "><a href="概要・設計/プロダクト概要.html"><strong aria-hidden="true">2.</strong> プロダクト概要</a></li><li class="chapter-item expanded "><a href="概要・設計/アーキテクチャ.html"><strong aria-hidden="true">3.</strong> アーキテクチャ</a></li><li class="chapter-item expanded "><a href="概要・設計/技術的意思決定.html"><strong aria-hidden="true">4.</strong> 技術的意思決定</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">UML図</li><li class="chapter-item expanded "><a href="UML図/ユースケース図.html"><strong aria-hidden="true">5.</strong> ユースケース図</a></li><li class="chapter-item expanded "><a href="UML図/アクティビティ図.html"><strong aria-hidden="true">6.</strong> アクティビティ図</a></li><li class="chapter-item expanded "><a href="UML図/シーケンス図.html"><strong aria-hidden="true">7.</strong> シーケンス図</a></li><li class="chapter-item expanded "><a href="UML図/画面遷移図.html"><strong aria-hidden="true">8.</strong> 画面遷移図</a></li><li class="chapter-item expanded "><a href="UML図/ER図.html"><strong aria-hidden="true">9.</strong> ER図</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">バックエンド</li><li class="chapter-item expanded "><a href="バックエンド/認証.html"><strong aria-hidden="true">10.</strong> 認証</a></li><li class="chapter-item expanded "><a href="バックエンド/API.html"><strong aria-hidden="true">11.</strong> API</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="バックエンド/APIリファレンス.html"><strong aria-hidden="true">11.1.</strong> API リファレンス</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><li class="part-title">画面仕様</li><li class="chapter-item expanded "><a href="画面仕様/画面一覧.html"><strong aria-hidden="true">12.</strong> 画面一覧</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="画面仕様/SCR-001_ウェルカム画面.html"><strong aria-hidden="true">12.1.</strong> SCR-001 ウェルカム画面</a></li><li class="chapter-item expanded "><a href="画面仕様/SCR-002_ホーム画面.html"><strong aria-hidden="true">12.2.</strong> SCR-002 ホーム画面</a></li><li class="chapter-item expanded "><a href="画面仕様/SCR-003_録音画面.html"><strong aria-hidden="true">12.3.</strong> SCR-003 録音画面</a></li><li class="chapter-item expanded "><a href="画面仕様/SCR-004_メモ検索画面.html"><strong aria-hidden="true">12.4.</strong> SCR-004 メモ検索画面</a></li><li class="chapter-item expanded "><a href="画面仕様/CMN-001_AI処理通知トースト.html"><strong aria-hidden="true">12.5.</strong> CMN-001 AI処理通知トースト</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><li class="part-title">検証</li><li class="chapter-item expanded "><a href="検証/文字起こし動作確認_12月17日.html"><strong aria-hidden="true">13.</strong> 文字起こし動作確認 (12月17日)</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">AI整形例</li><li class="chapter-item expanded "><a href="AI整形例/旅行計画.html"><strong aria-hidden="true">14.</strong> 旅行計画</a></li><li class="chapter-item expanded "><a href="AI整形例/買い物リスト.html"><strong aria-hidden="true">15.</strong> 買い物リスト</a></li><li class="chapter-item expanded "><a href="AI整形例/音声日記アプリ.html"><strong aria-hidden="true">16.</strong> 音声日記アプリ</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">発表資料</li><li class="chapter-item expanded "><a href="発表/中間発表_詳細_12月18日.html"><strong aria-hidden="true">17.</strong> 中間発表（詳細）</a></li><li class="chapter-item expanded "><a href="発表/中間発表_スライド用_12月18日.html"><strong aria-hidden="true">18.</strong> 中間発表（スライド用）</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">手順書</li><li class="chapter-item expanded "><a href="手順書/操作説明書.html"><strong aria-hidden="true">19.</strong> 操作説明書</a></li><li class="chapter-item expanded "><a href="手順書/ビルド手順書.html"><strong aria-hidden="true">20.</strong> ビルド手順書</a></li><li class="chapter-item expanded "><a href="手順書/インストール手順書.html"><strong aria-hidden="true">21.</strong> インストール手順書</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ボイスメモアプリのシステムドキュメント</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="voicebooklm"><a class="header" href="#voicebooklm">VoiceBookLM</a></h1>
+<p>このドキュメントは、AIを活用したボイスメモアプリケーションの設計と仕様についてまとめたものです。</p>
+<h2 id="概要"><a class="header" href="#概要">概要</a></h2>
+<p>このボイスメモアプリは、音声を録音し、その内容を自動で文字起こし・要約することで、情報の記録と整理を効率化することを目的としています。会議の議事録、アイデアのメモ、日々のタスク管理など、様々なシーンでご活用いただけます。</p>
+<h2 id="主な機能"><a class="header" href="#主な機能">主な機能</a></h2>
+<p>本アプリケーションが提供する主な機能は以下の通りです。</p>
+<ul>
+<li><strong>音声録音</strong>: 簡単な操作でボイスメモを録音します。</li>
+<li><strong>自動文字起こし</strong>: 録音された音声を高精度なAIがテキストに変換します。</li>
+<li><strong>自動要約</strong>: 文字起こしされたテキストをAIが解析し、簡潔な要約を生成します。</li>
+<li><strong>タグ付け・自動振り分け</strong>: メモの内容に応じて自動でタグを付け、ジャンルごとに整理します。</li>
+<li><strong>検索・閲覧</strong>: 過去のメモをキーワードで簡単に検索し、内容をすぐに確認できます。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="製品要件定義書prd"><a class="header" href="#製品要件定義書prd"><strong>製品要件定義書（PRD）</strong></a></h1>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody>
+<tr><td><strong>プロジェクト名</strong></td><td>思考崩壊防止型AI音声メモアプリ</td></tr>
+<tr><td><strong>バージョン</strong></td><td>1.1 (Draft)</td></tr>
+<tr><td><strong>作成日</strong></td><td>2025-12-15</td></tr>
+<tr><td><strong>ステータス</strong></td><td>企画・要件定義</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h1 id="1-製品概要product-overview"><a class="header" href="#1-製品概要product-overview">1. 製品概要（Product Overview）</a></h1>
+<p>本アプリは、ユーザーが思いついた考えやアイデアを音声で話すだけで、
+AIが内容を整理し、<strong>「読み返しても分かるメモ」<strong>に整形する</strong>思考整理特化型音声メモアプリ</strong>である。</p>
+<h3 id="解決する主な課題"><a class="header" href="#解決する主な課題">解決する主な課題</a></h3>
+<ul>
+<li>書いている途中で思考が迷子になる</li>
+<li>文章化が難しい</li>
+<li>後で読み返した際に意味がわからない</li>
+</ul>
+<hr />
+<h1 id="2-背景課題background--problem-statement"><a class="header" href="#2-背景課題background--problem-statement">2. 背景・課題（Background / Problem Statement）</a></h1>
+<p>ユーザーがメモを残す際に直面している問題は以下の通り。</p>
+<h2 id="21-書いている途中で迷走する"><a class="header" href="#21-書いている途中で迷走する">2.1 書いている途中で迷走する</a></h2>
+<ul>
+<li>頭の中では整理できているが、文章にすると論点がズレる</li>
+<li>文脈が散乱して一貫性が失われる</li>
+</ul>
+<h2 id="22-アイデアの文章化が難しい"><a class="header" href="#22-アイデアの文章化が難しい">2.2 アイデアの文章化が難しい</a></h2>
+<ul>
+<li>語彙が出てこない</li>
+<li>どこから書き始めればよいか分からない</li>
+<li>文章構成が難しく、勢いが途切れる</li>
+</ul>
+<h2 id="23-読み返した時に意味が分からない"><a class="header" href="#23-読み返した時に意味が分からない">2.3 読み返した時に意味が分からない</a></h2>
+<ul>
+<li>説明不足</li>
+<li>断片的で文脈が繋がらない</li>
+<li>当初の意図を思い出せない</li>
+</ul>
+<p><strong>結論：</strong>
+「メモしたのに役に立たない」「思考整理に活かせない」という問題が根本に存在する。</p>
+<hr />
+<h1 id="3-このアプリが提供する価値value-proposition"><a class="header" href="#3-このアプリが提供する価値value-proposition">3. このアプリが提供する価値（Value Proposition）</a></h1>
+<ul>
+<li><strong>思考維持</strong>：書く途中で思考が崩壊する問題を防ぐ</li>
+<li><strong>文章化代行</strong>：AIが文章化の苦手を代替し、整ったメモに変換</li>
+<li><strong>自動整理</strong>：要点・背景・意図・次アクションまで自動で構造化</li>
+<li><strong>高再利用性</strong>：思考の“本来の形”を保ち、読み返しやすく再利用しやすい</li>
+</ul>
+<hr />
+<h1 id="4-製品目標goals"><a class="header" href="#4-製品目標goals">4. 製品目標（Goals）</a></h1>
+<ul>
+<li><strong>G1:</strong> 思考崩壊を防ぐ音声入力を提供する</li>
+<li><strong>G2:</strong> AIが内容を再構成し、読み返し時の理解を保証する</li>
+<li><strong>G3:</strong> 誰でも「分かりやすいメモ」を作れる状態にする</li>
+<li><strong>G4:</strong> 思考の勢いを止めない最小ステップUIを実現する</li>
+<li><strong>G5:</strong> Markdownで構造化し、二次利用を容易にする</li>
+</ul>
+<hr />
+<h1 id="5-ペルソナpersona"><a class="header" href="#5-ペルソナpersona">5. ペルソナ（Persona）</a></h1>
+<h2 id="persona-1アイデアマン学生"><a class="header" href="#persona-1アイデアマン学生">Persona 1：アイデアマン・学生</a></h2>
+<ul>
+<li>アイデアは浮かぶが文章整理が苦手</li>
+<li>思いついた瞬間に声で残したい</li>
+<li>読み返した際に意味不明になるメモが多い</li>
+</ul>
+<h2 id="persona-2文章を書くのが苦手な人"><a class="header" href="#persona-2文章を書くのが苦手な人">Persona 2：文章を書くのが苦手な人</a></h2>
+<ul>
+<li>タイピングより話すほうが考えやすい</li>
+<li>書く途中で文脈が崩壊しがち</li>
+<li>読み返しやすい整理されたメモが必要</li>
+</ul>
+<hr />
+<h1 id="6-ユースケースuse-cases"><a class="header" href="#6-ユースケースuse-cases">6. ユースケース（Use Cases）</a></h1>
+<ol>
+<li><strong>通学中</strong>：アイデアを録音 → AIが整理しタイトル付きで保存</li>
+<li><strong>授業・作業中</strong>：その場の気づきを音声で記録 → 後で見返して理解できる状態に</li>
+<li><strong>就寝前</strong>：モヤモヤを吐き出す → AIが論点を整理してメモ化</li>
+<li><strong>代替入力</strong>：文章化が苦手な人が声でメモを残す</li>
+</ol>
+<h2 id="対象ユースケース具体的な利用シーン"><a class="header" href="#対象ユースケース具体的な利用シーン">対象ユースケース（具体的な利用シーン）</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>シーン</th><th>説明</th></tr></thead><tbody>
+<tr><td>面接の振り返り</td><td>面接直後に歩きながら感想を話し、後で検索</td></tr>
+<tr><td>自己分析ログ</td><td>散歩中に気持ちを話し、タグで思考を整理</td></tr>
+<tr><td>アイデア記録</td><td>浮かんだ瞬間に話すだけで保存</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h1 id="7-スコープscope"><a class="header" href="#7-スコープscope">7. スコープ（Scope）</a></h1>
+<h2 id="in-scopemvp"><a class="header" href="#in-scopemvp">In Scope（MVP）</a></h2>
+<ul>
+<li>音声録音（モバイルアプリ）</li>
+<li>Google Speech-to-Text APIによる高精度文字起こし</li>
+<li>AIによる文字起こし内容整形、構造化</li>
+<li>タイトル自動生成</li>
+<li>自動ディレクトリ作成、分類（AI）</li>
+<li>自動タグ付け（AI）</li>
+<li>Markdown形式で保存</li>
+<li>メモ一覧（タイトル＋ディレクトリ構造）</li>
+<li>再要約機能</li>
+</ul>
+<h2 id="out-of-scopemvp外"><a class="header" href="#out-of-scopemvp外">Out of Scope（MVP外）</a></h2>
+<ul>
+<li>リアルタイム文字起こし</li>
+<li>obsidianのような編集と閲覧が同じような機能</li>
+<li>意味ベース検索（Semantic Search）
+<ul>
+<li>ニュアンス・文脈で検索可能</li>
+<li>Embeddingによる類似度検索</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h1 id="8-コア機能core-features"><a class="header" href="#8-コア機能core-features">8. コア機能（Core Features）</a></h1>
+<h2 id="81-音声--テキスト変換"><a class="header" href="#81-音声--テキスト変換">8.1 音声 → テキスト変換</a></h2>
+<ul>
+<li>Google Speech-to-Text API</li>
+<li>言い直し・雑談も保持し高精度で文字化</li>
+</ul>
+<h2 id="82-ai構造化メモ生成markdown"><a class="header" href="#82-ai構造化メモ生成markdown">8.2 AI構造化メモ生成（Markdown）</a></h2>
+<p>出力構造：</p>
+<ul>
+<li>タイトル（AI生成）</li>
+<li>タグ（AI生成）</li>
+<li>本文（LLM整形）</li>
+<li>作成日時（属性）</li>
+</ul>
+<h3 id="markdownテンプレ例"><a class="header" href="#markdownテンプレ例">Markdownテンプレ例</a></h3>
+<pre><code class="language-md">---
+title: "自動生成タイトル"
+tags: ["アイデア", "プロジェクトA"]
+created: 2025-12-01
+---
+
+# タイトル
+
+LLMが整形した本文がここに入る。
+ユーザーの音声入力を元に、読みやすく構造化された文章が生成される。
+</code></pre>
+<h2 id="83-自動分類"><a class="header" href="#83-自動分類">8.3 自動分類</a></h2>
+<p>ジャンル例：アイデア / 日記 / 勉強 / 仕事 / 感情 / TODO</p>
+<h2 id="84-メモ一覧画面"><a class="header" href="#84-メモ一覧画面">8.4 メモ一覧画面</a></h2>
+<ul>
+<li>日付順 / カテゴリ別ソート</li>
+<li>サマリ表示</li>
+</ul>
+<h2 id="85-意味ベース検索semantic-search"><a class="header" href="#85-意味ベース検索semantic-search">8.5 意味ベース検索（Semantic Search）</a></h2>
+<ul>
+<li>正確なキーワード不要</li>
+<li>ニュアンス検索・文脈検索</li>
+<li>Embedding による類似度検索</li>
+</ul>
+<hr />
+<h1 id="9-非機能要件nfr"><a class="header" href="#9-非機能要件nfr">9. 非機能要件（NFR）</a></h1>
+<ul>
+<li><strong>安定性:</strong> アプリクラッシュ時でも音声データ保持・復旧</li>
+<li><strong>プライバシー:</strong> 音声データは端末内保存を基本とする</li>
+</ul>
+<p>（※取り消し線項目は削除し、必要項目のみ残しました）</p>
+<hr />
+<h1 id="10-技術要件technical-requirements"><a class="header" href="#10-技術要件technical-requirements">10. 技術要件（Technical Requirements）</a></h1>
+<ul>
+<li><strong>フロント:</strong> React Native</li>
+<li><strong>文字起こし:</strong> Google Speech-to-Text API</li>
+<li><strong>要約・整形AI:</strong> Gemini 2.0 Flash</li>
+<li><strong>データ保存:</strong> PostgreSQ ( 必要に応じてAWS S3)</li>
+<li><strong>Markdown生成:</strong> フロントエンド側でフォーマット(詳細は未確定)</li>
+</ul>
+<hr />
+<h1 id="11-競合分析competitive-analysis"><a class="header" href="#11-競合分析competitive-analysis">11. 競合分析（Competitive Analysis）</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>競合サービス</th><th>特徴</th><th>本アプリの優位性</th></tr></thead><tbody>
+<tr><td>TalkNotes</td><td>会議・制作寄り</td><td>思考整理に特化したテンプレ</td></tr>
+<tr><td>BrainDump</td><td>音声→Markdown化</td><td>より強力な構造化・分類機能</td></tr>
+<tr><td>Echo Notes</td><td>ライター向け・高品質文字起こし</td><td>「要約・再構成」を重視</td></tr>
+<tr><td>Cleft Notes</td><td>構造化に強いが汎用的</td><td>思考崩壊防止に特化したUX</td></tr>
+<tr><td>v2md</td><td>Obsidian特化</td><td>初心者でも使いやすい構造化テンプレ</td></tr>
+</tbody></table>
+</div>
+<p><strong>差別化ポイント：</strong></p>
+<ul>
+<li>会議・議論録音ツールは多いが、<strong>個人の思考整理に特化</strong>したアプリは少ない</li>
+<li>タグやディレクトリ構成をAIが自動で提案・整理</li>
+<li>「思考の崩壊を防ぐ」「読み返して分かる」出力品質とUX</li>
+</ul>
+<hr />
+<h1 id="12-成果指標kpi"><a class="header" href="#12-成果指標kpi">12. 成果指標（KPI）</a></h1>
+<ul>
+<li>理解できたメモ率</li>
+<li>1ユーザーあたりの再閲覧数</li>
+<li>“意味不明メモ”の減少</li>
+<li>書くストレスの低減</li>
+<li>月間継続利用率</li>
+<li>意味検索からのメモ閲覧数</li>
+<li>探したいメモが見つかった成功率</li>
+</ul>
+<hr />
+<h1 id="13-エレベーターピッチ"><a class="header" href="#13-エレベーターピッチ">13. エレベーターピッチ</a></h1>
+<p><strong>「書くと途中で迷子になる思考を、AIが整えて“読み返して分かるメモ”に変換する音声メモアプリ。」</strong></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="プロダクト概要"><a class="header" href="#プロダクト概要">プロダクト概要</a></h1>
+<p>VoiceBookLM は、<strong>音声ファースト × 自動整理</strong> をコンセプトとした AI 搭載ボイスメモアプリケーションです。</p>
+<h2 id="コンセプト"><a class="header" href="#コンセプト">コンセプト</a></h2>
+<blockquote>
+<p>「話すだけで、整理されたメモが自動で作られる」</p>
+</blockquote>
+<p>ユーザーは<strong>話すことに集中</strong>するだけ。AI がタイトル・本文・タグを自動生成し、クラウドに保存します。</p>
+<h2 id="解決する課題"><a class="header" href="#解決する課題">解決する課題</a></h2>
+<pre><code class="language-mermaid">graph TD
+    subgraph 従来のメモアプリ
+        A[テキスト入力] --&gt; B[タイトル設定]
+        B --&gt; C[タグ付け]
+        C --&gt; D[整理・分類]
+    end
+
+    subgraph VoiceBookLM
+        E[話す] --&gt; F[AI が自動整理]
+        F --&gt; G[保存完了]
+    end
+
+    style D fill:#f99,stroke:#333
+    style G fill:#9f9,stroke:#333
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>課題</th><th>VoiceBookLM の解決策</th></tr></thead><tbody>
+<tr><td>キーボード入力は思考を阻害</td><td>音声入力で思考の流れを保つ</td></tr>
+<tr><td>整理作業がユーザー負担</td><td>AI が自動でタイトル・タグ生成</td></tr>
+<tr><td>会議向けが多い</td><td><strong>個人の思考ログ</strong>に特化</td></tr>
+</tbody></table>
+</div>
+<h2 id="主要機能"><a class="header" href="#主要機能">主要機能</a></h2>
+<h3 id="mvpに含む機能"><a class="header" href="#mvpに含む機能">MVPに含む機能</a></h3>
+<ol>
+<li><strong>ワンタップ録音</strong> - シンプルな操作で録音開始</li>
+<li><strong>AI 自動整理</strong> - タイトル・本文・タグを自動生成</li>
+<li><strong>マークダウン対応</strong> - 本文はマークダウン形式で記述・編集・表示</li>
+<li><strong>クラウド保存</strong> - どこからでもアクセス可能</li>
+<li><strong>全文検索</strong> - 過去のメモを素早く発見</li>
+<li><strong>Google 認証</strong> - 安全なログイン</li>
+</ol>
+<h2 id="対象ユースケース"><a class="header" href="#対象ユースケース">対象ユースケース</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>シーン</th><th>説明</th></tr></thead><tbody>
+<tr><td>面接の振り返り</td><td>面接直後に歩きながら感想を話し、後で検索</td></tr>
+<tr><td>自己分析ログ</td><td>散歩中に気持ちを話し、タグで思考を整理</td></tr>
+<tr><td>アイデア記録</td><td>浮かんだ瞬間に話すだけで保存</td></tr>
+</tbody></table>
+</div>
+<h2 id="目標数値"><a class="header" href="#目標数値">目標数値</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>指標</th><th>目標</th></tr></thead><tbody>
+<tr><td>録音→AI整形完了</td><td><strong>30秒以内</strong></td></tr>
+<tr><td>検索レスポンス</td><td><strong>0.5秒以内</strong></td></tr>
+<tr><td>クラウド稼働率</td><td><strong>99%以上</strong></td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="アーキテクチャ"><a class="header" href="#アーキテクチャ">アーキテクチャ</a></h1>
+<h2 id="システム全体像"><a class="header" href="#システム全体像">システム全体像</a></h2>
+<pre><code class="language-mermaid">graph TB
+    subgraph Client["📱 モバイルアプリ"]
+        RN["React Native + Expo"]
+    end
+
+    subgraph Backend["🖥️ バックエンド"]
+        API["REST API&lt;br/&gt;Spring Boot"]
+        DB[(PostgreSQL)]
+    end
+
+    subgraph External["🌐 外部サービス"]
+        ASR["Google Cloud&lt;br/&gt;Speech-to-Text"]
+        AI["AI サービス&lt;br/&gt;Claude/GPT"]
+        OAuth["Google OAuth"]
+    end
+
+    RN --&gt;|HTTPS| API
+    API --&gt; DB
+    API --&gt; ASR
+    API --&gt; AI
+    RN --&gt; OAuth
+    API --&gt; OAuth
+</code></pre>
+<h2 id="backend-オニオンアーキテクチャ--ddd"><a class="header" href="#backend-オニオンアーキテクチャ--ddd">backend オニオンアーキテクチャ × DDD</a></h2>
+<p>バックエンドは<strong>オニオンアーキテクチャ</strong>と**ドメイン駆動設計(DDD)**を採用しています。</p>
+<pre><code class="language-mermaid">graph TB
+    subgraph Presentation["🎨 Presentation Layer"]
+        Controller["Controller&lt;br/&gt;REST API"]
+    end
+
+    subgraph UseCase["⚙️ UseCase Layer"]
+        UC["UseCase&lt;br/&gt;ビジネスロジック"]
+    end
+
+    subgraph Domain["💎 Domain Layer"]
+        Entity["Entity"]
+        Repo["Repository&lt;br/&gt;Interface"]
+    end
+
+    subgraph Infrastructure["🔧 Infrastructure Layer"]
+        JPA["JPA Repository&lt;br/&gt;実装"]
+        Client["外部API&lt;br/&gt;クライアント"]
+    end
+
+    Controller --&gt; UC
+    UC --&gt; Entity
+    UC --&gt; Repo
+    JPA -.-&gt;|implements| Repo
+    Client --&gt; ASR["Speech-to-Text"]
+
+    style Domain fill:#ffd,stroke:#333
+</code></pre>
+<h3 id="レイヤー責務"><a class="header" href="#レイヤー責務">レイヤー責務</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>レイヤー</th><th>責務</th><th>依存</th></tr></thead><tbody>
+<tr><td><strong>Domain</strong></td><td>エンティティ・ビジネスルール</td><td>なし（純粋Kotlin）</td></tr>
+<tr><td><strong>UseCase</strong></td><td>アプリケーション固有ロジック</td><td>Domain のみ</td></tr>
+<tr><td><strong>Presentation</strong></td><td>REST API・DTO変換</td><td>UseCase のみ</td></tr>
+<tr><td><strong>Infrastructure</strong></td><td>DB実装・外部API</td><td>Domain IF を実装</td></tr>
+</tbody></table>
+</div>
+<h2 id="技術スタック"><a class="header" href="#技術スタック">技術スタック</a></h2>
+<h3 id="backend"><a class="header" href="#backend">Backend</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>カテゴリ</th><th>技術</th></tr></thead><tbody>
+<tr><td>言語</td><td>Kotlin 2.0.21</td></tr>
+<tr><td>フレームワーク</td><td>Spring Boot 3.4.12</td></tr>
+<tr><td>ランタイム</td><td>JDK 21 LTS</td></tr>
+<tr><td>データベース</td><td>PostgreSQL 16</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="技術的意思決定"><a class="header" href="#技術的意思決定">技術的意思決定</a></h1>
+<h2 id="アーキテクチャ選定"><a class="header" href="#アーキテクチャ選定">アーキテクチャ選定</a></h2>
+<h3 id="オニオンアーキテクチャ--ddd-採用理由"><a class="header" href="#オニオンアーキテクチャ--ddd-採用理由">オニオンアーキテクチャ × DDD 採用理由</a></h3>
+<pre><code class="language-mermaid">graph LR
+    subgraph オニオンアーキテクチャ
+        D[Controller] --&gt; E[UseCase]
+        E --&gt; F[Domain]
+        G[Infrastructure] -.-&gt;|implements| F
+    end
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>観点</th><th>採用理由</th></tr></thead><tbody>
+<tr><td><strong>ドメイン独立性</strong></td><td>ビジネスロジックをフレームワークから隔離</td></tr>
+<tr><td><strong>テスタビリティ</strong></td><td>Domain/UseCase は純粋Kotlinでテスト可能</td></tr>
+<tr><td><strong>拡張性</strong></td><td>DB変更やCQRS導入に強い構造</td></tr>
+</tbody></table>
+</div>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ボイスメモ-ユースケース図"><a class="header" href="#ボイスメモ-ユースケース図">ボイスメモ ユースケース図</a></h1>
+<pre><code class="language-mermaid">flowchart LR
+    User((ユーザー))
+
+    subgraph VoiceBookLM
+        Login([Google でログイン])
+        Record([ボイスメモを録音])
+        ViewList([メモ一覧を閲覧])
+        Search([メモを検索])
+        Edit([タイトル・タグを編集])
+    end
+
+    User --&gt; Login
+    User --&gt; Record
+    User --&gt; ViewList
+    User --&gt; Search
+    User --&gt; Edit
+</code></pre>
+<h2 id="ユースケース一覧"><a class="header" href="#ユースケース一覧">ユースケース一覧</a></h2>
+<h3 id="mvp-機能実装対象"><a class="header" href="#mvp-機能実装対象">MVP 機能（実装対象）</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>ユースケース</th><th>説明</th><th>アクター</th></tr></thead><tbody>
+<tr><td>Google でログインする</td><td>Google OAuth で認証し、JWT トークンを取得</td><td>ユーザー</td></tr>
+<tr><td>ボイスメモを録音する</td><td>ワンタップで録音開始・停止</td><td>ユーザー</td></tr>
+<tr><td>音声をサーバーに送信する</td><td>録音完了後に REST API 経由で音声ファイルを送信</td><td>システム</td></tr>
+<tr><td>文字起こしする</td><td>録音完了後に ASR で一括テキスト化</td><td>システム</td></tr>
+<tr><td>AI でメモを整理する</td><td>タイトル・本文・タグを自動生成</td><td>システム</td></tr>
+<tr><td>クラウドに保存する</td><td>AI 整形済みメモのみを永続化</td><td>システム</td></tr>
+<tr><td>メモ一覧を閲覧する</td><td>日付ソートでメモを表示</td><td>ユーザー</td></tr>
+<tr><td>メモを検索する</td><td>全文検索でメモを検索</td><td>ユーザー</td></tr>
+<tr><td>タグでフィルタする</td><td>タグ指定でメモを絞り込み</td><td>ユーザー</td></tr>
+<tr><td>タイトル・タグを編集する</td><td>AI 生成結果を手動で修正</td><td>ユーザー</td></tr>
+</tbody></table>
+</div>
+<h3 id="mvp-対象外"><a class="header" href="#mvp-対象外">MVP 対象外</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>ユースケース</th><th>理由</th></tr></thead><tbody>
+<tr><td>音声を永続保存する</td><td>プライバシー重視設計により永久に含まない</td></tr>
+<tr><td>要約を生成する</td><td>MVP スコープ外</td></tr>
+<tr><td>複数発話者を判定する</td><td>個人メモ特化のため対象外</td></tr>
+<tr><td>Apple/メールでログインする</td><td>MVP では Google 認証のみ</td></tr>
+<tr><td>オフラインで録音する</td><td>MVP では対象外</td></tr>
+</tbody></table>
+</div>
+<h2 id="データポリシー"><a class="header" href="#データポリシー">データポリシー</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>データ種別</th><th>永続保存</th><th>説明</th></tr></thead><tbody>
+<tr><td>AI 整形済みメモ本文</td><td>✓</td><td>メモの主内容として保存</td></tr>
+<tr><td>タイトル</td><td>✓</td><td>AI 生成または編集結果</td></tr>
+<tr><td>タグ</td><td>✓</td><td>AI 生成または編集結果</td></tr>
+<tr><td>タイムスタンプ</td><td>✓</td><td>録音開始/終了の情報</td></tr>
+<tr><td>音声データ</td><td>✗</td><td>処理完了後に削除</td></tr>
+<tr><td>生文字起こし</td><td>✗</td><td>AI 整形前の生データは破棄</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="ボイスメモ-アクティビティ図"><a class="header" href="#ボイスメモ-アクティビティ図">ボイスメモ アクティビティ図</a></h1>
+<h2 id="メインフロー録音保存"><a class="header" href="#メインフロー録音保存">メインフロー（録音〜保存）</a></h2>
+<pre><code class="language-mermaid">flowchart TD
+    Start((開始))
+    Start --&gt; Login[Google ログイン]
+    Login --&gt; Home[ホーム画面]
+    Home --&gt; Record[録音ボタンをタップ]
+    Record --&gt; Speaking[話す]
+    Speaking --&gt; Stop[録音停止]
+    Stop --&gt; Upload[音声ファイル送信]
+    Upload --&gt; Transcribe[文字起こし]
+    AI --&gt; Save[クラウドに保存]
+    Save --&gt; Done((完了))
+    Transcribe --&gt; AI[AI でタイトル・本文・タグ生成]
+</code></pre>
+<h2 id="メモ閲覧フロー"><a class="header" href="#メモ閲覧フロー">メモ閲覧フロー</a></h2>
+<pre><code class="language-mermaid">flowchart TD
+    Home((ホーム画面))
+    Home --&gt; Directory[ディレクトリ構造]
+    Home --&gt; Search[キーワード検索]
+    Directory --&gt; Detail[メモを選択して閲覧]
+    Search --&gt; List[メモ一覧を表示]
+    List --&gt; Detail
+</code></pre>
+<h2 id="フローの説明"><a class="header" href="#フローの説明">フローの説明</a></h2>
+<h3 id="録音フロー"><a class="header" href="#録音フロー">録音フロー</a></h3>
+<ol>
+<li><strong>Google ログイン</strong> → JWT トークン取得</li>
+<li><strong>録音ボタンをタップ</strong> → 録音開始</li>
+<li><strong>話す</strong> → 音声を端末に一時保存</li>
+<li><strong>録音停止</strong> → 音声ファイル確定</li>
+<li><strong>音声ファイル送信</strong> → REST API 経由でサーバーに送信</li>
+<li><strong>文字起こし</strong> → ASR で一括テキスト化</li>
+<li><strong>AI 処理</strong> → タイトル・本文・タグを自動生成</li>
+<li><strong>クラウドに保存</strong> → AI 整形済みメモのみ永続化</li>
+</ol>
+<h3 id="メモ閲覧フロー-1"><a class="header" href="#メモ閲覧フロー-1">メモ閲覧フロー</a></h3>
+<ul>
+<li><strong>一覧表示</strong>: 日付ソートでメモを表示</li>
+<li><strong>検索</strong>: キーワードやタグで絞り込み</li>
+<li><strong>閲覧</strong>: メモを選択して内容を確認</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="シーケンス図"><a class="header" href="#シーケンス図">シーケンス図</a></h1>
+<p>システムの主要なフローを時系列で図示したシーケンス図です。</p>
+<hr />
+<h2 id="1-音声メモ生成フローメインフロー"><a class="header" href="#1-音声メモ生成フローメインフロー">1. 音声メモ生成フロー（メインフロー）</a></h2>
+<p>アプリのコア機能「音声 → 文字起こし → AI整形 → 保存」の全体フローです。</p>
+<pre><code class="language-mermaid">sequenceDiagram
+    autonumber
+    participant App as 📱 Mobile App
+    participant API as 🖥️ Backend API
+    participant STT as 🎤 Google Speech-to-Text
+    participant AI as 🤖 Gemini AI
+    participant DB as 🗄️ PostgreSQL
+
+    Note over App: ユーザーが録音完了
+
+    App-&gt;&gt;API: POST /api/voice/memos&lt;br/&gt;multipart/form-data&lt;br/&gt;(file, language)
+    activate API
+
+    Note over API: JWT検証
+
+    API-&gt;&gt;STT: 音声ファイル送信
+    activate STT
+    STT--&gt;&gt;API: 文字起こしテキスト
+    deactivate STT
+
+    alt 文字起こし成功
+        API-&gt;&gt;AI: 文字起こしテキスト送信
+        activate AI
+        Note over AI: タイトル生成&lt;br/&gt;本文整形&lt;br/&gt;タグ抽出
+        AI--&gt;&gt;API: 整形結果&lt;br/&gt;(title, content, tags)
+        deactivate AI
+
+        alt AI整形成功
+            API-&gt;&gt;DB: メモ保存
+            activate DB
+            DB--&gt;&gt;API: 保存完了
+            deactivate DB
+            API--&gt;&gt;App: 201 Created&lt;br/&gt;{memoId, title, content, tags, ...}
+        else AI整形失敗
+            Note over API: フォールバック処理&lt;br/&gt;文字起こしテキストをそのまま使用
+            API-&gt;&gt;DB: メモ保存（フォールバック）
+            DB--&gt;&gt;API: 保存完了
+            API--&gt;&gt;App: 201 Created&lt;br/&gt;{..., fallback: {formatting: true}}
+        end
+    else 文字起こし失敗
+        API--&gt;&gt;App: 500 Internal Server Error
+    end
+
+    deactivate API
+</code></pre>
+<h3 id="フローの詳細"><a class="header" href="#フローの詳細">フローの詳細</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>ステップ</th><th>処理内容</th><th>処理時間目安</th></tr></thead><tbody>
+<tr><td>1</td><td>音声ファイルアップロード</td><td>ファイルサイズ依存</td></tr>
+<tr><td>2-3</td><td>JWT認証 + 文字起こし</td><td>2-10秒</td></tr>
+<tr><td>4-5</td><td>AI整形処理</td><td>1-3秒</td></tr>
+<tr><td>6-7</td><td>DB保存</td><td>100ms以下</td></tr>
+</tbody></table>
+</div>
+<h3 id="エラーハンドリング"><a class="header" href="#エラーハンドリング">エラーハンドリング</a></h3>
+<ul>
+<li><strong>文字起こし失敗</strong>: 500エラーを返却</li>
+<li><strong>AI整形失敗</strong>: フォールバックモードで文字起こしテキストをそのまま保存</li>
+<li><strong>DB保存失敗</strong>: 500エラーを返却</li>
+</ul>
+<hr />
+<h2 id="2-google-oauth-ログインフロー"><a class="header" href="#2-google-oauth-ログインフロー">2. Google OAuth ログインフロー</a></h2>
+<p>Google Sign-In を使用した認証フローです。</p>
+<pre><code class="language-mermaid">sequenceDiagram
+    autonumber
+    participant App as 📱 Mobile App
+    participant Google as 🌐 Google OAuth
+    participant API as 🖥️ Backend API
+    participant DB as 🗄️ PostgreSQL
+
+    App-&gt;&gt;Google: Google Sign-In 開始
+    activate Google
+    Note over Google: ユーザー認証&lt;br/&gt;同意画面
+    Google--&gt;&gt;App: ID Token
+    deactivate Google
+
+    App-&gt;&gt;API: POST /api/auth/google&lt;br/&gt;{idToken}
+    activate API
+
+    API-&gt;&gt;Google: ID Token 検証&lt;br/&gt;/tokeninfo
+    activate Google
+    Google--&gt;&gt;API: Token Info&lt;br/&gt;(sub, email, name, ...)
+    deactivate Google
+
+    alt トークン検証成功
+        API-&gt;&gt;DB: ユーザー検索&lt;br/&gt;(googleSub)
+        activate DB
+
+        alt 既存ユーザー
+            DB--&gt;&gt;API: User
+        else 新規ユーザー
+            API-&gt;&gt;DB: ユーザー作成
+            DB--&gt;&gt;API: User
+        end
+
+        Note over API: JWT生成&lt;br/&gt;・accessToken (1日)&lt;br/&gt;・refreshToken (180日)
+
+        API-&gt;&gt;DB: RefreshToken 保存
+        DB--&gt;&gt;API: 保存完了
+        deactivate DB
+
+        API--&gt;&gt;App: 200 OK&lt;br/&gt;{accessToken, refreshToken}
+    else トークン検証失敗
+        API--&gt;&gt;App: 401 Unauthorized
+    end
+
+    deactivate API
+</code></pre>
+<h3 id="セキュリティポイント"><a class="header" href="#セキュリティポイント">セキュリティポイント</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody>
+<tr><td>ID Token 検証</td><td>Google の <code>/tokeninfo</code> エンドポイントで検証</td></tr>
+<tr><td>aud クレーム確認</td><td>クライアントIDとの一致を確認</td></tr>
+<tr><td>メール検証確認</td><td><code>email_verified: true</code> を確認</td></tr>
+<tr><td>UUIDv7 使用</td><td>時系列順でソート可能なID</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="3-トークンリフレッシュフロー"><a class="header" href="#3-トークンリフレッシュフロー">3. トークンリフレッシュフロー</a></h2>
+<p>アクセストークン更新時のトークンローテーションフローです。</p>
+<pre><code class="language-mermaid">sequenceDiagram
+    autonumber
+    participant App as 📱 Mobile App
+    participant API as 🖥️ Backend API
+    participant DB as 🗄️ PostgreSQL
+
+    Note over App: accessToken 期限切れ検知
+
+    App-&gt;&gt;API: POST /api/auth/refresh&lt;br/&gt;{refreshToken}
+    activate API
+
+    API-&gt;&gt;DB: RefreshToken 検証&lt;br/&gt;(token, revoked=false, expires &gt; now)
+    activate DB
+    DB--&gt;&gt;API: RefreshToken (valid/invalid)
+    deactivate DB
+
+    alt トークン有効
+        API-&gt;&gt;DB: ユーザー取得
+        activate DB
+        DB--&gt;&gt;API: User
+        deactivate DB
+
+        API-&gt;&gt;DB: 旧 RefreshToken 無効化&lt;br/&gt;(revoked = true)
+        activate DB
+        DB--&gt;&gt;API: 更新完了
+        deactivate DB
+
+        Note over API: 新規JWT生成&lt;br/&gt;・accessToken&lt;br/&gt;・refreshToken
+
+        API-&gt;&gt;DB: 新 RefreshToken 保存
+        activate DB
+        DB--&gt;&gt;API: 保存完了
+        deactivate DB
+
+        API--&gt;&gt;App: 200 OK&lt;br/&gt;{accessToken, refreshToken}
+    else トークン無効/期限切れ
+        API--&gt;&gt;App: 401 Unauthorized
+        Note over App: 再ログイン必要
+    end
+
+    deactivate API
+</code></pre>
+<h3 id="トークンローテーションの意義"><a class="header" href="#トークンローテーションの意義">トークンローテーションの意義</a></h3>
+<pre><code>旧トークン使用 → 無効化 → 新トークン発行
+</code></pre>
+<ul>
+<li><strong>リプレイ攻撃防止</strong>: 古いトークンは使えなくなる</li>
+<li><strong>トークン漏洩検知</strong>: 無効化済みトークンの使用で検知可能</li>
+<li><strong>セッション管理</strong>: アクティブなセッションのみ有効</li>
+</ul>
+<hr />
+<h2 id="4-認証付きapi呼び出しフロー"><a class="header" href="#4-認証付きapi呼び出しフロー">4. 認証付きAPI呼び出しフロー</a></h2>
+<p>JWT認証が必要なAPIの共通フローです。</p>
+<pre><code class="language-mermaid">sequenceDiagram
+    autonumber
+    participant App as 📱 Mobile App
+    participant Filter as 🔐 JwtAuthFilter
+    participant Controller as 📋 Controller
+    participant UseCase as ⚙️ UseCase
+
+    App-&gt;&gt;Filter: API Request&lt;br/&gt;Authorization: Bearer {token}
+    activate Filter
+
+    Filter-&gt;&gt;Filter: JWT検証
+
+    alt 有効なアクセストークン
+        Filter-&gt;&gt;Filter: SecurityContext設定&lt;br/&gt;(userId, email)
+        Filter-&gt;&gt;Controller: Request継続
+        activate Controller
+        Controller-&gt;&gt;UseCase: ビジネスロジック実行
+        activate UseCase
+        UseCase--&gt;&gt;Controller: 結果
+        deactivate UseCase
+        Controller--&gt;&gt;App: 200 OK / 201 Created
+        deactivate Controller
+    else 無効/期限切れトークン
+        Filter--&gt;&gt;App: 401 Unauthorized
+    else リフレッシュトークン使用
+        Filter--&gt;&gt;App: 401 Unauthorized&lt;br/&gt;(アクセストークンが必要)
+    end
+
+    deactivate Filter
+</code></pre>
+<hr />
+<h2 id="5-ログアウトフロー"><a class="header" href="#5-ログアウトフロー">5. ログアウトフロー</a></h2>
+<pre><code class="language-mermaid">sequenceDiagram
+    autonumber
+    participant App as 📱 Mobile App
+    participant API as 🖥️ Backend API
+    participant DB as 🗄️ PostgreSQL
+
+    App-&gt;&gt;API: POST /api/auth/logout&lt;br/&gt;{refreshToken}
+    activate API
+
+    API-&gt;&gt;DB: RefreshToken 無効化&lt;br/&gt;(revoked = true)
+    activate DB
+    DB--&gt;&gt;API: 更新完了
+    deactivate DB
+
+    API--&gt;&gt;App: 204 No Content
+    deactivate API
+
+    Note over App: ローカルトークン削除
+</code></pre>
+<hr />
+<h2 id="6-アカウント削除フロー"><a class="header" href="#6-アカウント削除フロー">6. アカウント削除フロー</a></h2>
+<pre><code class="language-mermaid">sequenceDiagram
+    autonumber
+    participant App as 📱 Mobile App
+    participant API as 🖥️ Backend API
+    participant DB as 🗄️ PostgreSQL
+
+    App-&gt;&gt;API: DELETE /api/auth/account&lt;br/&gt;Authorization: Bearer {token}
+    activate API
+
+    Note over API: JWT検証（userId取得）
+
+    API-&gt;&gt;DB: メモ削除&lt;br/&gt;(user_id = ?)
+    activate DB
+    DB--&gt;&gt;API: 削除完了
+    deactivate DB
+
+    API-&gt;&gt;DB: RefreshToken 削除&lt;br/&gt;(user_id = ?)
+    activate DB
+    DB--&gt;&gt;API: 削除完了
+    deactivate DB
+
+    API-&gt;&gt;DB: User 削除&lt;br/&gt;(id = ?)
+    activate DB
+    DB--&gt;&gt;API: 削除完了
+    deactivate DB
+
+    API--&gt;&gt;App: 204 No Content
+    deactivate API
+
+    Note over App: ログイン画面へ遷移
+</code></pre>
+<h3 id="削除順序の重要性"><a class="header" href="#削除順序の重要性">削除順序の重要性</a></h3>
+<p>外部キー制約を考慮し、以下の順序で削除:</p>
+<ol>
+<li><strong>VoiceMemo</strong> (user_id 参照)</li>
+<li><strong>RefreshToken</strong> (user_id 参照)</li>
+<li><strong>User</strong> (親テーブル)</li>
+</ol>
+<hr />
+<h2 id="7-エラーハンドリング全体像"><a class="header" href="#7-エラーハンドリング全体像">7. エラーハンドリング全体像</a></h2>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant App as 📱 Mobile App
+    participant API as 🖥️ Backend API
+
+    Note over App,API: 想定されるエラーパターン
+
+    rect rgb(255, 230, 230)
+        Note right of App: 認証エラー
+        App-&gt;&gt;API: 無効なJWT
+        API--&gt;&gt;App: 401 Unauthorized&lt;br/&gt;{error, code: "UNAUTHORIZED"}
+    end
+
+    rect rgb(255, 245, 230)
+        Note right of App: 入力エラー
+        App-&gt;&gt;API: 不正なリクエスト
+        API--&gt;&gt;App: 400 Bad Request&lt;br/&gt;{error, code: "BAD_REQUEST"}
+    end
+
+    rect rgb(255, 230, 245)
+        Note right of App: リソースエラー
+        App-&gt;&gt;API: 存在しないリソース
+        API--&gt;&gt;App: 404 Not Found&lt;br/&gt;{error, code: "NOT_FOUND"}
+    end
+
+    rect rgb(230, 230, 255)
+        Note right of App: サーバーエラー
+        App-&gt;&gt;API: 外部API障害
+        API--&gt;&gt;App: 500 Internal Server Error&lt;br/&gt;{error, code: "INTERNAL_SERVER_ERROR"}
+    end
+</code></pre>
+<hr />
+<h2 id="処理時間の目安"><a class="header" href="#処理時間の目安">処理時間の目安</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>フロー</th><th>想定処理時間</th><th>ボトルネック</th></tr></thead><tbody>
+<tr><td>ログイン</td><td>500ms - 1s</td><td>Google Token検証</td></tr>
+<tr><td>トークンリフレッシュ</td><td>100ms - 200ms</td><td>DB操作</td></tr>
+<tr><td>音声メモ生成</td><td>3s - 15s</td><td>Speech-to-Text + AI整形</td></tr>
+<tr><td>ログアウト</td><td>50ms - 100ms</td><td>DB操作</td></tr>
+<tr><td>アカウント削除</td><td>200ms - 500ms</td><td>複数テーブル削除</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="関連ドキュメント"><a class="header" href="#関連ドキュメント">関連ドキュメント</a></h2>
+<ul>
+<li><a href="UML%E5%9B%B3/../%E6%A6%82%E8%A6%81%E3%83%BB%E8%A8%AD%E8%A8%88/architecture.html">アーキテクチャ</a> - システム全体構成</li>
+<li><a href="UML%E5%9B%B3/../%E3%83%90%E3%83%83%E3%82%AF%E3%82%A8%E3%83%B3%E3%83%89/auth.html">認証</a> - 認証システム詳細</li>
+<li><a href="UML%E5%9B%B3/../%E3%83%90%E3%83%83%E3%82%AF%E3%82%A8%E3%83%B3%E3%83%89/api-reference.html">API リファレンス</a> - API仕様詳細</li>
+<li><a href="UML%E5%9B%B3/./activity.html">アクティビティ図</a> - ユーザー操作フロー</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="画面遷移図"><a class="header" href="#画面遷移図">画面遷移図</a></h1>
+<p>VoiceBookLM モバイルアプリの画面遷移を図示します。</p>
+<hr />
+<h2 id="全体概要"><a class="header" href="#全体概要">全体概要</a></h2>
+<pre><code class="language-mermaid">stateDiagram-v2
+    [*] --&gt; スプラッシュ
+    スプラッシュ --&gt; ログイン: 未認証
+    スプラッシュ --&gt; ホーム: 認証済み
+
+    state ログイン {
+        [*] --&gt; ログイン画面
+        ログイン画面 --&gt; Google認証
+        Google認証 --&gt; ログイン画面: 失敗
+    }
+    ログイン --&gt; ホーム: 認証成功
+
+    state ホーム {
+        [*] --&gt; メモ一覧
+        メモ一覧 --&gt; 検索
+        検索 --&gt; メモ一覧
+    }
+
+    ホーム --&gt; 録音: 録音ボタン
+    録音 --&gt; 処理中: 録音完了
+    処理中 --&gt; メモ詳細: 生成完了
+    メモ詳細 --&gt; ホーム: 戻る
+
+    ホーム --&gt; メモ詳細: メモ選択
+    ホーム --&gt; 設定: 設定アイコン
+
+    設定 --&gt; ログイン: ログアウト
+    設定 --&gt; [*]: アカウント削除
+</code></pre>
+<hr />
+<h2 id="1-認証フロー"><a class="header" href="#1-認証フロー">1. 認証フロー</a></h2>
+<pre><code class="language-mermaid">flowchart TD
+    subgraph 起動["📱 アプリ起動"]
+        Splash[スプラッシュ画面]
+    end
+
+    subgraph 認証チェック["🔐 認証チェック"]
+        Check{JWT有効?}
+        Refresh{リフレッシュ&lt;br/&gt;可能?}
+    end
+
+    subgraph ログイン["🔑 ログイン"]
+        Login[ログイン画面]
+        GoogleAuth[Google Sign-In]
+        AuthError[認証エラー&lt;br/&gt;ダイアログ]
+    end
+
+    subgraph メイン["🏠 メイン"]
+        Home[ホーム画面]
+    end
+
+    Splash --&gt; Check
+    Check --&gt;|有効| Home
+    Check --&gt;|期限切れ| Refresh
+    Refresh --&gt;|成功| Home
+    Refresh --&gt;|失敗| Login
+
+    Check --&gt;|なし| Login
+    Login --&gt;|Googleでログイン| GoogleAuth
+    GoogleAuth --&gt;|成功| Home
+    GoogleAuth --&gt;|失敗| AuthError
+    AuthError --&gt;|再試行| Login
+
+    style Splash fill:#e1f5fe
+    style Home fill:#c8e6c9
+    style Login fill:#fff3e0
+    style AuthError fill:#ffcdd2
+</code></pre>
+<h3 id="画面詳細"><a class="header" href="#画面詳細">画面詳細</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>画面</th><th>説明</th><th>主要アクション</th></tr></thead><tbody>
+<tr><td>スプラッシュ</td><td>アプリロゴ表示、JWT検証</td><td>自動遷移</td></tr>
+<tr><td>ログイン</td><td>Google Sign-In ボタン</td><td>Googleでログイン</td></tr>
+<tr><td>認証エラー</td><td>エラーメッセージ表示</td><td>再試行、閉じる</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="2-メイン画面フロー"><a class="header" href="#2-メイン画面フロー">2. メイン画面フロー</a></h2>
+<pre><code class="language-mermaid">flowchart TD
+    subgraph ホーム["🏠 ホーム画面"]
+        MemoList[メモ一覧&lt;br/&gt;日付順表示]
+        Directory[ディレクトリ&lt;br/&gt;ツリー表示]
+        SearchBar[検索バー]
+        RecordBtn((🎤&lt;br/&gt;録音))
+        SettingsBtn[⚙️]
+    end
+
+    subgraph 検索["🔍 検索"]
+        SearchInput[キーワード入力]
+        TagFilter[タグフィルター]
+        SearchResults[検索結果一覧]
+    end
+
+    subgraph メモ詳細["📄 メモ詳細"]
+        MemoView[メモ表示&lt;br/&gt;Markdown]
+        MemoTags[タグ表示]
+        MemoMeta[作成日時]
+        ResummarizeBtn[再要約ボタン]
+    end
+
+    subgraph 録音["🎤 録音画面"]
+        Recording[録音中&lt;br/&gt;波形表示]
+        StopBtn[停止ボタン]
+    end
+
+    subgraph 処理中["⏳ 処理中"]
+        Uploading[アップロード中]
+        Transcribing[文字起こし中]
+        Formatting[AI整形中]
+    end
+
+    subgraph 設定["⚙️ 設定"]
+        Profile[プロフィール]
+        Language[言語設定]
+        Logout[ログアウト]
+        DeleteAccount[アカウント削除]
+    end
+
+    MemoList --&gt; SearchBar
+    SearchBar --&gt; SearchInput
+    SearchInput --&gt; SearchResults
+    TagFilter --&gt; SearchResults
+    SearchResults --&gt; MemoView
+
+    MemoList --&gt; MemoView
+    Directory --&gt; MemoView
+
+    RecordBtn --&gt; Recording
+    Recording --&gt; StopBtn
+    StopBtn --&gt; Uploading
+    Uploading --&gt; Transcribing
+    Transcribing --&gt; Formatting
+    Formatting --&gt; MemoView
+
+    MemoView --&gt; ResummarizeBtn
+    ResummarizeBtn --&gt; Formatting
+
+    SettingsBtn --&gt; Profile
+    Profile --&gt; Language
+    Profile --&gt; Logout
+    Profile --&gt; DeleteAccount
+
+    style RecordBtn fill:#f44336,color:#fff
+    style MemoList fill:#e3f2fd
+    style MemoView fill:#e8f5e9
+    style Recording fill:#ffebee
+    style Formatting fill:#fff3e0
+</code></pre>
+<hr />
+<h2 id="3-録音保存フロー詳細"><a class="header" href="#3-録音保存フロー詳細">3. 録音〜保存フロー（詳細）</a></h2>
+<pre><code class="language-mermaid">flowchart TD
+    subgraph 録音準備["📱 録音準備"]
+        Home[ホーム画面]
+        RecordButton((🎤))
+        PermissionCheck{マイク&lt;br/&gt;許可?}
+        PermissionRequest[許可リクエスト]
+    end
+
+    subgraph 録音中["🔴 録音中"]
+        RecordingScreen[録音画面]
+        Waveform[波形表示]
+        Timer[経過時間]
+        StopButton[停止ボタン]
+        CancelButton[キャンセル]
+    end
+
+    subgraph 確認["✅ 確認"]
+        Preview[録音プレビュー]
+        PlayButton[再生]
+        RetryButton[録り直し]
+        SubmitButton[送信]
+    end
+
+    subgraph 処理["⚙️ 処理中"]
+        Progress[プログレス表示]
+        Step1[1. アップロード中...]
+        Step2[2. 文字起こし中...]
+        Step3[3. AI整形中...]
+        Step4[4. 保存中...]
+    end
+
+    subgraph 完了["🎉 完了"]
+        Result[生成結果画面]
+        Title[タイトル]
+        Content[整形済み本文]
+        Tags[自動タグ]
+        SaveButton[保存して閉じる]
+    end
+
+    subgraph エラー["❌ エラー"]
+        ErrorDialog[エラーダイアログ]
+        RetryOption[再試行]
+        DismissOption[閉じる]
+    end
+
+    Home --&gt; RecordButton
+    RecordButton --&gt; PermissionCheck
+    PermissionCheck --&gt;|許可済み| RecordingScreen
+    PermissionCheck --&gt;|未許可| PermissionRequest
+    PermissionRequest --&gt;|許可| RecordingScreen
+    PermissionRequest --&gt;|拒否| Home
+
+    RecordingScreen --&gt; Waveform
+    RecordingScreen --&gt; Timer
+    RecordingScreen --&gt; StopButton
+    RecordingScreen --&gt; CancelButton
+    CancelButton --&gt; Home
+
+    StopButton --&gt; Preview
+    Preview --&gt; PlayButton
+    Preview --&gt; RetryButton
+    Preview --&gt; SubmitButton
+    RetryButton --&gt; RecordingScreen
+
+    SubmitButton --&gt; Progress
+    Progress --&gt; Step1 --&gt; Step2 --&gt; Step3 --&gt; Step4
+
+    Step4 --&gt;|成功| Result
+    Step1 --&gt;|失敗| ErrorDialog
+    Step2 --&gt;|失敗| ErrorDialog
+    Step3 --&gt;|失敗| ErrorDialog
+
+    ErrorDialog --&gt; RetryOption
+    ErrorDialog --&gt; DismissOption
+    RetryOption --&gt; Progress
+    DismissOption --&gt; Home
+
+    Result --&gt; Title
+    Result --&gt; Content
+    Result --&gt; Tags
+    Result --&gt; SaveButton
+    SaveButton --&gt; Home
+
+    style RecordButton fill:#f44336,color:#fff
+    style RecordingScreen fill:#ffcdd2
+    style Progress fill:#fff3e0
+    style Result fill:#c8e6c9
+    style ErrorDialog fill:#ffcdd2
+</code></pre>
+<hr />
+<h2 id="4-画面一覧"><a class="header" href="#4-画面一覧">4. 画面一覧</a></h2>
+<h3 id="認証系"><a class="header" href="#認証系">認証系</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>#</th><th>画面名</th><th>パス</th><th>説明</th></tr></thead><tbody>
+<tr><td>1</td><td>スプラッシュ</td><td><code>/splash</code></td><td>アプリ起動時のロード画面</td></tr>
+<tr><td>2</td><td>ログイン</td><td><code>/login</code></td><td>Google Sign-In ボタン</td></tr>
+</tbody></table>
+</div>
+<h3 id="メイン系"><a class="header" href="#メイン系">メイン系</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>#</th><th>画面名</th><th>パス</th><th>説明</th></tr></thead><tbody>
+<tr><td>3</td><td>ホーム</td><td><code>/home</code></td><td>メモ一覧、ディレクトリ表示</td></tr>
+<tr><td>4</td><td>検索</td><td><code>/search</code></td><td>キーワード・タグ検索</td></tr>
+<tr><td>5</td><td>メモ詳細</td><td><code>/memo/:id</code></td><td>Markdown形式でメモ表示</td></tr>
+</tbody></table>
+</div>
+<h3 id="録音系"><a class="header" href="#録音系">録音系</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>#</th><th>画面名</th><th>パス</th><th>説明</th></tr></thead><tbody>
+<tr><td>6</td><td>録音</td><td><code>/record</code></td><td>音声録音画面</td></tr>
+<tr><td>7</td><td>録音確認</td><td><code>/record/preview</code></td><td>録音プレビュー・送信確認</td></tr>
+<tr><td>8</td><td>処理中</td><td><code>/record/processing</code></td><td>アップロード〜AI整形のプログレス</td></tr>
+<tr><td>9</td><td>生成結果</td><td><code>/record/result</code></td><td>生成されたメモの確認</td></tr>
+</tbody></table>
+</div>
+<h3 id="設定系"><a class="header" href="#設定系">設定系</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>#</th><th>画面名</th><th>パス</th><th>説明</th></tr></thead><tbody>
+<tr><td>10</td><td>設定</td><td><code>/settings</code></td><td>設定メニュー</td></tr>
+<tr><td>11</td><td>プロフィール</td><td><code>/settings/profile</code></td><td>ユーザー情報表示</td></tr>
+<tr><td>12</td><td>言語設定</td><td><code>/settings/language</code></td><td>文字起こし言語選択</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="5-画面コンポーネント構成"><a class="header" href="#5-画面コンポーネント構成">5. 画面コンポーネント構成</a></h2>
+<pre><code class="language-mermaid">flowchart TB
+    subgraph App["📱 App"]
+        subgraph Navigation["🧭 Navigation"]
+            BottomTab[BottomTabNavigator]
+            Stack[StackNavigator]
+        end
+
+        subgraph Screens["📄 Screens"]
+            subgraph Auth["認証"]
+                SplashScreen
+                LoginScreen
+            end
+
+            subgraph Main["メイン"]
+                HomeScreen
+                SearchScreen
+                MemoDetailScreen
+            end
+
+            subgraph Record["録音"]
+                RecordScreen
+                PreviewScreen
+                ProcessingScreen
+                ResultScreen
+            end
+
+            subgraph Settings["設定"]
+                SettingsScreen
+                ProfileScreen
+                LanguageScreen
+            end
+        end
+
+        subgraph Components["🧩 共通コンポーネント"]
+            Header[Header]
+            MemoCard[MemoCard]
+            TagChip[TagChip]
+            LoadingIndicator[LoadingIndicator]
+            ErrorDialog[ErrorDialog]
+            FAB[FloatingActionButton]
+        end
+    end
+
+    BottomTab --&gt; HomeScreen
+    BottomTab --&gt; SearchScreen
+    BottomTab --&gt; SettingsScreen
+
+    Stack --&gt; MemoDetailScreen
+    Stack --&gt; RecordScreen
+    Stack --&gt; PreviewScreen
+    Stack --&gt; ProcessingScreen
+    Stack --&gt; ResultScreen
+
+    HomeScreen --&gt; MemoCard
+    HomeScreen --&gt; FAB
+    SearchScreen --&gt; MemoCard
+    SearchScreen --&gt; TagChip
+    MemoDetailScreen --&gt; TagChip
+
+    RecordScreen --&gt; Header
+    ProcessingScreen --&gt; LoadingIndicator
+    ResultScreen --&gt; TagChip
+</code></pre>
+<hr />
+<h2 id="6-ナビゲーション構造"><a class="header" href="#6-ナビゲーション構造">6. ナビゲーション構造</a></h2>
+<pre><code>App
+├── AuthStack (未認証時)
+│   ├── Splash
+│   └── Login
+│
+└── MainStack (認証済み)
+    ├── BottomTabs
+    │   ├── HomeTab
+    │   │   └── Home
+    │   ├── SearchTab
+    │   │   └── Search
+    │   └── SettingsTab
+    │       └── Settings
+    │
+    └── Modals / Stacks
+        ├── MemoDetail
+        ├── RecordFlow
+        │   ├── Record
+        │   ├── Preview
+        │   ├── Processing
+        │   └── Result
+        ├── Profile
+        └── Language
+</code></pre>
+<hr />
+<h2 id="7-状態遷移表"><a class="header" href="#7-状態遷移表">7. 状態遷移表</a></h2>
+<h3 id="認証状態"><a class="header" href="#認証状態">認証状態</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>現在の状態</th><th>イベント</th><th>次の状態</th><th>アクション</th></tr></thead><tbody>
+<tr><td>未認証</td><td>アプリ起動</td><td>スプラッシュ</td><td>JWT確認</td></tr>
+<tr><td>スプラッシュ</td><td>JWT有効</td><td>ホーム</td><td>自動遷移</td></tr>
+<tr><td>スプラッシュ</td><td>JWT無効</td><td>ログイン</td><td>自動遷移</td></tr>
+<tr><td>ログイン</td><td>Google認証成功</td><td>ホーム</td><td>トークン保存</td></tr>
+<tr><td>ログイン</td><td>Google認証失敗</td><td>ログイン</td><td>エラー表示</td></tr>
+<tr><td>認証済み</td><td>ログアウト</td><td>ログイン</td><td>トークン削除</td></tr>
+<tr><td>認証済み</td><td>アカウント削除</td><td>ログイン</td><td>データ削除</td></tr>
+</tbody></table>
+</div>
+<h3 id="録音状態"><a class="header" href="#録音状態">録音状態</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>現在の状態</th><th>イベント</th><th>次の状態</th><th>アクション</th></tr></thead><tbody>
+<tr><td>ホーム</td><td>録音ボタン</td><td>録音画面</td><td>権限確認</td></tr>
+<tr><td>録音画面</td><td>停止</td><td>プレビュー</td><td>録音停止</td></tr>
+<tr><td>録音画面</td><td>キャンセル</td><td>ホーム</td><td>録音破棄</td></tr>
+<tr><td>プレビュー</td><td>送信</td><td>処理中</td><td>API呼び出し</td></tr>
+<tr><td>プレビュー</td><td>録り直し</td><td>録音画面</td><td>録音リセット</td></tr>
+<tr><td>処理中</td><td>完了</td><td>結果画面</td><td>レスポンス表示</td></tr>
+<tr><td>処理中</td><td>エラー</td><td>エラーダイアログ</td><td>エラー表示</td></tr>
+<tr><td>結果画面</td><td>保存</td><td>ホーム</td><td>一覧更新</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="8-ワイヤーフレーム概要"><a class="header" href="#8-ワイヤーフレーム概要">8. ワイヤーフレーム概要</a></h2>
+<h3 id="ホーム画面"><a class="header" href="#ホーム画面">ホーム画面</a></h3>
+<pre><code>┌─────────────────────────────────┐
+│  📱 VoiceBookLM          ⚙️    │
+├─────────────────────────────────┤
+│  🔍 メモを検索...               │
+├─────────────────────────────────┤
+│                                 │
+│  📁 アイデア                    │
+│    └─ 📄 新機能のアイデア       │
+│    └─ 📄 改善案メモ             │
+│                                 │
+│  📁 日記                        │
+│    └─ 📄 今日の振り返り         │
+│                                 │
+│  📁 仕事                        │
+│    └─ 📄 会議メモ               │
+│                                 │
+│                                 │
+│                        ┌─────┐  │
+│                        │ 🎤  │  │
+│                        └─────┘  │
+├─────────────────────────────────┤
+│   🏠      🔍      ⚙️           │
+└─────────────────────────────────┘
+</code></pre>
+<h3 id="録音画面"><a class="header" href="#録音画面">録音画面</a></h3>
+<pre><code>┌─────────────────────────────────┐
+│  ← 録音                         │
+├─────────────────────────────────┤
+│                                 │
+│                                 │
+│         ╭──────────────╮        │
+│         │              │        │
+│         │   🔴 録音中   │        │
+│         │              │        │
+│         ╰──────────────╯        │
+│                                 │
+│     ∿∿∿∿∿∿∿∿∿∿∿∿∿∿∿∿∿         │
+│     波形表示                    │
+│                                 │
+│           00:15                 │
+│                                 │
+│         ┌─────────┐             │
+│         │  停止   │             │
+│         └─────────┘             │
+│                                 │
+│     キャンセル                   │
+│                                 │
+└─────────────────────────────────┘
+</code></pre>
+<h3 id="メモ詳細画面"><a class="header" href="#メモ詳細画面">メモ詳細画面</a></h3>
+<pre><code>┌─────────────────────────────────┐
+│  ←  メモ詳細              ⋮    │
+├─────────────────────────────────┤
+│                                 │
+│  # 新機能のアイデア             │
+│                                 │
+│  📅 2025-12-17                  │
+│  🏷️ アイデア  機能  MVP         │
+│                                 │
+│  ─────────────────────────────  │
+│                                 │
+│  ## 概要                        │
+│  音声入力でメモを取れる         │
+│  アプリを作りたい。             │
+│                                 │
+│  ## ポイント                    │
+│  - AIで自動整形                 │
+│  - タグ自動付与                 │
+│  - Markdown形式                 │
+│                                 │
+│  ## 次のアクション              │
+│  - 技術選定を進める             │
+│                                 │
+│         ┌─────────┐             │
+│         │ 再要約  │             │
+│         └─────────┘             │
+└─────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="関連ドキュメント-1"><a class="header" href="#関連ドキュメント-1">関連ドキュメント</a></h2>
+<ul>
+<li><a href="UML%E5%9B%B3/../%E6%A6%82%E8%A6%81%E3%83%BB%E8%A8%AD%E8%A8%88/PRD.html">PRD</a> - 製品要件定義</li>
+<li><a href="UML%E5%9B%B3/./activity.html">アクティビティ図</a> - ユーザー操作フロー</li>
+<li><a href="UML%E5%9B%B3/./sequence.html">シーケンス図</a> - システム間の通信フロー</li>
+<li><a href="UML%E5%9B%B3/../%E3%83%90%E3%83%83%E3%82%AF%E3%82%A8%E3%83%B3%E3%83%89/api-reference.html">API リファレンス</a> - バックエンドAPI仕様</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="er図"><a class="header" href="#er図">ER図</a></h1>
+<pre><code class="language-mermaid">erDiagram
+    users {
+        UUID id PK "UUIDv7"
+        VARCHAR google_sub UK "Google User ID (sub claim)"
+        VARCHAR email UK "メールアドレス"
+        VARCHAR name "表示名"
+        TIMESTAMPTZ created_at "作成日時"
+        TIMESTAMPTZ updated_at "更新日時"
+    }
+
+    memos {
+        UUID id PK "UUIDv7"
+        UUID user_id FK "ユーザーID"
+        VARCHAR transcription_status "文字起こしステータス"
+        VARCHAR formatting_status "AI整形ステータス"
+        TEXT transcription "文字起こし結果"
+        VARCHAR title "AIタイトル"
+        TEXT content "AI整形本文(Markdown)"
+        TIMESTAMPTZ created_at "作成日時"
+        TIMESTAMPTZ updated_at "更新日時"
+        BOOLEAN deleted "論理削除フラグ"
+    }
+
+    memo_tags {
+        UUID memo_id PK,FK "メモID"
+        VARCHAR tag PK "タグ名"
+    }
+
+    refresh_tokens {
+        UUID id PK "UUIDv7"
+        VARCHAR token UK "リフレッシュトークン"
+        UUID user_id FK "ユーザーID"
+        TIMESTAMPTZ expires_at "有効期限"
+        TIMESTAMPTZ created_at "作成日時"
+        BOOLEAN revoked "無効化フラグ"
+    }
+
+    users ||--o{ memos : "has"
+    users ||--o{ refresh_tokens : "has"
+    memos ||--o{ memo_tags : "has"
+</code></pre>
+<h2 id="テーブル概要"><a class="header" href="#テーブル概要">テーブル概要</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>テーブル名</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>users</code></td><td>ユーザーアカウント情報（Google OAuth 認証）</td></tr>
+<tr><td><code>memos</code></td><td>AI 整形済みボイスメモ（文字起こし→AI整形の2段階処理）</td></tr>
+<tr><td><code>memo_tags</code></td><td>メモタグ（AI 生成またはユーザー編集）</td></tr>
+<tr><td><code>refresh_tokens</code></td><td>JWT リフレッシュトークン（トークンローテーション対応）</td></tr>
+</tbody></table>
+</div>
+<h2 id="リレーションシップ"><a class="header" href="#リレーションシップ">リレーションシップ</a></h2>
+<ul>
+<li><strong>users → memos</strong>: 1対多（1ユーザーが複数のメモを持つ）</li>
+<li><strong>users → refresh_tokens</strong>: 1対多（1ユーザーが複数のトークンを持つ）</li>
+<li><strong>memos → memo_tags</strong>: 1対多（1メモが複数のタグを持つ）</li>
+</ul>
+<h2 id="ステータス値"><a class="header" href="#ステータス値">ステータス値</a></h2>
+<h3 id="transcription_status--formatting_status"><a class="header" href="#transcription_status--formatting_status">transcription_status / formatting_status</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>値</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>PENDING</code></td><td>処理待ち</td></tr>
+<tr><td><code>PROCESSING</code></td><td>処理中</td></tr>
+<tr><td><code>COMPLETED</code></td><td>完了</td></tr>
+<tr><td><code>FAILED</code></td><td>失敗</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="認証"><a class="header" href="#認証">認証</a></h1>
+<p>VoiceBookLM Backend の認証システムは、Google OAuth 認証と JWT トークン管理を提供するクリーンアーキテクチャベースの実装です。</p>
+<h2 id="アーキテクチャ概要"><a class="header" href="#アーキテクチャ概要">アーキテクチャ概要</a></h2>
+<pre><code class="language-mermaid">flowchart TB
+    subgraph Presentation["Presentation Layer"]
+        AuthController["AuthController (/api/auth)&lt;br/&gt;POST /google : Google OAuth ログイン&lt;br/&gt;POST /refresh : トークンリフレッシュ&lt;br/&gt;POST /logout : ログアウト&lt;br/&gt;DELETE /account : アカウント削除&lt;br/&gt;GET /me : 現在のユーザー情報取得"]
+    end
+
+    subgraph UseCase["UseCase Layer"]
+        LoginUseCase
+        RefreshTokenUseCase
+        LogoutUseCase
+        GetCurrentUserUseCase
+        DeleteAccountUseCase
+    end
+
+    subgraph Domain["Domain Layer"]
+        subgraph Models
+            User
+            RefreshToken
+            OAuthUserInfo
+        end
+        subgraph Interfaces
+            UserRepository
+            RefreshTokenRepo
+            OAuthClient
+        end
+    end
+
+    subgraph Infrastructure["Infrastructure Layer"]
+        JwtTokenProvider
+        JwtAuthenticationFilter
+        GoogleOAuthClient
+        UserRepositoryImpl["UserRepositoryImpl (JPA)"]
+        RefreshTokenRepositoryImpl
+    end
+
+    Presentation --&gt; UseCase
+    UseCase --&gt; Domain
+    Domain --&gt; Infrastructure
+</code></pre>
+<hr />
+<h2 id="domain-layer"><a class="header" href="#domain-layer">Domain Layer</a></h2>
+<h3 id="user"><a class="header" href="#user">User</a></h3>
+<p><strong>ファイル:</strong> <code>src/main/kotlin/com/assari/voicebooklm/domain/model/User.kt</code></p>
+<p>Google OAuth 認証で取得したユーザー情報を表現するドメインモデル。</p>
+<pre><code class="language-kotlin">class User(
+    val id: UUID,           // UUIDv7 (時系列順)
+    val googleSub: String,  // Google の一意識別子
+    val email: String,      // メールアドレス
+    var name: String,       // 表示名
+    val createdAt: Instant,
+    var updatedAt: Instant
+)
+</code></pre>
+<p><strong>メソッド:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>メソッド</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>updateName(newName: String)</code></td><td>ユーザー名を更新し、<code>updatedAt</code> を現在時刻に設定</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="refreshtoken"><a class="header" href="#refreshtoken">RefreshToken</a></h3>
+<p><strong>ファイル:</strong> <code>src/main/kotlin/com/assari/voicebooklm/domain/model/RefreshToken.kt</code></p>
+<p>JWT リフレッシュトークンの情報を表現するドメインモデル。トークンローテーションをサポート。</p>
+<pre><code class="language-kotlin">class RefreshToken(
+    val id: UUID,           // UUIDv7
+    val token: String,      // JWT トークン文字列
+    val userId: UUID,       // 所有ユーザーの ID
+    val expiresAt: Instant, // 有効期限
+    val createdAt: Instant,
+    var revoked: Boolean    // 無効化フラグ
+)
+</code></pre>
+<p><strong>メソッド:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>メソッド</th><th>戻り値</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>isExpired()</code></td><td><code>Boolean</code></td><td>有効期限切れかどうか</td></tr>
+<tr><td><code>isValid()</code></td><td><code>Boolean</code></td><td>有効かどうか（未失効 かつ 期限内）</td></tr>
+<tr><td><code>revoke()</code></td><td><code>Unit</code></td><td>トークンを無効化</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="oauthuserinfo"><a class="header" href="#oauthuserinfo">OAuthUserInfo</a></h3>
+<p><strong>ファイル:</strong> <code>src/main/kotlin/com/assari/voicebooklm/domain/model/OAuthUserInfo.kt</code></p>
+<p>OAuth プロバイダーから取得したユーザー情報を表現する値オブジェクト。</p>
+<pre><code class="language-kotlin">data class OAuthUserInfo(
+    val providerId: String,  // プロバイダー固有 ID (Google: sub)
+    val email: String,
+    val name: String,
+    val picture: String?     // プロフィール画像 URL
+)
+</code></pre>
+<hr />
+<h3 id="oauthclient-interface"><a class="header" href="#oauthclient-interface">OAuthClient (Interface)</a></h3>
+<p><strong>ファイル:</strong> <code>src/main/kotlin/com/assari/voicebooklm/domain/gateway/OAuthClient.kt</code></p>
+<p>OAuth 認証プロバイダーとの通信を抽象化するゲートウェイインターフェース。</p>
+<pre><code class="language-kotlin">interface OAuthClient {
+    fun verifyIdTokenAndGetUserInfo(idToken: String): OAuthUserInfo?
+}
+</code></pre>
+<p><strong>実装:</strong></p>
+<ul>
+<li><code>GoogleOAuthClient</code> - Google OAuth 認証</li>
+</ul>
+<hr />
+<h3 id="userrepository-interface"><a class="header" href="#userrepository-interface">UserRepository (Interface)</a></h3>
+<p><strong>ファイル:</strong> <code>src/main/kotlin/com/assari/voicebooklm/domain/repository/UserRepository.kt</code></p>
+<pre><code class="language-kotlin">interface UserRepository {
+    fun save(user: User): User
+    fun findById(id: UUID): User?
+    fun findByEmail(email: String): User?
+    fun findByGoogleSub(googleSub: String): User?
+    fun deleteById(id: UUID)
+}
+</code></pre>
+<hr />
+<h3 id="refreshtokenrepository-interface"><a class="header" href="#refreshtokenrepository-interface">RefreshTokenRepository (Interface)</a></h3>
+<p><strong>ファイル:</strong> <code>src/main/kotlin/com/assari/voicebooklm/domain/repository/RefreshTokenRepository.kt</code></p>
+<pre><code class="language-kotlin">interface RefreshTokenRepository {
+    fun save(token: RefreshToken): RefreshToken
+    fun findByTokenAndValid(token: String, now: Instant): RefreshToken?
+    fun revokeByToken(token: String)
+    fun revokeByUserId(userId: UUID)    // ログアウト時
+    fun deleteByUserId(userId: UUID)    // アカウント削除時
+}
+</code></pre>
+<hr />
+<h2 id="usecase-layer"><a class="header" href="#usecase-layer">UseCase Layer</a></h2>
+<h3 id="loginusecase"><a class="header" href="#loginusecase">LoginUseCase</a></h3>
+<p><strong>ファイル:</strong> <code>src/main/kotlin/com/assari/voicebooklm/usecase/auth/LoginUseCase.kt</code></p>
+<p>OAuth 認証フローを処理し、JWT トークンペアを発行する。</p>
+<p><strong>入力:</strong> <code>LoginCommand(idToken: String)</code></p>
+<p><strong>出力:</strong> <code>LoginResult(accessToken, refreshToken, userId)</code></p>
+<p><strong>フロー:</strong></p>
+<ol>
+<li><code>OAuthClient</code> で ID トークンを検証</li>
+<li>ユーザーを取得または新規作成</li>
+<li>アクセストークン・リフレッシュトークンを生成</li>
+<li>リフレッシュトークンを DB に保存</li>
+</ol>
+<p><strong>例外:</strong></p>
+<ul>
+<li><code>InvalidIdTokenException</code> - ID トークンの検証失敗</li>
+</ul>
+<hr />
+<h3 id="refreshtokenusecase"><a class="header" href="#refreshtokenusecase">RefreshTokenUseCase</a></h3>
+<p><strong>ファイル:</strong> <code>src/main/kotlin/com/assari/voicebooklm/usecase/auth/RefreshTokenUseCase.kt</code></p>
+<p>リフレッシュトークンローテーションを実装。旧トークンを無効化し、新しいトークンペアを発行。</p>
+<p><strong>入力:</strong> <code>RefreshTokenCommand(refreshToken: String)</code></p>
+<p><strong>出力:</strong> <code>RefreshTokenResult(accessToken, refreshToken, userId)</code></p>
+<p><strong>フロー:</strong></p>
+<ol>
+<li>保存済みリフレッシュトークンを検証</li>
+<li>ユーザーを取得</li>
+<li><strong>旧トークンを無効化</strong>（ローテーション）</li>
+<li>新しいトークンペアを生成・保存</li>
+</ol>
+<p><strong>例外:</strong></p>
+<ul>
+<li><code>InvalidRefreshTokenException</code> - トークンが無効または期限切れ</li>
+</ul>
+<hr />
+<h3 id="logoutusecase"><a class="header" href="#logoutusecase">LogoutUseCase</a></h3>
+<p><strong>ファイル:</strong> <code>src/main/kotlin/com/assari/voicebooklm/usecase/auth/LogoutUseCase.kt</code></p>
+<p>リフレッシュトークンを無効化してログアウト。</p>
+<p><strong>入力:</strong> <code>LogoutCommand(refreshToken: String)</code></p>
+<p><strong>出力:</strong> なし</p>
+<hr />
+<h3 id="getcurrentuserusecase"><a class="header" href="#getcurrentuserusecase">GetCurrentUserUseCase</a></h3>
+<p><strong>ファイル:</strong> <code>src/main/kotlin/com/assari/voicebooklm/usecase/auth/GetCurrentUserUseCase.kt</code></p>
+<p>JWT から取得したユーザー ID でユーザー情報を取得。</p>
+<p><strong>入力:</strong> <code>GetCurrentUserCommand(userId: UUID)</code></p>
+<p><strong>出力:</strong> <code>UserInfo(id, email, name)</code></p>
+<hr />
+<h3 id="deleteaccountusecase"><a class="header" href="#deleteaccountusecase">DeleteAccountUseCase</a></h3>
+<p><strong>ファイル:</strong> <code>src/main/kotlin/com/assari/voicebooklm/usecase/auth/DeleteAccountUseCase.kt</code></p>
+<p>ユーザーのすべてのデータを物理削除。</p>
+<p><strong>入力:</strong> <code>DeleteAccountCommand(userId: UUID)</code></p>
+<p><strong>削除順序（参照整合性維持）:</strong></p>
+<ol>
+<li>メモ</li>
+<li>リフレッシュトークン</li>
+<li>ユーザー</li>
+</ol>
+<hr />
+<h2 id="infrastructure-layer"><a class="header" href="#infrastructure-layer">Infrastructure Layer</a></h2>
+<h3 id="jwttokenprovider"><a class="header" href="#jwttokenprovider">JwtTokenProvider</a></h3>
+<p><strong>ファイル:</strong> <code>src/main/kotlin/com/assari/voicebooklm/infrastructure/security/JwtTokenProvider.kt</code></p>
+<p>JWT アクセストークン・リフレッシュトークンの生成・検証を行う。HS256 アルゴリズムを使用。</p>
+<p><strong>設定:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>プロパティ</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>jwt.secret</code></td><td>署名用シークレットキー</td></tr>
+<tr><td><code>jwt.access-token-expiration</code></td><td>アクセストークン有効期限（ms）</td></tr>
+<tr><td><code>jwt.refresh-token-expiration</code></td><td>リフレッシュトークン有効期限（ms）</td></tr>
+</tbody></table>
+</div>
+<p><strong>メソッド:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>メソッド</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>generateAccessToken(userId, email)</code></td><td>アクセストークン生成</td></tr>
+<tr><td><code>generateRefreshToken(userId)</code></td><td>リフレッシュトークン生成</td></tr>
+<tr><td><code>validateToken(token)</code></td><td>トークン検証</td></tr>
+<tr><td><code>isAccessToken(token)</code></td><td>アクセストークン判定</td></tr>
+<tr><td><code>isRefreshToken(token)</code></td><td>リフレッシュトークン判定</td></tr>
+<tr><td><code>getUserIdFromToken(token)</code></td><td>トークンからユーザー ID 抽出</td></tr>
+<tr><td><code>getEmailFromToken(token)</code></td><td>トークンからメール抽出</td></tr>
+</tbody></table>
+</div>
+<p><strong>トークンクレーム:</strong></p>
+<ul>
+<li><code>userId</code> - ユーザー ID</li>
+<li><code>email</code> - メールアドレス（アクセストークンのみ）</li>
+<li><code>tokenType</code> - <code>access</code> または <code>refresh</code></li>
+</ul>
+<hr />
+<h3 id="jwtauthenticationfilter"><a class="header" href="#jwtauthenticationfilter">JwtAuthenticationFilter</a></h3>
+<p><strong>ファイル:</strong> <code>src/main/kotlin/com/assari/voicebooklm/infrastructure/security/JwtAuthenticationFilter.kt</code></p>
+<p>Authorization ヘッダーから JWT トークンを抽出し、検証する Spring Security フィルタ。</p>
+<p><strong>動作:</strong></p>
+<ol>
+<li><code>Authorization: Bearer &lt;token&gt;</code> ヘッダーからトークン抽出</li>
+<li><code>JwtTokenProvider</code> でトークン検証</li>
+<li>アクセストークンの場合のみ認証情報を <code>SecurityContext</code> に設定</li>
+</ol>
+<hr />
+<h3 id="googleoauthclient"><a class="header" href="#googleoauthclient">GoogleOAuthClient</a></h3>
+<p><strong>ファイル:</strong> <code>src/main/kotlin/com/assari/voicebooklm/infrastructure/api/GoogleOAuthClient.kt</code></p>
+<p><code>OAuthClient</code> インターフェースの Google 実装。Google ID トークンの検証とユーザー情報の取得を行う。</p>
+<p><strong>検証フロー:</strong></p>
+<ol>
+<li><code>https://oauth2.googleapis.com/tokeninfo</code> エンドポイントで検証</li>
+<li><code>aud</code> クレームがクライアント ID と一致するか確認</li>
+<li>メール検証済みか確認</li>
+<li><code>OAuthUserInfo</code> に変換して返却</li>
+</ol>
+<hr />
+<h2 id="presentation-layer"><a class="header" href="#presentation-layer">Presentation Layer</a></h2>
+<h3 id="authcontroller"><a class="header" href="#authcontroller">AuthController</a></h3>
+<p><strong>ファイル:</strong> <code>src/main/kotlin/com/assari/voicebooklm/presentation/controller/auth/AuthController.kt</code></p>
+<p><strong>Base Path:</strong> <code>/api/auth</code></p>
+<div class="table-wrapper"><table><thead><tr><th>メソッド</th><th>パス</th><th>説明</th><th>認証</th></tr></thead><tbody>
+<tr><td>POST</td><td><code>/google</code></td><td>Google OAuth ログイン</td><td>不要</td></tr>
+<tr><td>POST</td><td><code>/refresh</code></td><td>トークンリフレッシュ</td><td>不要</td></tr>
+<tr><td>POST</td><td><code>/logout</code></td><td>ログアウト</td><td>不要</td></tr>
+<tr><td>DELETE</td><td><code>/account</code></td><td>アカウント削除</td><td>必要</td></tr>
+<tr><td>GET</td><td><code>/me</code></td><td>現在のユーザー情報取得</td><td>必要</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="リクエストレスポンス"><a class="header" href="#リクエストレスポンス">リクエスト/レスポンス</a></h3>
+<h4 id="googleauthrequest"><a class="header" href="#googleauthrequest">GoogleAuthRequest</a></h4>
+<pre><code class="language-json">{
+  "idToken": "eyJhbGciOiJSUzI1NiIsInR..."
+}
+</code></pre>
+<h4 id="refreshtokenrequest--logoutrequest"><a class="header" href="#refreshtokenrequest--logoutrequest">RefreshTokenRequest / LogoutRequest</a></h4>
+<pre><code class="language-json">{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR..."
+}
+</code></pre>
+<h4 id="tokenresponse"><a class="header" href="#tokenresponse">TokenResponse</a></h4>
+<pre><code class="language-json">{
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR...",
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR..."
+}
+</code></pre>
+<h4 id="userresponse"><a class="header" href="#userresponse">UserResponse</a></h4>
+<pre><code class="language-json">{
+  "id": "01916f54-1234-7abc-def0-123456789abc",
+  "email": "user@example.com",
+  "name": "田中太郎"
+}
+</code></pre>
+<h4 id="errorresponse"><a class="header" href="#errorresponse">ErrorResponse</a></h4>
+<pre><code class="language-json">{
+  "error": "認証に失敗しました",
+  "code": "UNAUTHORIZED"
+}
+</code></pre>
+<hr />
+<h2 id="認証フロー"><a class="header" href="#認証フロー">認証フロー</a></h2>
+<h3 id="1-ログインフロー"><a class="header" href="#1-ログインフロー">1. ログインフロー</a></h3>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant App as Mobile App
+    participant Backend
+    participant Google
+
+    App-&gt;&gt;Google: Google Sign-In
+    Google--&gt;&gt;App: ID Token
+
+    App-&gt;&gt;Backend: POST /api/auth/google&lt;br/&gt;{ idToken }
+    Backend-&gt;&gt;Google: Verify Token
+    Google--&gt;&gt;Backend: Token Info
+
+    Note over Backend: Create/Find User&lt;br/&gt;Generate JWT Pair&lt;br/&gt;Save Refresh Token
+
+    Backend--&gt;&gt;App: TokenResponse&lt;br/&gt;{ accessToken, refreshToken }
+</code></pre>
+<h3 id="2-トークンリフレッシュフロー"><a class="header" href="#2-トークンリフレッシュフロー">2. トークンリフレッシュフロー</a></h3>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant App as Mobile App
+    participant Backend
+
+    App-&gt;&gt;Backend: POST /api/auth/refresh&lt;br/&gt;{ refreshToken }
+
+    Note over Backend: Validate Stored Token&lt;br/&gt;Revoke Old Token (Rotation)&lt;br/&gt;Generate New JWT Pair&lt;br/&gt;Save New Refresh Token
+
+    Backend--&gt;&gt;App: TokenResponse&lt;br/&gt;{ accessToken, refreshToken }
+</code></pre>
+<hr />
+<h2 id="セキュリティ考慮事項"><a class="header" href="#セキュリティ考慮事項">セキュリティ考慮事項</a></h2>
+<ol>
+<li><strong>トークンローテーション</strong>: リフレッシュトークン使用時に旧トークンを無効化</li>
+<li><strong>JWT 署名検証</strong>: HS256 アルゴリズムによる改ざん検知</li>
+<li><strong>トークンタイプ分離</strong>: アクセストークンとリフレッシュトークンを区別</li>
+<li><strong>メール検証</strong>: Google 認証時にメール検証済みを確認</li>
+<li><strong>クライアント ID 検証</strong>: ID トークンの <code>aud</code> クレームを検証</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="api"><a class="header" href="#api">API</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="api-リファレンス"><a class="header" href="#api-リファレンス">API リファレンス</a></h1>
+<p>VoiceBookLM バックエンド API の詳細仕様です。</p>
+<blockquote>
+<p>[!NOTE]
+<strong>バージョン</strong>: 0.0.1-SNAPSHOT<br />
+<strong>開発環境</strong>: <code>http://localhost:8080</code><br />
+<strong>本番環境</strong>: <code>https://api.voicebooklm.example.com</code></p>
+</blockquote>
+<hr />
+<h2 id="認証-api-apiauth"><a class="header" href="#認証-api-apiauth">認証 API (<code>/api/auth</code>)</a></h2>
+<h3 id="post-apiauthgoogle---google-oauth-ログイン"><a class="header" href="#post-apiauthgoogle---google-oauth-ログイン">POST <code>/api/auth/google</code> - Google OAuth ログイン</a></h3>
+<p>Google ID トークンを検証し、JWT トークンペアを発行します。新規ユーザーの場合はアカウントを作成します。</p>
+<p><strong>認証</strong>: 不要</p>
+<p><strong>リクエスト</strong>:</p>
+<pre><code class="language-json">{
+  "idToken": "string (必須) - Google ID トークン"
+}
+</code></pre>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>200 OK</code></td><td>ログイン成功</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>認証失敗</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-json">{
+  "accessToken": "string - アクセストークン（1日有効）",
+  "refreshToken": "string - リフレッシュトークン（180日間有効）"
+}
+</code></pre>
+<hr />
+<h3 id="post-apiauthrefresh---トークンリフレッシュ"><a class="header" href="#post-apiauthrefresh---トークンリフレッシュ">POST <code>/api/auth/refresh</code> - トークンリフレッシュ</a></h3>
+<p>リフレッシュトークンを使用して新しいトークンペアを発行します（トークンローテーション）。</p>
+<p><strong>認証</strong>: 不要</p>
+<p><strong>リクエスト</strong>:</p>
+<pre><code class="language-json">{
+  "refreshToken": "string (必須) - リフレッシュトークン"
+}
+</code></pre>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>200 OK</code></td><td>リフレッシュ成功</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>リフレッシュトークンが無効または期限切れ</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-json">{
+  "accessToken": "string - 新しいアクセストークン",
+  "refreshToken": "string - 新しいリフレッシュトークン"
+}
+</code></pre>
+<hr />
+<h3 id="post-apiauthlogout---ログアウト"><a class="header" href="#post-apiauthlogout---ログアウト">POST <code>/api/auth/logout</code> - ログアウト</a></h3>
+<p>リフレッシュトークンを無効化してログアウトします。</p>
+<p><strong>認証</strong>: 不要</p>
+<p><strong>リクエスト</strong>:</p>
+<pre><code class="language-json">{
+  "refreshToken": "string (必須) - リフレッシュトークン"
+}
+</code></pre>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>204 No Content</code></td><td>ログアウト成功</td></tr>
+<tr><td><code>400 Bad Request</code></td><td>リクエスト形式が不正</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="delete-apiauthaccount---アカウント削除"><a class="header" href="#delete-apiauthaccount---アカウント削除">DELETE <code>/api/auth/account</code> - アカウント削除</a></h3>
+<p>ユーザーアカウントとすべての関連データを完全に削除します。</p>
+<p><strong>認証</strong>: 必須（JWT Bearer トークン）</p>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>204 No Content</code></td><td>削除成功</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>認証失敗</td></tr>
+<tr><td><code>404 Not Found</code></td><td>ユーザーが見つからない</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="get-apiauthme---現在のユーザー情報取得"><a class="header" href="#get-apiauthme---現在のユーザー情報取得">GET <code>/api/auth/me</code> - 現在のユーザー情報取得</a></h3>
+<p>認証済みユーザーの情報を取得します。</p>
+<p><strong>認証</strong>: 必須（JWT Bearer トークン）</p>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>200 OK</code></td><td>取得成功</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>認証失敗</td></tr>
+<tr><td><code>404 Not Found</code></td><td>ユーザーが見つからない</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-json">{
+  "id": "UUID - ユーザー ID",
+  "email": "string - メールアドレス",
+  "name": "string - ユーザー名"
+}
+</code></pre>
+<hr />
+<h2 id="音声メモ-api-apivoice"><a class="header" href="#音声メモ-api-apivoice">音声メモ API (<code>/api/voice</code>)</a></h2>
+<h3 id="post-apivoicememos---音声ファイルからメモを生成"><a class="header" href="#post-apivoicememos---音声ファイルからメモを生成">POST <code>/api/voice/memos</code> - 音声ファイルからメモを生成</a></h3>
+<p>音声ファイルをアップロードし、文字起こし → AI整形 → 保存を行います。60秒以内のレスポンスを想定。</p>
+<p><strong>認証</strong>: 必須（JWT Bearer トークン）</p>
+<p><strong>Content-Type</strong>: <code>multipart/form-data</code></p>
+<p><strong>リクエスト</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>フィールド</th><th>型</th><th style="text-align: center">必須</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>file</code></td><td>File</td><td style="text-align: center">○</td><td>音声ファイル</td></tr>
+<tr><td><code>language</code></td><td>String</td><td style="text-align: center">×</td><td>言語コード（例: <code>ja-JP</code>, <code>en-US</code>）</td></tr>
+</tbody></table>
+</div>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>201 Created</code></td><td>メモ生成成功</td></tr>
+<tr><td><code>400 Bad Request</code></td><td>入力不正（音声が空、Content-Type 不正など）</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>認証エラー（JWT 不正）</td></tr>
+<tr><td><code>500 Internal Server Error</code></td><td>サーバエラー</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-json">{
+  "memoId": "UUID - メモ ID",
+  "title": "string - タイトル",
+  "content": "string - 整形されたメモ内容",
+  "tags": ["string"],
+  "transcription": "string | null - 文字起こしテキスト",
+  "transcriptionStatus": "COMPLETED | FAILED | PENDING",
+  "formattingStatus": "COMPLETED | FAILED | PENDING",
+  "processingTimeMillis": {
+    "transcription": "number (ms)",
+    "formatting": "number (ms)",
+    "persistence": "number (ms)",
+    "total": "number (ms)"
+  },
+  "fallback": {
+    "transcription": "boolean",
+    "formatting": "boolean"
+  }
+}
+</code></pre>
+<hr />
+<h2 id="メモ-api-apimemos"><a class="header" href="#メモ-api-apimemos">メモ API (<code>/api/memos</code>)</a></h2>
+<h3 id="get-apimemos---メモ一覧取得"><a class="header" href="#get-apimemos---メモ一覧取得">GET <code>/api/memos</code> - メモ一覧取得</a></h3>
+<p>認証ユーザーのメモを取得します。フォルダーによるフィルタリング、キーワード検索、ソート、件数制限が可能。</p>
+<p><strong>認証</strong>: 必須（JWT Bearer トークン）</p>
+<p><strong>クエリパラメータ</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>パラメータ</th><th>型</th><th style="text-align: center">必須</th><th style="text-align: center">デフォルト</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>folderId</code></td><td>UUID</td><td style="text-align: center">×</td><td style="text-align: center">-</td><td>フォルダーIDでフィルタリング</td></tr>
+<tr><td><code>includeDescendants</code></td><td>boolean</td><td style="text-align: center">×</td><td style="text-align: center"><code>false</code></td><td>true の場合、子孫フォルダーのメモも含める</td></tr>
+<tr><td><code>uncategorizedOnly</code></td><td>boolean</td><td style="text-align: center">×</td><td style="text-align: center"><code>false</code></td><td>true の場合、未分類メモのみ取得</td></tr>
+<tr><td><code>keyword</code></td><td>string</td><td style="text-align: center">×</td><td style="text-align: center">-</td><td>キーワード検索（タイトルまたはコンテントに含まれるメモを検索）</td></tr>
+<tr><td><code>sort</code></td><td>string</td><td style="text-align: center">×</td><td style="text-align: center"><code>updated_at</code></td><td>ソート項目（<code>updated_at</code>, <code>created_at</code>, <code>title</code>）</td></tr>
+<tr><td><code>order</code></td><td>string</td><td style="text-align: center">×</td><td style="text-align: center"><code>desc</code></td><td>ソート順序（<code>asc</code>, <code>desc</code>）</td></tr>
+<tr><td><code>limit</code></td><td>integer</td><td style="text-align: center">×</td><td style="text-align: center">-</td><td>取得件数制限</td></tr>
+</tbody></table>
+</div>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>200 OK</code></td><td>取得成功</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>認証エラー</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-json">{
+  "memos": [
+    {
+      "memoId": "UUID",
+      "title": "string | null",
+      "tags": ["string"],
+      "transcriptionStatus": "COMPLETED | FAILED | PENDING",
+      "formattingStatus": "COMPLETED | FAILED | PENDING",
+      "folder": {
+        "id": "UUID",
+        "name": "string",
+        "path": "string"
+      },
+      "createdAt": "ISO 8601 datetime",
+      "updatedAt": "ISO 8601 datetime"
+    }
+  ]
+}
+</code></pre>
+<hr />
+<h3 id="get-apimemosid---メモ詳細取得"><a class="header" href="#get-apimemosid---メモ詳細取得">GET <code>/api/memos/{id}</code> - メモ詳細取得</a></h3>
+<p>指定されたIDのメモの詳細情報を取得します。セキュリティ上、権限のないメモも404として返します。</p>
+<p><strong>認証</strong>: 必須（JWT Bearer トークン）</p>
+<p><strong>パスパラメータ</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>パラメータ</th><th>型</th><th style="text-align: center">必須</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>id</code></td><td>UUID</td><td style="text-align: center">○</td><td>メモ ID</td></tr>
+</tbody></table>
+</div>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>200 OK</code></td><td>取得成功</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>認証失敗</td></tr>
+<tr><td><code>404 Not Found</code></td><td>メモが見つからない（存在しない、削除済み、または権限なし）</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-json">{
+  "memoId": "UUID",
+  "title": "string | null",
+  "content": "string | null",
+  "tags": ["string"],
+  "transcriptionText": "string | null",
+  "transcriptionStatus": "COMPLETED | FAILED | PENDING",
+  "formattingStatus": "COMPLETED | FAILED | PENDING",
+  "createdAt": "ISO 8601 datetime",
+  "updatedAt": "ISO 8601 datetime"
+}
+</code></pre>
+<hr />
+<h3 id="patch-apimemosid---メモ更新"><a class="header" href="#patch-apimemosid---メモ更新">PATCH <code>/api/memos/{id}</code> - メモ更新</a></h3>
+<p>メモの部分更新を行います。指定されたフィールドのみ更新されます。</p>
+<p><strong>認証</strong>: 必須（JWT Bearer トークン）</p>
+<p><strong>パスパラメータ</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>パラメータ</th><th>型</th><th style="text-align: center">必須</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>id</code></td><td>UUID</td><td style="text-align: center">○</td><td>メモ ID</td></tr>
+</tbody></table>
+</div>
+<p><strong>リクエスト</strong>:</p>
+<pre><code class="language-json">{
+  "title": "string (任意, 最大100文字)",
+  "content": "string (任意)",
+  "tags": ["string (任意)"]
+}
+</code></pre>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>200 OK</code></td><td>更新成功</td></tr>
+<tr><td><code>400 Bad Request</code></td><td>バリデーションエラー</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>認証失敗</td></tr>
+<tr><td><code>404 Not Found</code></td><td>メモが見つからない（存在しない、削除済み、または権限なし）</td></tr>
+<tr><td><code>422 Unprocessable Entity</code></td><td>メモの整形が完了していない、またはフォルダーが存在しない</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-json">{
+  "memoId": "UUID",
+  "title": "string | null",
+  "content": "string | null",
+  "tags": ["string"],
+  "transcriptionText": "string | null",
+  "transcriptionStatus": "COMPLETED | FAILED | PENDING",
+  "formattingStatus": "COMPLETED | FAILED | PENDING",
+  "createdAt": "ISO 8601 datetime",
+  "updatedAt": "ISO 8601 datetime"
+}
+</code></pre>
+<hr />
+<h3 id="delete-apimemosid---メモ削除"><a class="header" href="#delete-apimemosid---メモ削除">DELETE <code>/api/memos/{id}</code> - メモ削除</a></h3>
+<p>指定されたメモを削除します。</p>
+<p><strong>認証</strong>: 必須（JWT Bearer トークン）</p>
+<p><strong>パスパラメータ</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>パラメータ</th><th>型</th><th style="text-align: center">必須</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>id</code></td><td>UUID</td><td style="text-align: center">○</td><td>メモ ID</td></tr>
+</tbody></table>
+</div>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>204 No Content</code></td><td>削除成功</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>認証失敗</td></tr>
+<tr><td><code>403 Forbidden</code></td><td>アクセス権限なし</td></tr>
+<tr><td><code>404 Not Found</code></td><td>メモが見つからない</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="post-apimemosidresummarize---再要約"><a class="header" href="#post-apimemosidresummarize---再要約">POST <code>/api/memos/{id}/resummarize</code> - 再要約</a></h3>
+<p>編集された文字起こしテキストから再度AI整形（要約）を行います。</p>
+<p><strong>認証</strong>: 必須（JWT Bearer トークン）</p>
+<p><strong>パスパラメータ</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>パラメータ</th><th>型</th><th style="text-align: center">必須</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>id</code></td><td>UUID</td><td style="text-align: center">○</td><td>メモ ID</td></tr>
+</tbody></table>
+</div>
+<p><strong>リクエスト</strong>:</p>
+<pre><code class="language-json">{
+  "editedTranscription": "string (必須) - 編集された文字起こしテキスト"
+}
+</code></pre>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>200 OK</code></td><td>再要約成功</td></tr>
+<tr><td><code>400 Bad Request</code></td><td>バリデーションエラー</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>認証失敗</td></tr>
+<tr><td><code>404 Not Found</code></td><td>メモが見つからない（存在しない、削除済み、または権限なし）</td></tr>
+<tr><td><code>422 Unprocessable Entity</code></td><td>処理エラー（整形失敗など）</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-json">{
+  "memoId": "UUID",
+  "title": "string | null",
+  "content": "string | null",
+  "tags": ["string"],
+  "transcriptionText": "string | null",
+  "transcriptionStatus": "COMPLETED | FAILED | PENDING",
+  "formattingStatus": "COMPLETED | FAILED | PENDING",
+  "createdAt": "ISO 8601 datetime",
+  "updatedAt": "ISO 8601 datetime"
+}
+</code></pre>
+<hr />
+<h2 id="フォルダー-api-apifolders"><a class="header" href="#フォルダー-api-apifolders">フォルダー API (<code>/api/folders</code>)</a></h2>
+<h3 id="get-apifolders---フォルダー一覧取得"><a class="header" href="#get-apifolders---フォルダー一覧取得">GET <code>/api/folders</code> - フォルダー一覧取得</a></h3>
+<p>認証ユーザーのフォルダー一覧をパス情報付きで取得します。</p>
+<p><strong>認証</strong>: 必須（JWT Bearer トークン）</p>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>200 OK</code></td><td>取得成功</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>認証エラー</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-json">{
+  "folders": [
+    {
+      "id": "UUID",
+      "name": "string",
+      "parentId": "UUID | null",
+      "path": "string"
+    }
+  ]
+}
+</code></pre>
+<hr />
+<h3 id="post-apifolders---フォルダー作成"><a class="header" href="#post-apifolders---フォルダー作成">POST <code>/api/folders</code> - フォルダー作成</a></h3>
+<p>新しいフォルダーを作成します。親フォルダーを指定して階層構造を作成可能。</p>
+<p><strong>認証</strong>: 必須（JWT Bearer トークン）</p>
+<p><strong>リクエスト</strong>:</p>
+<pre><code class="language-json">{
+  "name": "string (必須, 最大50文字)",
+  "parentId": "UUID (任意) - 親フォルダー ID"
+}
+</code></pre>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>201 Created</code></td><td>作成成功</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>認証エラー</td></tr>
+<tr><td><code>404 Not Found</code></td><td>親フォルダーが見つからない</td></tr>
+<tr><td><code>409 Conflict</code></td><td>同名フォルダーが既に存在する</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-json">{
+  "id": "UUID",
+  "name": "string",
+  "parentId": "UUID | null",
+  "path": "string"
+}
+</code></pre>
+<hr />
+<h3 id="patch-apifoldersid---フォルダー更新"><a class="header" href="#patch-apifoldersid---フォルダー更新">PATCH <code>/api/folders/{id}</code> - フォルダー更新</a></h3>
+<p>フォルダーのリネームまたは移動を行います。両方同時に指定可能。</p>
+<p><strong>認証</strong>: 必須（JWT Bearer トークン）</p>
+<p><strong>パスパラメータ</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>パラメータ</th><th>型</th><th style="text-align: center">必須</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>id</code></td><td>UUID</td><td style="text-align: center">○</td><td>フォルダー ID</td></tr>
+</tbody></table>
+</div>
+<p><strong>リクエスト</strong>:</p>
+<pre><code class="language-json">{
+  "name": "string (任意, 最大50文字)",
+  "parentId": "UUID (任意) - 新しい親フォルダー ID",
+  "moveToRoot": "boolean (必須) - ルートに移動する場合 true"
+}
+</code></pre>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>200 OK</code></td><td>更新成功</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>認証エラー</td></tr>
+<tr><td><code>404 Not Found</code></td><td>フォルダーが見つからない</td></tr>
+<tr><td><code>409 Conflict</code></td><td>同名フォルダーが既に存在する / 循環参照が発生する</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-json">{
+  "id": "UUID",
+  "name": "string",
+  "parentId": "UUID | null",
+  "path": "string"
+}
+</code></pre>
+<hr />
+<h3 id="delete-apifoldersid---フォルダー削除"><a class="header" href="#delete-apifoldersid---フォルダー削除">DELETE <code>/api/folders/{id}</code> - フォルダー削除</a></h3>
+<p>フォルダーを削除します。子フォルダーまたはメモが存在する場合は削除できません。</p>
+<p><strong>認証</strong>: 必須（JWT Bearer トークン）</p>
+<p><strong>パスパラメータ</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>パラメータ</th><th>型</th><th style="text-align: center">必須</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>id</code></td><td>UUID</td><td style="text-align: center">○</td><td>フォルダー ID</td></tr>
+</tbody></table>
+</div>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>204 No Content</code></td><td>削除成功</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>認証エラー</td></tr>
+<tr><td><code>404 Not Found</code></td><td>フォルダーが見つからない</td></tr>
+<tr><td><code>409 Conflict</code></td><td>子フォルダーまたはメモが存在するため削除できない</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="タグ-api-apitags"><a class="header" href="#タグ-api-apitags">タグ API (<code>/api/tags</code>)</a></h2>
+<h3 id="get-apitags---タグ一覧取得"><a class="header" href="#get-apitags---タグ一覧取得">GET <code>/api/tags</code> - タグ一覧取得</a></h3>
+<p>認証ユーザーが使用している全タグを取得します。ソート順と件数制限が指定可能。</p>
+<p><strong>認証</strong>: 必須（JWT Bearer トークン）</p>
+<p><strong>クエリパラメータ</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>パラメータ</th><th>型</th><th style="text-align: center">必須</th><th style="text-align: center">デフォルト</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>sort</code></td><td>string</td><td style="text-align: center">×</td><td style="text-align: center"><code>name</code></td><td>ソート項目（<code>name</code>: 名前順, <code>usage_count</code>: 使用回数順）</td></tr>
+<tr><td><code>order</code></td><td>string</td><td style="text-align: center">×</td><td style="text-align: center"><code>asc</code></td><td>ソート順序（<code>asc</code>, <code>desc</code>）</td></tr>
+<tr><td><code>limit</code></td><td>integer</td><td style="text-align: center">×</td><td style="text-align: center">-</td><td>取得件数制限</td></tr>
+</tbody></table>
+</div>
+<p><strong>使用例</strong>:</p>
+<ul>
+<li>人気タグを取得: <code>GET /api/tags?sort=usage_count&amp;order=desc&amp;limit=10</code></li>
+</ul>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>200 OK</code></td><td>取得成功</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>認証エラー</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-json">{
+  "tags": ["開発", "コード", "ミーティング"]
+}
+</code></pre>
+<hr />
+<h2 id="開発用-api-apidev"><a class="header" href="#開発用-api-apidev">開発用 API (<code>/api/dev</code>)</a></h2>
+<blockquote>
+<p>[!CAUTION]
+これらの API は <strong>開発環境（dev）でのみ有効</strong>です。本番環境では使用できません。</p>
+</blockquote>
+<h3 id="post-apidevtoken---開発用トークン取得"><a class="header" href="#post-apidevtoken---開発用トークン取得">POST <code>/api/dev/token</code> - 開発用トークン取得</a></h3>
+<p>指定したメールアドレスのユーザーのアクセストークンを取得します。OAuth不要で、Swagger UIからすぐにAPIテストができます。</p>
+<p><strong>認証</strong>: 不要</p>
+<p><strong>クエリパラメータ</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>パラメータ</th><th>型</th><th style="text-align: center">必須</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>email</code></td><td>string</td><td style="text-align: center">○</td><td>ユーザーのメールアドレス</td></tr>
+</tbody></table>
+</div>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>200 OK</code></td><td>トークン取得成功</td></tr>
+<tr><td><code>404 Not Found</code></td><td>ユーザーが見つからない</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-json">{
+  "accessToken": "string - アクセストークン（JWT）",
+  "userId": "string - ユーザーID",
+  "email": "string - メールアドレス",
+  "message": "string - 使い方の説明"
+}
+</code></pre>
+<hr />
+<h3 id="post-apidevseed---テストデータ作成"><a class="header" href="#post-apidevseed---テストデータ作成">POST <code>/api/dev/seed</code> - テストデータ作成</a></h3>
+<p>認証ユーザー用にテスト用のフォルダーとメモを作成します。データは <code>seed-data.yml</code> から読み込まれます。冪等性を持ち、既にフォルダーが存在する場合はスキップします。</p>
+<p><strong>認証</strong>: 必須（JWT Bearer トークン）</p>
+<p><strong>レスポンス</strong>:</p>
+<div class="table-wrapper"><table><thead><tr><th>ステータス</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>200 OK</code></td><td>作成成功（またはスキップ）</td></tr>
+<tr><td><code>401 Unauthorized</code></td><td>認証エラー</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-json">{
+  "foldersCreated": 3,
+  "memosCreated": 10,
+  "skipped": false,
+  "message": "string - 結果メッセージ"
+}
+</code></pre>
+<hr />
+<h2 id="共通仕様"><a class="header" href="#共通仕様">共通仕様</a></h2>
+<h3 id="認証方式"><a class="header" href="#認証方式">認証方式</a></h3>
+<p>JWT (JSON Web Token) を使用。</p>
+<div class="table-wrapper"><table><thead><tr><th>トークン種別</th><th>有効期限</th></tr></thead><tbody>
+<tr><td>アクセストークン</td><td>1日</td></tr>
+<tr><td>リフレッシュトークン</td><td>180日</td></tr>
+</tbody></table>
+</div>
+<p>認証が必要な API には <code>Authorization</code> ヘッダーを設定:</p>
+<pre><code>Authorization: Bearer &lt;access_token&gt;
+</code></pre>
+<h3 id="エラーレスポンス"><a class="header" href="#エラーレスポンス">エラーレスポンス</a></h3>
+<pre><code class="language-json">{
+  "error": "string - エラーメッセージ",
+  "code": "string - エラーコード"
+}
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>コード</th><th>説明</th></tr></thead><tbody>
+<tr><td><code>UNAUTHORIZED</code></td><td>認証失敗</td></tr>
+<tr><td><code>FORBIDDEN</code></td><td>アクセス権限なし</td></tr>
+<tr><td><code>NOT_FOUND</code></td><td>リソースが見つからない</td></tr>
+<tr><td><code>BAD_REQUEST</code></td><td>リクエスト形式が不正</td></tr>
+<tr><td><code>CONFLICT</code></td><td>リソースの競合</td></tr>
+<tr><td><code>UNPROCESSABLE_ENTITY</code></td><td>処理不能なエンティティ</td></tr>
+<tr><td><code>INTERNAL_SERVER_ERROR</code></td><td>サーバー内部エラー</td></tr>
+</tbody></table>
+</div>
+<h3 id="openapi-ドキュメント"><a class="header" href="#openapi-ドキュメント">OpenAPI ドキュメント</a></h3>
+<ul>
+<li><strong>Swagger UI</strong>: <code>http://localhost:8080/swagger-ui.html</code></li>
+<li><strong>API 仕様 (JSON)</strong>: <code>http://localhost:8080/v3/api-docs</code></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="画面一覧"><a class="header" href="#画面一覧">画面一覧</a></h1>
+<p>VoiceBookLM の画面仕様書一覧です。</p>
+<h2 id="画面id採番ルール"><a class="header" href="#画面id採番ルール">画面ID採番ルール</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>プレフィックス</th><th>種別</th><th>例</th></tr></thead><tbody>
+<tr><td>SCR</td><td>画面（Screen）</td><td>SCR-001</td></tr>
+<tr><td>CMN</td><td>共通（Common）</td><td>CMN-001</td></tr>
+</tbody></table>
+</div>
+<h2 id="画面一覧-1"><a class="header" href="#画面一覧-1">画面一覧</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>画面ID</th><th>画面名</th><th>パス</th><th>概要</th></tr></thead><tbody>
+<tr><td><a href="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/./SCR-001_%E3%82%A6%E3%82%A7%E3%83%AB%E3%82%AB%E3%83%A0%E7%94%BB%E9%9D%A2.html">SCR-001</a></td><td>ウェルカム画面</td><td>/</td><td>未認証ユーザー向け初期画面・ファイルアップロード</td></tr>
+<tr><td><a href="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/./SCR-002_%E3%83%9B%E3%83%BC%E3%83%A0%E7%94%BB%E9%9D%A2.html">SCR-002</a></td><td>ホーム画面</td><td>/home</td><td>ログイン済みユーザーのメイン画面</td></tr>
+<tr><td><a href="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/./SCR-003_%E9%8C%B2%E9%9F%B3%E7%94%BB%E9%9D%A2.html">SCR-003</a></td><td>録音画面</td><td>/recording</td><td>音声メモを録音する画面</td></tr>
+</tbody></table>
+</div>
+<h2 id="共通コンポーネント一覧"><a class="header" href="#共通コンポーネント一覧">共通コンポーネント一覧</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>コンポーネントID</th><th>コンポーネント名</th><th>概要</th></tr></thead><tbody>
+<tr><td><a href="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/./CMN-001_AI%E5%87%A6%E7%90%86%E9%80%9A%E7%9F%A5%E3%83%88%E3%83%BC%E3%82%B9%E3%83%88.html">CMN-001</a></td><td>AI処理通知トースト</td><td>AI整形処理の進行状況を通知するフローティングトースト</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="ウェルカム画面"><a class="header" href="#ウェルカム画面">ウェルカム画面</a></h1>
+<h2 id="基本情報"><a class="header" href="#基本情報">基本情報</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody>
+<tr><td>画面ID</td><td>SCR-001</td></tr>
+<tr><td>画面名</td><td>ウェルカム画面</td></tr>
+<tr><td>URL/パス</td><td>/</td></tr>
+<tr><td>認証要否</td><td>不要（未認証でも閲覧可）</td></tr>
+</tbody></table>
+</div>
+<h2 id="画面概要"><a class="header" href="#画面概要">画面概要</a></h2>
+<p>VoiceBookLMアプリ起動時に未認証ユーザーに表示されるウェルカム画面。アプリの概要と主な機能を紹介し、Googleアカウントでのログインを促す。</p>
+<h2 id="画面イメージ"><a class="header" href="#画面イメージ">画面イメージ</a></h2>
+<p><img src="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/../assets/SCR-001_%E3%82%A6%E3%82%A7%E3%83%AB%E3%82%AB%E3%83%A0%E7%94%BB%E9%9D%A2.png" alt="ウェルカム画面" /></p>
+<h2 id="画面要素一覧"><a class="header" href="#画面要素一覧">画面要素一覧</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>必須</th><th>説明</th></tr></thead><tbody>
+<tr><td>app_icon</td><td>アプリアイコン</td><td>画像</td><td>-</td><td>画面最上部に配置</td></tr>
+<tr><td>app_name</td><td>アプリ名</td><td>ラベル</td><td>-</td><td>「VoiceBookLM」</td></tr>
+<tr><td>catchphrase</td><td>キャッチフレーズ</td><td>ラベル</td><td>-</td><td>アプリの簡潔な説明</td></tr>
+<tr><td>feature_1_icon</td><td>機能1アイコン</td><td>アイコン</td><td>-</td><td>機能1のアイコン</td></tr>
+<tr><td>feature_1_name</td><td>機能1名</td><td>ラベル</td><td>-</td><td>機能1の名称</td></tr>
+<tr><td>feature_1_desc</td><td>機能1説明</td><td>ラベル</td><td>-</td><td>機能1の説明文</td></tr>
+<tr><td>feature_2_icon</td><td>機能2アイコン</td><td>アイコン</td><td>-</td><td>機能2のアイコン</td></tr>
+<tr><td>feature_2_name</td><td>機能2名</td><td>ラベル</td><td>-</td><td>機能2の名称</td></tr>
+<tr><td>feature_2_desc</td><td>機能2説明</td><td>ラベル</td><td>-</td><td>機能2の説明文</td></tr>
+<tr><td>feature_3_icon</td><td>機能3アイコン</td><td>アイコン</td><td>-</td><td>機能3のアイコン</td></tr>
+<tr><td>feature_3_name</td><td>機能3名</td><td>ラベル</td><td>-</td><td>機能3の名称</td></tr>
+<tr><td>feature_3_desc</td><td>機能3説明</td><td>ラベル</td><td>-</td><td>機能3の説明文</td></tr>
+<tr><td>btn_google_login</td><td>Googleでログインボタン</td><td>ボタン</td><td>-</td><td>Googleアカウントで認証後、ホーム画面へ遷移</td></tr>
+<tr><td>terms_notice</td><td>利用規約同意文</td><td>ラベル</td><td>-</td><td>「ログインすることで、利用規約とプライバシーポリシーに同意したものとみなされます。」</td></tr>
+</tbody></table>
+</div>
+<h2 id="画面遷移"><a class="header" href="#画面遷移">画面遷移</a></h2>
+<h3 id="遷移元"><a class="header" href="#遷移元">遷移元</a></h3>
+<p>なし</p>
+<h2 id="api連携"><a class="header" href="#api連携">API連携</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>メソッド</th><th>エンドポイント</th><th>用途</th></tr></thead><tbody>
+<tr><td>POST</td><td>/api/auth/google</td><td>Google認証処理</td></tr>
+</tbody></table>
+</div>
+<h2 id="バリデーション"><a class="header" href="#バリデーション">バリデーション</a></h2>
+<p>なし</p>
+<h2 id="状態"><a class="header" href="#状態">状態</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>状態</th><th>説明</th></tr></thead><tbody>
+<tr><td>初期状態</td><td>静的表示、操作待ち状態</td></tr>
+</tbody></table>
+</div>
+<h2 id="備考"><a class="header" href="#備考">備考</a></h2>
+<ul>
+<li>未認証状態でのみ表示される画面</li>
+<li>ログイン済みユーザーはホーム画面へリダイレクト</li>
+<li>利用規約・プライバシーポリシーへのリンクを含む</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ホーム画面-1"><a class="header" href="#ホーム画面-1">ホーム画面</a></h1>
+<h2 id="基本情報-1"><a class="header" href="#基本情報-1">基本情報</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody>
+<tr><td>画面ID</td><td>SCR-002</td></tr>
+<tr><td>画面名</td><td>ホーム画面</td></tr>
+<tr><td>URL/パス</td><td>/home</td></tr>
+<tr><td>認証要否</td><td>要（ログイン済みユーザー）</td></tr>
+</tbody></table>
+</div>
+<h2 id="画面概要-1"><a class="header" href="#画面概要-1">画面概要</a></h2>
+<p>ログイン済みユーザーのメイン画面。最近作成・編集したメモの一覧と、フォルダによるメモの整理機能を提供する。また、音声入力ボタンから新規メモの作成が可能。</p>
+<h2 id="画面イメージ-1"><a class="header" href="#画面イメージ-1">画面イメージ</a></h2>
+<h3 id="通常状態"><a class="header" href="#通常状態">通常状態</a></h3>
+<p><img src="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/../assets/SCR-002_%E3%83%9B%E3%83%BC%E3%83%A0%E7%94%BB%E9%9D%A2.png" alt="ホーム画面" /></p>
+<h3 id="ai整形実行中"><a class="header" href="#ai整形実行中">AI整形実行中</a></h3>
+<p><img src="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/../assets/SCR-002_%E3%83%9B%E3%83%BC%E3%83%A0%E7%94%BB%E9%9D%A2AI%E6%95%B4%E5%BD%A2%E5%AE%9F%E8%A1%8C%E4%B8%AD.png" alt="ホーム画面AI整形実行中" /></p>
+<h3 id="ai整形完了"><a class="header" href="#ai整形完了">AI整形完了</a></h3>
+<p><img src="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/../assets/SCR-002_%E3%83%9B%E3%83%BC%E3%83%A0%E7%94%BB%E9%9D%A2AI%E6%95%B4%E5%BD%A2%E5%AE%8C%E4%BA%86.png" alt="ホーム画面AI整形完了" /></p>
+<h3 id="ai整形に失敗"><a class="header" href="#ai整形に失敗">AI整形に失敗</a></h3>
+<p><img src="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/../assets/SCR-002_%E3%83%9B%E3%83%BC%E3%83%A0%E7%94%BB%E9%9D%A2AI%E6%95%B4%E5%BD%A2%E3%81%AB%E5%A4%B1%E6%95%97.png" alt="ホーム画面AI整形に失敗" /></p>
+<h2 id="画面要素一覧-1"><a class="header" href="#画面要素一覧-1">画面要素一覧</a></h2>
+<h3 id="ヘッダー部"><a class="header" href="#ヘッダー部">ヘッダー部</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>必須</th><th>説明</th></tr></thead><tbody>
+<tr><td>btn_search</td><td>検索ボタン</td><td>アイコン</td><td>-</td><td>メモ検索画面へ遷移</td></tr>
+<tr><td>btn_setting</td><td>設定ボタン</td><td>アイコン</td><td>-</td><td>設定画面へ遷移（歯車アイコン）</td></tr>
+</tbody></table>
+</div>
+<h3 id="最近のメモセクション"><a class="header" href="#最近のメモセクション">最近のメモセクション</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>必須</th><th>説明</th></tr></thead><tbody>
+<tr><td>section_recent</td><td>最近のメモ</td><td>セクション</td><td>-</td><td>セクションヘッダー</td></tr>
+<tr><td>memo_card</td><td>メモカード</td><td>カード</td><td>-</td><td>メモのプレビューカード（複数）</td></tr>
+<tr><td>memo_title</td><td>メモタイトル</td><td>ラベル</td><td>-</td><td>メモのタイトル表示</td></tr>
+<tr><td>memo_tags</td><td>タグ</td><td>バッジ</td><td>-</td><td>メモに付与されたタグ（デザイン、UIなど）</td></tr>
+<tr><td>memo_date</td><td>更新日時</td><td>ラベル</td><td>-</td><td>最終更新日時（YYYY-MM-DD HH:mm）</td></tr>
+<tr><td>btn_memo_menu</td><td>メモメニューボタン</td><td>アイコン</td><td>-</td><td>メモの編集・削除メニュー（︙）</td></tr>
+</tbody></table>
+</div>
+<h3 id="フォルダセクション"><a class="header" href="#フォルダセクション">フォルダセクション</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>必須</th><th>説明</th></tr></thead><tbody>
+<tr><td>section_folder</td><td>フォルダ</td><td>セクション</td><td>-</td><td>セクションヘッダー</td></tr>
+<tr><td>folder_item</td><td>フォルダ項目</td><td>リストアイテム</td><td>-</td><td>フォルダ名と件数を表示</td></tr>
+<tr><td>folder_name</td><td>フォルダ名</td><td>ラベル</td><td>-</td><td>フォルダ名（受信トレイ、仕事など）</td></tr>
+<tr><td>folder_count</td><td>メモ件数</td><td>ラベル</td><td>-</td><td>フォルダ内のメモ件数</td></tr>
+<tr><td>folder_expand</td><td>展開アイコン</td><td>アイコン</td><td>-</td><td>サブフォルダの展開/折りたたみ（&gt;）</td></tr>
+</tbody></table>
+</div>
+<h3 id="音声入力ボタン"><a class="header" href="#音声入力ボタン">音声入力ボタン</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>必須</th><th>説明</th></tr></thead><tbody>
+<tr><td>btn_voice</td><td>音声入力ボタン</td><td>FAB</td><td>-</td><td>音声入力で新規メモ作成開始</td></tr>
+</tbody></table>
+</div>
+<h3 id="通知トーストグローバルコンポーネント"><a class="header" href="#通知トーストグローバルコンポーネント">通知トースト（グローバルコンポーネント）</a></h3>
+<blockquote>
+<p>AI処理通知トーストの詳細仕様は <a href="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/./CMN-001_AI%E5%87%A6%E7%90%86%E9%80%9A%E7%9F%A5%E3%83%88%E3%83%BC%E3%82%B9%E3%83%88.html">CMN-001 AI処理通知トースト</a> を参照してください。</p>
+</blockquote>
+<h3 id="メモメニューポップアップ"><a class="header" href="#メモメニューポップアップ">メモメニュー（ポップアップ）</a></h3>
+<p>メモカードの︙ボタンをタップすると表示されるコンテキストメニュー。</p>
+<p><img src="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/../assets/CMP-001_3%E7%82%B9%E3%83%AA%E3%83%BC%E3%83%80%E3%83%BC%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC.png" alt="メモメニュー" /></p>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>必須</th><th>説明</th></tr></thead><tbody>
+<tr><td>menu_delete</td><td>削除</td><td>ボタン</td><td>-</td><td>メモ削除確認ダイアログを表示（赤字）</td></tr>
+</tbody></table>
+</div>
+<h2 id="画面遷移-1"><a class="header" href="#画面遷移-1">画面遷移</a></h2>
+<h3 id="遷移元-1"><a class="header" href="#遷移元-1">遷移元</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>遷移元</th><th>条件/アクション</th></tr></thead><tbody>
+<tr><td>ウェルカム画面</td><td>ログイン成功後</td></tr>
+<tr><td>各画面</td><td>戻るボタン押下</td></tr>
+</tbody></table>
+</div>
+<h2 id="api連携-1"><a class="header" href="#api連携-1">API連携</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>メソッド</th><th>エンドポイント</th><th>用途</th></tr></thead><tbody>
+<tr><td>GET</td><td>/api/memos?sort=updated_at&amp;order=desc&amp;limit=3</td><td>メモ一覧取得（更新日時降順、最新3件）</td></tr>
+<tr><td>GET</td><td>/api/folders</td><td>フォルダ階層取得（memoCount含む）</td></tr>
+<tr><td>GET</td><td>/api/memos?folder_id=:id</td><td>フォルダ内メモ取得（フォルダ展開時）</td></tr>
+<tr><td>GET</td><td>/api/memos/:id/status</td><td>メモのAI処理状態確認（将来実装予定）</td></tr>
+</tbody></table>
+</div>
+<h2 id="バリデーション-1"><a class="header" href="#バリデーション-1">バリデーション</a></h2>
+<p>なし</p>
+<h2 id="状態-1"><a class="header" href="#状態-1">状態</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>状態</th><th>説明</th><th>画像</th></tr></thead><tbody>
+<tr><td>通常状態</td><td>メモ一覧とフォルダ一覧を表示</td><td>SCR-002_ホーム画面.png</td></tr>
+<tr><td>AI整形実行中</td><td><a href="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/./CMN-001_AI%E5%87%A6%E7%90%86%E9%80%9A%E7%9F%A5%E3%83%88%E3%83%BC%E3%82%B9%E3%83%88.html">通知トースト</a>表示</td><td>SCR-002_ホーム画面AI整形実行中.png</td></tr>
+<tr><td>AI整形完了</td><td><a href="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/./CMN-001_AI%E5%87%A6%E7%90%86%E9%80%9A%E7%9F%A5%E3%83%88%E3%83%BC%E3%82%B9%E3%83%88.html">通知トースト</a>で確認を案内</td><td>SCR-002_ホーム画面AI整形完了.png</td></tr>
+<tr><td>AI整形に失敗</td><td><a href="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/./CMN-001_AI%E5%87%A6%E7%90%86%E9%80%9A%E7%9F%A5%E3%83%88%E3%83%BC%E3%82%B9%E3%83%88.html">通知トースト</a>でエラー表示</td><td>SCR-002_ホーム画面AI整形に失敗.png</td></tr>
+</tbody></table>
+</div>
+<h2 id="備考-1"><a class="header" href="#備考-1">備考</a></h2>
+<ul>
+<li>ログイン済みユーザー専用画面</li>
+<li>未認証ユーザーはウェルカム画面へリダイレクト</li>
+<li>最近のメモは更新日時の降順で表示</li>
+<li>フォルダは階層構造をサポート（サブフォルダあり）</li>
+<li>AI整形処理はバックグラウンドで実行され、完了時にトースト通知</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="録音画面-1"><a class="header" href="#録音画面-1">録音画面</a></h1>
+<h2 id="基本情報-2"><a class="header" href="#基本情報-2">基本情報</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody>
+<tr><td>画面ID</td><td>SCR-003</td></tr>
+<tr><td>画面名</td><td>録音画面</td></tr>
+<tr><td>URL/パス</td><td>/recording</td></tr>
+<tr><td>認証要否</td><td>要（ログイン済みユーザー）</td></tr>
+</tbody></table>
+</div>
+<h2 id="画面概要-2"><a class="header" href="#画面概要-2">画面概要</a></h2>
+<p>音声メモを録音するための画面。リアルタイムで音声波形を表示し、録音の一時停止・再開が可能。録音完了後はAIによる整形処理へ遷移する。</p>
+<h2 id="画面イメージ-2"><a class="header" href="#画面イメージ-2">画面イメージ</a></h2>
+<h3 id="録音中"><a class="header" href="#録音中">録音中</a></h3>
+<p><img src="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/../assets/SCR-003_%E9%8C%B2%E9%9F%B3%E7%94%BB%E9%9D%A2.png" alt="録音画面" /></p>
+<h3 id="一時停止中"><a class="header" href="#一時停止中">一時停止中</a></h3>
+<p><img src="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/../assets/SCR-003_%E9%8C%B2%E9%9F%B3%E7%94%BB%E9%9D%A2%E4%B8%80%E6%99%82%E5%81%9C%E6%AD%A2.png" alt="録音画面一時停止" /></p>
+<h2 id="画面要素一覧-2"><a class="header" href="#画面要素一覧-2">画面要素一覧</a></h2>
+<h3 id="ヘッダー部-1"><a class="header" href="#ヘッダー部-1">ヘッダー部</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>必須</th><th>説明</th></tr></thead><tbody>
+<tr><td>btn_back</td><td>戻るボタン</td><td>アイコン</td><td>-</td><td>前画面へ戻る（録音破棄確認あり）</td></tr>
+<tr><td>recording_indicator</td><td>録音インジケーター</td><td>バッジ</td><td>-</td><td>赤い●と経過時間を表示（MM:SS形式）</td></tr>
+</tbody></table>
+</div>
+<h3 id="波形表示エリア"><a class="header" href="#波形表示エリア">波形表示エリア</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>必須</th><th>説明</th></tr></thead><tbody>
+<tr><td>waveform_area</td><td>波形表示エリア</td><td>コンテナ</td><td>-</td><td>音声波形を表示するエリア</td></tr>
+<tr><td>waveform</td><td>音声波形</td><td>グラフィック</td><td>-</td><td>リアルタイムで音声入力レベルを波形で可視化（青→ピンクのグラデーション）</td></tr>
+</tbody></table>
+</div>
+<h3 id="操作ボタン"><a class="header" href="#操作ボタン">操作ボタン</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>必須</th><th>説明</th></tr></thead><tbody>
+<tr><td>btn_pause</td><td>一時停止ボタン</td><td>アイコン</td><td>-</td><td>録音を一時停止（⏸アイコン）</td></tr>
+<tr><td>btn_resume</td><td>再開ボタン</td><td>アイコン</td><td>-</td><td>一時停止中に表示、録音を再開（▷アイコン）</td></tr>
+<tr><td>btn_complete</td><td>完了ボタン</td><td>ボタン</td><td>-</td><td>「完了してAI整形する」録音を終了しAI処理開始</td></tr>
+</tbody></table>
+</div>
+<h2 id="画面遷移-2"><a class="header" href="#画面遷移-2">画面遷移</a></h2>
+<h3 id="遷移元-2"><a class="header" href="#遷移元-2">遷移元</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>遷移元</th><th>条件/アクション</th></tr></thead><tbody>
+<tr><td>ホーム画面</td><td>音声入力ボタン（FAB）押下</td></tr>
+</tbody></table>
+</div>
+<h3 id="遷移先"><a class="header" href="#遷移先">遷移先</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>遷移先</th><th>条件/アクション</th></tr></thead><tbody>
+<tr><td>ホーム画面</td><td>完了してAI整形するボタン押下（<a href="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/./CMN-001_AI%E5%87%A6%E7%90%86%E9%80%9A%E7%9F%A5%E3%83%88%E3%83%BC%E3%82%B9%E3%83%88.html">通知トースト</a>を表示して遷移）</td></tr>
+</tbody></table>
+</div>
+<h2 id="api連携-2"><a class="header" href="#api連携-2">API連携</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>メソッド</th><th>エンドポイント</th><th>用途</th></tr></thead><tbody>
+<tr><td>POST</td><td>/api/voice/memos</td><td>音声アップロード・文字起こし・AI整形を一括処理する</td></tr>
+</tbody></table>
+</div>
+<h2 id="バリデーション-2"><a class="header" href="#バリデーション-2">バリデーション</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>ルール</th><th>エラーメッセージ例</th></tr></thead><tbody>
+<tr><td>録音時間</td><td>最低1秒以上の録音が必要</td><td>録音時間が短すぎます</td></tr>
+<tr><td>録音時間</td><td>最大60分まで</td><td>録音時間の上限に達しました</td></tr>
+<tr><td>マイク権限</td><td>マイクへのアクセス許可が必要</td><td>マイクへのアクセスを許可してください</td></tr>
+</tbody></table>
+</div>
+<h2 id="状態-2"><a class="header" href="#状態-2">状態</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>状態</th><th>説明</th><th>画像</th></tr></thead><tbody>
+<tr><td>録音中</td><td>波形がアニメーションし、経過時間が更新される</td><td>SCR-003_録音画面.png</td></tr>
+<tr><td>一時停止中</td><td>波形が静止し、再開ボタンが表示される</td><td>SCR-003_録音画面一時停止.png</td></tr>
+</tbody></table>
+</div>
+<h2 id="備考-2"><a class="header" href="#備考-2">備考</a></h2>
+<ul>
+<li>ログイン済みユーザー専用画面</li>
+<li>録音中は画面スリープを無効化</li>
+<li>バックグラウンド移行時は録音を自動的に一時停止</li>
+<li>録音データはローカルに一時保存され、完了時にサーバーへアップロード</li>
+<li>戻るボタン押下時は録音破棄確認ダイアログを表示</li>
+<li>録音インジケーターの●は録音中に点滅アニメーション</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="メモ検索画面"><a class="header" href="#メモ検索画面">メモ検索画面</a></h1>
+<h2 id="基本情報-3"><a class="header" href="#基本情報-3">基本情報</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody>
+<tr><td>画面ID</td><td>SCR-004</td></tr>
+<tr><td>画面名</td><td>メモ検索画面</td></tr>
+<tr><td>URL/パス</td><td>/search</td></tr>
+<tr><td>認証要否</td><td>要（ログイン済みユーザー）</td></tr>
+</tbody></table>
+</div>
+<h2 id="画面概要-3"><a class="header" href="#画面概要-3">画面概要</a></h2>
+<p>キーワードによるメモの全文検索機能を提供する画面。検索履歴とよく使うタグからの絞り込みにも対応し、目的のメモに素早くアクセスできる。</p>
+<h2 id="画面イメージ-3"><a class="header" href="#画面イメージ-3">画面イメージ</a></h2>
+<h3 id="初期状態検索前"><a class="header" href="#初期状態検索前">初期状態（検索前）</a></h3>
+<p><img src="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/../assets/SCR-004_%E3%83%A1%E3%83%A2%E6%A4%9C%E7%B4%A2%E7%94%BB%E9%9D%A2.png" alt="メモ検索画面" /></p>
+<h3 id="検索結果あり"><a class="header" href="#検索結果あり">検索結果あり</a></h3>
+<p><img src="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/../assets/SCR-004_%E3%83%A1%E3%83%A2%E6%A4%9C%E7%B4%A2%E7%94%BB%E9%9D%A2_%E6%A4%9C%E7%B4%A2%E3%83%92%E3%83%83%E3%83%88%E3%81%82%E3%82%8A.png" alt="検索結果あり" /></p>
+<h3 id="検索結果なし"><a class="header" href="#検索結果なし">検索結果なし</a></h3>
+<p><img src="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/../assets/SCR-004_%E6%A4%9C%E7%B4%A2%E7%94%BB%E9%9D%A2_%E6%A4%9C%E7%B4%A2%E3%83%92%E3%83%83%E3%83%88%E3%81%AA%E3%81%97.png" alt="検索結果なし" /></p>
+<h2 id="画面要素一覧-3"><a class="header" href="#画面要素一覧-3">画面要素一覧</a></h2>
+<h3 id="ヘッダー部-2"><a class="header" href="#ヘッダー部-2">ヘッダー部</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>必須</th><th>説明</th></tr></thead><tbody>
+<tr><td>btn_back</td><td>戻るボタン</td><td>アイコン</td><td>-</td><td>前画面（ホーム画面）へ戻る</td></tr>
+<tr><td>page_title</td><td>画面タイトル</td><td>ラベル</td><td>-</td><td>「検索」を表示</td></tr>
+</tbody></table>
+</div>
+<h3 id="検索入力部"><a class="header" href="#検索入力部">検索入力部</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>必須</th><th>説明</th></tr></thead><tbody>
+<tr><td>input_search</td><td>検索入力欄</td><td>テキスト</td><td>-</td><td>プレースホルダー「メモを検索...」</td></tr>
+<tr><td>btn_clear</td><td>クリアボタン</td><td>アイコン</td><td>-</td><td>検索文字列をクリア（×アイコン）</td></tr>
+</tbody></table>
+</div>
+<h3 id="検索履歴セクション初期状態のみ表示"><a class="header" href="#検索履歴セクション初期状態のみ表示">検索履歴セクション（初期状態のみ表示）</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>必須</th><th>説明</th></tr></thead><tbody>
+<tr><td>section_history</td><td>検索履歴</td><td>セクション</td><td>-</td><td>セクションヘッダー「検索履歴」</td></tr>
+<tr><td>history_item</td><td>履歴項目</td><td>リストアイテム</td><td>-</td><td>過去の検索キーワード（タップで再検索）</td></tr>
+<tr><td>history_expand</td><td>展開アイコン</td><td>アイコン</td><td>-</td><td>履歴詳細へ遷移（&gt;アイコン）</td></tr>
+</tbody></table>
+</div>
+<h3 id="よく使うタグセクション初期状態のみ表示"><a class="header" href="#よく使うタグセクション初期状態のみ表示">よく使うタグセクション（初期状態のみ表示）</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>必須</th><th>説明</th></tr></thead><tbody>
+<tr><td>section_tags</td><td>よく使うタグ</td><td>セクション</td><td>-</td><td>セクションヘッダー「よく使うタグ」</td></tr>
+<tr><td>tag_chip</td><td>タグチップ</td><td>チップ</td><td>-</td><td>タグバッジ（開発、コード、ミーティング等）</td></tr>
+</tbody></table>
+</div>
+<h3 id="検索結果セクション検索実行後に表示"><a class="header" href="#検索結果セクション検索実行後に表示">検索結果セクション（検索実行後に表示）</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>必須</th><th>説明</th></tr></thead><tbody>
+<tr><td>section_results</td><td>検索結果</td><td>セクション</td><td>-</td><td>「検索結果 (N件)」を表示</td></tr>
+<tr><td>result_item</td><td>検索結果項目</td><td>リストアイテム</td><td>-</td><td>ヒットしたメモの一覧</td></tr>
+<tr><td>result_title</td><td>メモタイトル</td><td>ラベル</td><td>-</td><td>メモのタイトル表示</td></tr>
+<tr><td>result_tags</td><td>タグ</td><td>バッジ</td><td>-</td><td>メモに付与されたタグ</td></tr>
+<tr><td>result_date</td><td>更新日時</td><td>ラベル</td><td>-</td><td>最終更新日時（YYYY-MM-DD HH:mm形式）</td></tr>
+<tr><td>btn_result_menu</td><td>メニューボタン</td><td>アイコン</td><td>-</td><td>メモの編集・削除メニュー（︙）</td></tr>
+</tbody></table>
+</div>
+<h3 id="検索結果なし表示"><a class="header" href="#検索結果なし表示">検索結果なし表示</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>必須</th><th>説明</th></tr></thead><tbody>
+<tr><td>empty_state</td><td>結果なしメッセージ</td><td>メッセージ</td><td>-</td><td>「該当するメモが見つかりませんでした」</td></tr>
+</tbody></table>
+</div>
+<h2 id="画面遷移-3"><a class="header" href="#画面遷移-3">画面遷移</a></h2>
+<h3 id="遷移元-3"><a class="header" href="#遷移元-3">遷移元</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>遷移元</th><th>条件/アクション</th></tr></thead><tbody>
+<tr><td>ホーム画面</td><td>検索ボタン押下</td></tr>
+</tbody></table>
+</div>
+<h3 id="遷移先-1"><a class="header" href="#遷移先-1">遷移先</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>遷移先</th><th>条件/アクション</th></tr></thead><tbody>
+<tr><td>ホーム画面</td><td>戻るボタン押下</td></tr>
+<tr><td>メモ詳細画面</td><td>検索結果のメモ項目タップ</td></tr>
+</tbody></table>
+</div>
+<h2 id="api連携-3"><a class="header" href="#api連携-3">API連携</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>メソッド</th><th>エンドポイント</th><th>用途</th></tr></thead><tbody>
+<tr><td>GET</td><td>/api/memos/search?q=:keyword</td><td>キーワードによるメモ全文検索</td></tr>
+<tr><td>GET</td><td>/api/search/history</td><td>検索履歴取得</td></tr>
+<tr><td>GET</td><td>/api/tags?sort=usage&amp;limit=10</td><td>よく使うタグ取得（使用頻度順）</td></tr>
+</tbody></table>
+</div>
+<h2 id="バリデーション-3"><a class="header" href="#バリデーション-3">バリデーション</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>ルール</th><th>エラーメッセージ例</th></tr></thead><tbody>
+<tr><td>検索文字列</td><td>最低1文字以上入力が必要</td><td>検索キーワードを入力してください</td></tr>
+<tr><td>検索文字列</td><td>最大100文字まで</td><td>検索キーワードが長すぎます</td></tr>
+</tbody></table>
+</div>
+<h2 id="状態-3"><a class="header" href="#状態-3">状態</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>状態</th><th>説明</th><th>画像</th></tr></thead><tbody>
+<tr><td>初期状態</td><td>検索履歴とよく使うタグを表示</td><td>SCR-004_メモ検索画面.png</td></tr>
+<tr><td>検索結果あり</td><td>検索結果一覧を表示（件数付き）</td><td>SCR-004_メモ検索画面_検索ヒットあり.png</td></tr>
+<tr><td>検索結果なし</td><td>「該当するメモが見つかりませんでした」を表示</td><td>SCR-004_検索画面_検索ヒットなし.png</td></tr>
+</tbody></table>
+</div>
+<h2 id="備考-3"><a class="header" href="#備考-3">備考</a></h2>
+<ul>
+<li>ログイン済みユーザー専用画面</li>
+<li>検索はメモのタイトル・本文・タグを対象とした全文検索</li>
+<li>検索は入力完了後に自動実行（デバウンス処理あり）</li>
+<li>検索履歴は最新10件まで保持</li>
+<li>タグチップタップ時は該当タグでフィルタリング検索を実行</li>
+<li>検索結果はスクロールによる無限ロード対応</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ai処理通知トースト"><a class="header" href="#ai処理通知トースト">AI処理通知トースト</a></h1>
+<h2 id="基本情報-4"><a class="header" href="#基本情報-4">基本情報</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody>
+<tr><td>コンポーネントID</td><td>CMN-001</td></tr>
+<tr><td>コンポーネント名</td><td>AI処理通知トースト</td></tr>
+<tr><td>種別</td><td>グローバルコンポーネント（フローティング）</td></tr>
+</tbody></table>
+</div>
+<h2 id="概要-1"><a class="header" href="#概要-1">概要</a></h2>
+<p>AI整形処理（要約生成）の進行状況をユーザーに通知するフローティングトースト。録音完了後にホーム画面へ遷移した際に表示され、<strong>どの画面に遷移しても画面上部に表示され続ける</strong>。処理完了後はタップして作成されたメモへ遷移可能。</p>
+<h2 id="画面イメージ-4"><a class="header" href="#画面イメージ-4">画面イメージ</a></h2>
+<h3 id="処理中"><a class="header" href="#処理中">処理中</a></h3>
+<p><img src="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/../assets/CMN-001_%E3%83%88%E3%83%BC%E3%82%B9%E3%83%88AI%E6%95%B4%E5%BD%A2%E3%82%92%E5%AE%9F%E8%A1%8C%E4%B8%AD.png" alt="AI整形を実行中" /></p>
+<h3 id="処理完了"><a class="header" href="#処理完了">処理完了</a></h3>
+<p><img src="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/../assets/CMN-001_%E3%83%88%E3%83%BC%E3%82%B9%E3%83%88AI%E6%95%B4%E5%BD%A2%E3%81%8C%E5%AE%8C%E4%BA%86.png" alt="AI整形が完了" /></p>
+<h3 id="処理失敗"><a class="header" href="#処理失敗">処理失敗</a></h3>
+<p><img src="%E7%94%BB%E9%9D%A2%E4%BB%95%E6%A7%98/../assets/CMN-001_%E3%83%88%E3%83%BC%E3%82%B9%E3%83%88AI%E6%95%B4%E5%BD%A2%E3%81%AB%E5%A4%B1%E6%95%97.png" alt="AI整形に失敗" /></p>
+<h2 id="要素一覧"><a class="header" href="#要素一覧">要素一覧</a></h2>
+<h3 id="処理中状態"><a class="header" href="#処理中状態">処理中状態</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>説明</th></tr></thead><tbody>
+<tr><td>toast_processing</td><td>処理中トースト</td><td>トースト</td><td>フローティングトーストコンテナ</td></tr>
+<tr><td>processing_text</td><td>処理中テキスト</td><td>ラベル</td><td>「AI整形を実行中」</td></tr>
+<tr><td>processing_sub_text</td><td>サブテキスト</td><td>ラベル</td><td>「バックグラウンドで処理中」</td></tr>
+<tr><td>processing_indicator</td><td>プログレス表示</td><td>アイコン</td><td>ローディングインジケーター（青丸）</td></tr>
+</tbody></table>
+</div>
+<h3 id="完了状態"><a class="header" href="#完了状態">完了状態</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>説明</th></tr></thead><tbody>
+<tr><td>toast_completed</td><td>完了トースト</td><td>トースト</td><td>フローティングトーストコンテナ</td></tr>
+<tr><td>completed_text</td><td>完了テキスト</td><td>ラベル</td><td>「AI整形が完了」</td></tr>
+<tr><td>completed_action</td><td>確認リンク</td><td>リンク</td><td>「タップして確認する」</td></tr>
+<tr><td>completed_icon</td><td>完了アイコン</td><td>アイコン</td><td>チェックマークアイコン（緑丸）</td></tr>
+</tbody></table>
+</div>
+<h3 id="失敗状態"><a class="header" href="#失敗状態">失敗状態</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素ID</th><th>要素名</th><th>種別</th><th>説明</th></tr></thead><tbody>
+<tr><td>toast_failed</td><td>失敗トースト</td><td>トースト</td><td>フローティングトーストコンテナ</td></tr>
+<tr><td>failed_text</td><td>失敗テキスト</td><td>ラベル</td><td>「AI整形に失敗」</td></tr>
+<tr><td>failed_action</td><td>リトライ案内</td><td>ラベル</td><td>「長押しで破棄 / タップで再試行」</td></tr>
+<tr><td>failed_icon</td><td>失敗アイコン</td><td>アイコン</td><td>×アイコン（赤丸）</td></tr>
+</tbody></table>
+</div>
+<h2 id="表示条件"><a class="header" href="#表示条件">表示条件</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>条件</th><th>動作</th></tr></thead><tbody>
+<tr><td>AI整形処理開始</td><td>処理中トーストを表示</td></tr>
+<tr><td>AI整形処理完了</td><td>完了トーストに切り替え</td></tr>
+<tr><td>AI整形処理失敗</td><td>失敗トーストに切り替え</td></tr>
+<tr><td>完了トーストタップ</td><td>作成されたメモ詳細画面へ遷移、トーストを非表示</td></tr>
+<tr><td>失敗トーストタップ</td><td>AI整形処理を再試行</td></tr>
+<tr><td>失敗トースト長押し</td><td>処理を破棄、トーストを非表示</td></tr>
+<tr><td>トーストスワイプ</td><td>トーストを非表示（任意で閉じる）</td></tr>
+<tr><td>画面遷移</td><td><strong>遷移先でもトーストを継続表示</strong></td></tr>
+</tbody></table>
+</div>
+<h2 id="表示トリガー"><a class="header" href="#表示トリガー">表示トリガー</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>トリガー</th><th>説明</th></tr></thead><tbody>
+<tr><td>録音画面で「完了してAI整形する」押下</td><td>処理中トーストを表示し、ホーム画面へ遷移</td></tr>
+</tbody></table>
+</div>
+<h2 id="api連携-4"><a class="header" href="#api連携-4">API連携</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>メソッド</th><th>エンドポイント</th><th>用途</th></tr></thead><tbody>
+<tr><td>GET</td><td>/api/memos/:id/status</td><td>メモのAI処理状態をポーリングで確認</td></tr>
+</tbody></table>
+</div>
+<h3 id="ステータス値-1"><a class="header" href="#ステータス値-1">ステータス値</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>status</th><th>説明</th><th>トースト表示</th></tr></thead><tbody>
+<tr><td><code>processing</code></td><td>AI整形処理中</td><td>処理中トースト</td></tr>
+<tr><td><code>completed</code></td><td>AI整形完了</td><td>完了トースト</td></tr>
+<tr><td><code>failed</code></td><td>AI整形失敗</td><td>失敗トースト</td></tr>
+</tbody></table>
+</div>
+<h2 id="備考-4"><a class="header" href="#備考-4">備考</a></h2>
+<ul>
+<li>処理はバックグラウンドで実行されるため、アプリ操作を妨げない</li>
+<li>複数の処理が同時に走る場合の仕様は将来検討</li>
+<li>ネットワークエラー時はリトライ案内を表示予定</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="12-17"><a class="header" href="#12-17">12-17</a></h1>
+<pre><code>{
+  "memoId": "3fe8b039-f867-4403-a8bb-06e217f94b5a",
+  "title": "## ボイスブックLM 開発音声メモ",
+  "content": "## ボイスブックLM 開発音声メモ\n\nボイスブックLMの開発状況と今後の展望について音声で記録。\n*   React NativeアプリのビルドでNode.jsのバージョン問題\n*   Google Speech to TextとGemini APIによる文字起こしと整形\n*   リアルタイム文字起こし、タグ自動付与の検討\n*   来週までにMVP完成を目指す\n\nTags: `Voicebook`, `AI`, `Development`, `Memo`",
+  "tags": [
+    "*",
+    "リアルタイム文字起こし、タグ自動付与の検討"
+  ],
+  "transcription": "今日はボイスブック LM のテストも兼ねて今考えてることを音声でメモして行こうと思いますまず最初に今日行って作業振り返りから話します今日は午前中にリアクトネイティブとエキスポを使ったアプリのビルド周りを触っていました EAS ビルドを使って開発ビルドを作ろうとしたんですが NPM の警告がたくさん出てインフライトがディプリケーターだったりり胸付のバージョンが古いとかグローブの性格も出ていました後 Windows 環境のとアセンションふぇーみたいな色も出て喉 JS のバージョン磯ぽいなと感じましたこの辺りは後で整理して Node のバージョンを20系に固定するか nvm をちゃんと使うのかドキュメントにまとめたいと思っています次にボイスブック NM 自体の話をしますこのアプリでは音声を一気に録音してバックエンドに送信して Google Speech to text で文字起こしをしてその後に地味に\nゼロフラッシュを使ってタイトル先生とか本文の整形タグ付けを行う想定です例えば今日やったこととホームがやりたいことと悩んでいることが混ざった音声でもうまく整理してくれるかを試したいですここで今後やりたいことを話します直近ではリアルタイム文字起こしも行ってみたいなと思っています今は一括音声アップロード方式なんですが夜ソケットを使ってストリーミングで文字文字起こしてきたら会議メモとかにも使えそうだなと考えていますあとタグの児童扶養ももっと賢くしたくて例えば開発 react Native 音声認識 AI みたいなタグをユーザーが何もしなくてもつけてくれると嬉しいです少し話題を変えて個人的なメモを残しときます来週までにボイスケイレブの MVP を一旦完成させたいです最低限必要なのは音声録音文字起こし AI 整形一覧表示検索機能ですツールとしては一つ目音声アップロード API\n エラーハンドリング改善フタツメ文字起こしパイ市のリトライ処理見つめジェミニ API のレスポンスをもう少し安定させることこの三つは遊星の高めです最後にこの音声がちゃんと自然な文章に成形されて読みやすいメモになっていたら成功かなと思っていますもし可能ならタイトルはボイスブック LM 開発メモ SR とメモ AI 整形の継承みたいな感じになると嬉しいです以上です",
+  "transcriptionStatus": "COMPLETED",
+  "formattingStatus": "COMPLETED",
+  "processingTimeMillis": {
+    "transcription": 62634,
+    "formatting": 1421,
+    "persistence": 18,
+    "total": 64074
+  },
+  "fallback": {
+    "transcription": false,
+    "formatting": false
+  }
+}
+</code></pre>
+<h2 id="-テスト音声-台本そのまま読んでok"><a class="header" href="#-テスト音声-台本そのまま読んでok">🎤 テスト音声 台本（そのまま読んでOK）</a></h2>
+<p>えーっと、今日は VoiceBook LM のテストも兼ねて、
+今考えていることを音声でメモしていこうと思います。</p>
+<p>まず最初に、今日やった作業の振り返りから話します。</p>
+<p>今日は午前中に、React Native と Expo を使ったアプリのビルド周りを触っていました。
+EAS Build を使って開発ビルドを作ろうとしたんですが、
+npm の警告が結構たくさん出て、
+inflight が deprecated だったり、rimraf のバージョンが古いとか、
+glob の警告も出ていました。</p>
+<p>あと、Windows 環境だと
+Assertion failed: new_time &gt;= loop-&gt;time
+みたいなエラーも出て、
+Node.js のバージョン依存っぽいなと感じました。</p>
+<p>このあたりは後で整理して、
+Node のバージョンを 20 系に固定するか、
+nvm をちゃんと使うか、
+ドキュメントにまとめたいと思っています。</p>
+<p>次に、VoiceBook LM 自体の話をします。</p>
+<p>このアプリでは、
+音声を一気に録音して、
+バックエンドに送信して、
+Google Speech-to-Text で文字起こしをして、
+その後に Gemini 2.0 Flash を使って
+タイトル生成とか、本文の整形、タグ付けを行う想定です。</p>
+<p>例えば、
+「今日やったこと」と
+「今後やりたいこと」と
+「悩んでいること」
+が混ざった音声でも、
+うまく整理してくれるかを試したいです。</p>
+<p>ここで、今後やりたいことを話します。</p>
+<p>直近では、
+リアルタイム文字起こしもやってみたいなと思っています。
+今は一括音声アップロード方式なんですけど、
+WebSocket とかを使って
+ストリーミングで文字起こしできたら、
+会議メモとかにも使えそうだなと考えています。</p>
+<p>あと、
+タグの自動付与ももっと賢くしたくて、
+例えば
+「開発」「React Native」「音声認識」「AI」
+みたいなタグを
+ユーザーが何もしなくても付けてくれると嬉しいです。</p>
+<p>少し話題を変えて、
+個人的なメモも残しておきます。</p>
+<p>来週までに、
+VoiceBook LM の MVP を一旦完成させたいです。
+最低限必要なのは、
+音声録音、
+文字起こし、
+AI 整形、
+一覧表示、
+検索機能です。</p>
+<p>TODO としては、</p>
+<p>一つ目、
+音声アップロード API のエラーハンドリング改善。</p>
+<p>二つ目、
+文字起こし失敗時のリトライ処理。</p>
+<p>三つ目、
+Gemini API のレスポンスを
+もう少し安定させること。</p>
+<p>この三つは優先度高めです。</p>
+<p>最後に、
+この音声がちゃんと
+自然な文章に整形されて、
+読みやすいメモになっていたら成功かなと思っています。</p>
+<p>もし可能なら、
+タイトルは
+「VoiceBook LM 開発メモ：ASR と AI 整形の検証」
+みたいな感じになると嬉しいです。</p>
+<h3 id="文字起こし結果"><a class="header" href="#文字起こし結果">文字起こし結果</a></h3>
+<p>今日はボイスブック LM のテストも兼ねて今考えてることを音声でメモして行こうと思いますまず最初に今日行って作業振り返りから話します今日は午前中にリアクトネイティブとエキスポを使ったアプリのビルド周りを触っていました EAS ビルドを使って開発ビルドを作ろうとしたんですが NPM の警告がたくさん出てインフライトがディプリケーターだったりり胸付のバージョンが古いとかグローブの性格も出ていました後 Windows 環境のとアセンションふぇーみたいな色も出て喉 JS のバージョン磯ぽいなと感じましたこの辺りは後で整理して Node のバージョンを20系に固定するか nvm をちゃんと使うのかドキュメントにまとめたいと思っています次にボイスブック NM 自体の話をしますこのアプリでは音声を一気に録音してバックエンドに送信して Google Speech to text で文字起こしをしてその後に地味に\nゼロフラッシュを使ってタイトル先生とか本文の整形タグ付けを行う想定です例えば今日やったこととホームがやりたいことと悩んでいることが混ざった音声でもうまく整理してくれるかを試したいですここで今後やりたいことを話します直近ではリアルタイム文字起こしも行ってみたいなと思っています今は一括音声アップロード方式なんですが夜ソケットを使ってストリーミングで文字文字起こしてきたら会議メモとかにも使えそうだなと考えていますあとタグの児童扶養ももっと賢くしたくて例えば開発 react Native 音声認識 AI みたいなタグをユーザーが何もしなくてもつけてくれると嬉しいです少し話題を変えて個人的なメモを残しときます来週までにボイスケイレブの MVP を一旦完成させたいです最低限必要なのは音声録音文字起こし AI 整形一覧表示検索機能ですツールとしては一つ目音声アップロード API\n エラーハンドリング改善フタツメ文字起こしパイ市のリトライ処理見つめジェミニ API のレスポンスをもう少し安定させることこの三つは遊星の高めです最後にこの音声がちゃんと自然な文章に成形されて読みやすいメモになっていたら成功かなと思っていますもし可能ならタイトルはボイスブック LM 開発メモ SR とメモ AI 整形の継承みたいな感じになると嬉しいです以上です</p>
+<h3 id="ai整形結果"><a class="header" href="#ai整形結果">AI整形結果</a></h3>
+<h2 id="ボイスブックlm-開発音声メモnnボイスブックlmの開発状況と今後の展望について音声で記録n-react-nativeアプリのビルドでnodejsのバージョン問題n-google-speech-to-textとgemini-apiによる文字起こしと整形n-リアルタイム文字起こしタグ自動付与の検討n-来週までにmvp完成を目指すnntags-voicebook-ai-development-memo"><a class="header" href="#ボイスブックlm-開発音声メモnnボイスブックlmの開発状況と今後の展望について音声で記録n-react-nativeアプリのビルドでnodejsのバージョン問題n-google-speech-to-textとgemini-apiによる文字起こしと整形n-リアルタイム文字起こしタグ自動付与の検討n-来週までにmvp完成を目指すnntags-voicebook-ai-development-memo">ボイスブックLM 開発音声メモ\n\nボイスブックLMの開発状況と今後の展望について音声で記録。\n* React NativeアプリのビルドでNode.jsのバージョン問題\n* Google Speech to TextとGemini APIによる文字起こしと整形\n* リアルタイム文字起こし、タグ自動付与の検討\n* 来週までにMVP完成を目指す\n\nTags: <code>Voicebook</code>, <code>AI</code>, <code>Development</code>, <code>Memo</code></a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ai整形"><a class="header" href="#ai整形">AI整形</a></h1>
+<pre><code>えーっと、来月あたりに京都へ旅行に行こうかなって考えていて、  
+期間は2泊3日くらいを想定しています。
+
+初日はまず嵐山に行きたいなと思っていて、  
+竹林を歩いたりとか、時間があれば周辺も少し散策できたらいいなって感じです。  
+2日目は清水寺と祇園あたりを回る予定で、  
+いわゆる京都っぽい景色をゆっくり見て回りたいなと思っています。
+
+最終日は伏見稲荷に行くつもりで、  
+あの鳥居がずっと続いているところを一度ちゃんと歩いてみたいなって思ってます。  
+体力と時間を見ながら、行けるところまで行けたらいいかなと。
+
+宿については、移動しやすそうなので四条あたりで探そうと思っていて、  
+全体の予算はだいたい5万円くらいを目安に考えています。  
+そんな感じで、京都旅行の計画を立てているところです。
+</code></pre>
+<h1 id="ai整形後"><a class="header" href="#ai整形後">AI整形後</a></h1>
+<h2 id="京都旅行の概要"><a class="header" href="#京都旅行の概要">京都旅行の概要</a></h2>
+<p>来月、<strong>2泊3日</strong>の日程で京都旅行を計画している。
+全体の予算は<strong>5万円</strong>を目安に検討を進めている。</p>
+<h2 id="観光スケジュール"><a class="header" href="#観光スケジュール">観光スケジュール</a></h2>
+<h3 id="1日目"><a class="header" href="#1日目">1日目</a></h3>
+<p>初日は<strong>嵐山</strong>を訪れる予定だ。
+竹林の散策を中心に、時間があれば周辺エリアも巡りたいと考えている。</p>
+<h3 id="2日目"><a class="header" href="#2日目">2日目</a></h3>
+<p>2日目は<strong>清水寺</strong>と<strong>祇園</strong>を中心に観光する。
+京都らしい風情をゆっくりと楽しむ一日とする予定だ。</p>
+<h3 id="3日目"><a class="header" href="#3日目">3日目</a></h3>
+<p>最終日には<strong>伏見稲荷大社</strong>へ足を運ぶ。
+千本鳥居を歩くことを目的とし、体力と時間に応じて散策範囲を決める。</p>
+<h2 id="宿泊地"><a class="header" href="#宿泊地">宿泊地</a></h2>
+<p>宿泊先は移動の利便性を重視し、<strong>四条エリア</strong>で探す予定だ。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ai整形前"><a class="header" href="#ai整形前">AI整形前</a></h1>
+<pre><code>えーっと、今週の買い物なんですけど、まず食品で言うと、牛乳と卵とパンは買っておきたいなと思ってます。
+あと、野菜も必要で、キャベツとかにんじんを買う予定です。
+それから日用品なんですけど、洗剤がそろそろなくなりそうなので補充したいのと、ティッシュも在庫が少ないので一緒に買っておこうかなと思ってます。
+</code></pre>
+<h1 id="ai整形後-1"><a class="header" href="#ai整形後-1">AI整形後</a></h1>
+<p>今週の買い物について計画をまとめました。
+主に食品と日用品の補充が必要となります。</p>
+<h2 id="食品の購入リスト"><a class="header" href="#食品の購入リスト">食品の購入リスト</a></h2>
+<p>食品では、<strong>牛乳</strong>、<strong>卵</strong>、<strong>パン</strong>を優先的に購入します。
+また、野菜は<strong>キャベツ</strong>と<strong>にんじん</strong>が必要となるため、これらも購入する予定です。</p>
+<h2 id="日用品の補充"><a class="header" href="#日用品の補充">日用品の補充</a></h2>
+<p>日用品では、<strong>洗剤</strong>の残量が少なくなっているため補充します。
+加えて、<strong>ティッシュ</strong>の在庫も減少しているため、この機会に購入する予定です。</p>
+<h3 id="todo"><a class="header" href="#todo">TODO</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+食料品（牛乳、卵、パン、キャベツ、にんじん）を購入する</li>
+<li><input disabled="" type="checkbox"/>
+日用品（洗剤、ティッシュ）を購入する</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ai整形前-1"><a class="header" href="#ai整形前-1">AI整形前</a></h1>
+<pre><code>えーっと、最近ちょっと思ったんですけど、音声で日記をつけられるアプリがあったら、けっこう便利なんじゃないかなって思ってて。
+毎日こう、5分くらいでいいから、その日にあったこととか、感じたことをそのまま話すだけで、AIがいい感じに要約してくれたら楽だなって思うんですよね。
+文字で日記を書くのって、正直ちょっと面倒な日もあるじゃないですか。
+でも、話すだけなら通勤中とか、寝る前とかでもできそうだなって。
+で、あとから読み返したときに、ちゃんと分かる文章にまとまってたら嬉しいなと思ってます。
+それに、内容に応じて自動でタグ付けしてくれたり、あとから「あのとき何考えてたっけ」みたいに検索できる機能があったら、日記としても振り返りやすくなる気がします。
+ただ記録するだけじゃなくて、自分の考えとか感情を整理するのを手伝ってくれる、そんな感じの音声日記アプリがあったらいいな、って思いました。
+
+</code></pre>
+<h1 id="ai整形後-2"><a class="header" href="#ai整形後-2">AI整形後</a></h1>
+<h2 id="音声日記アプリの構想"><a class="header" href="#音声日記アプリの構想">音声日記アプリの構想</a></h2>
+<p>最近、音声で手軽に日記をつけられるアプリがあれば、非常に便利だと感じています。毎日、<strong>約5分程度</strong>の短い時間で、その日にあった出来事や感じたことを話すだけで完結するのが理想です。</p>
+<p>文字で日記を書くことは、正直なところ面倒に感じる日もありますが、音声入力であればそのハードルを下げられます。通勤中や寝る前など、隙間時間を活用して気軽に利用できるでしょう。</p>
+<h2 id="期待する機能"><a class="header" href="#期待する機能">期待する機能</a></h2>
+<p>このアプリには、入力された音声をAIが<strong>自動で要約</strong>し、後から読み返したときに理解しやすい自然な文章にまとめる機能が必要です。これにより、日々の記録が簡潔に整理されます。</p>
+<p>また、記録内容に応じて<strong>自動でタグ付け</strong>される機能や、過去の記録をキーワードで<strong>検索できる機能</strong>も備わっていると便利です。これらの機能があれば、「あの時何を考えていたか」といった振り返りが容易になり、日記としての価値が高まります。</p>
+<h2 id="アプリの価値"><a class="header" href="#アプリの価値">アプリの価値</a></h2>
+<p>単に日々の出来事を記録するだけでなく、自分の考えや感情を整理する手助けをしてくれるようなアプリを目指したいです。このような音声日記アプリは、忙しい現代において個人の内省を促し、自己理解を深める上で非常に有用だと考えられます。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="voicebooklm-中間発表"><a class="header" href="#voicebooklm-中間発表">VoiceBookLM 中間発表</a></h1>
+<h2 id="発表日-2024年12月18日"><a class="header" href="#発表日-2024年12月18日">発表日: 2024年12月18日</a></h2>
+<hr />
+<h2 id="1-プロジェクト概要"><a class="header" href="#1-プロジェクト概要">1. プロジェクト概要</a></h2>
+<p><strong>VoiceBookLM</strong> は音声メモをAIで自動要約・整理するアプリケーションです。</p>
+<hr />
+<h2 id="2-現在の実装状況中間発表時点"><a class="header" href="#2-現在の実装状況中間発表時点">2. 現在の実装状況（中間発表時点）</a></h2>
+<h3 id="21-バックエンドapi"><a class="header" href="#21-バックエンドapi">2.1 バックエンド（API）</a></h3>
+<h4 id="実装完了-api620"><a class="header" href="#実装完了-api620">実装完了 API（6/20）</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>カテゴリ</th><th>API</th><th>説明</th></tr></thead><tbody>
+<tr><td><strong>認証</strong></td><td><code>POST /api/auth/google</code></td><td>Google OAuth ログイン</td></tr>
+<tr><td><strong>認証</strong></td><td><code>POST /api/auth/refresh</code></td><td>トークンリフレッシュ</td></tr>
+<tr><td><strong>認証</strong></td><td><code>POST /api/auth/logout</code></td><td>ログアウト</td></tr>
+<tr><td><strong>認証</strong></td><td><code>DELETE /api/auth/account</code></td><td>アカウント削除</td></tr>
+<tr><td><strong>認証</strong></td><td><code>GET /api/auth/me</code></td><td>ユーザー情報取得</td></tr>
+<tr><td><strong>音声メモ</strong></td><td><code>POST /api/voice/memos</code></td><td>音声ファイルからメモ生成</td></tr>
+</tbody></table>
+</div>
+<h4 id="バックエンド達成率"><a class="header" href="#バックエンド達成率">バックエンド達成率</a></h4>
+<pre><code>実装済み: 6 / 20 API（30%）
+├── 認証 API:     5/5  ████████████████████ 100%
+├── 音声メモ API: 1/1  ████████████████████ 100%
+├── メモ API:     0/7  ░░░░░░░░░░░░░░░░░░░░   0%
+├── フォルダ API: 0/4  ░░░░░░░░░░░░░░░░░░░░   0%
+└── タグ API:     0/3  ░░░░░░░░░░░░░░░░░░░░   0%
+</code></pre>
+<hr />
+<h3 id="22-フロントエンド画面"><a class="header" href="#22-フロントエンド画面">2.2 フロントエンド（画面）</a></h3>
+<h4 id="実装完了画面412"><a class="header" href="#実装完了画面412">実装完了画面（4/12）</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>カテゴリ</th><th>画面</th><th>パス</th><th style="text-align: center">状態</th></tr></thead><tbody>
+<tr><td><strong>認証</strong></td><td>ログイン</td><td><code>/login</code></td><td style="text-align: center">✅</td></tr>
+<tr><td><strong>録音</strong></td><td>録音</td><td><code>/record</code></td><td style="text-align: center">✅</td></tr>
+<tr><td><strong>録音</strong></td><td>録音確認</td><td><code>/record/preview</code></td><td style="text-align: center">✅</td></tr>
+<tr><td><strong>録音</strong></td><td>処理中</td><td><code>/record/processing</code></td><td style="text-align: center">✅</td></tr>
+</tbody></table>
+</div>
+<h4 id="フロントエンド達成率"><a class="header" href="#フロントエンド達成率">フロントエンド達成率</a></h4>
+<pre><code>実装済み: 4 / 12 画面（33%）
+├── 認証系:   1/2  ██████████░░░░░░░░░░  50%
+├── メイン系: 0/3  ░░░░░░░░░░░░░░░░░░░░   0%
+├── 録音系:   3/4  ███████████████░░░░░  75%
+└── 設定系:   0/3  ░░░░░░░░░░░░░░░░░░░░   0%
+</code></pre>
+<hr />
+<h3 id="23-実装済み機能の詳細"><a class="header" href="#23-実装済み機能の詳細">2.3 実装済み機能の詳細</a></h3>
+<h4 id="認証システムバックエンド完成フロント一部完成"><a class="header" href="#認証システムバックエンド完成フロント一部完成">認証システム（バックエンド完成・フロント一部完成）</a></h4>
+<ul>
+<li>Google OAuth によるソーシャルログイン</li>
+<li>JWT トークンによるセッション管理</li>
+<li>リフレッシュトークンによる自動更新</li>
+<li>セキュアなログアウト処理</li>
+<li>アカウント削除機能</li>
+</ul>
+<h4 id="音声メモ生成バックエンド完成フロント一部完成"><a class="header" href="#音声メモ生成バックエンド完成フロント一部完成">音声メモ生成（バックエンド完成・フロント一部完成）</a></h4>
+<ul>
+<li>音声ファイルのアップロード</li>
+<li>AI による文字起こし</li>
+<li>自動要約生成</li>
+<li>録音〜処理中画面の実装</li>
+</ul>
+<hr />
+<h2 id="3-合評会までの実装予定全機能完成目標"><a class="header" href="#3-合評会までの実装予定全機能完成目標">3. 合評会までの実装予定（全機能完成目標）</a></h2>
+<h3 id="31-バックエンド残り14-api"><a class="header" href="#31-バックエンド残り14-api">3.1 バックエンド（残り14 API）</a></h3>
+<h4 id="メモ-api7個"><a class="header" href="#メモ-api7個">メモ API（7個）</a></h4>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">メソッド</th><th>エンドポイント</th><th>説明</th></tr></thead><tbody>
+<tr><td style="text-align: center">GET</td><td><code>/api/memos</code></td><td>メモ一覧取得</td></tr>
+<tr><td style="text-align: center">GET</td><td><code>/api/memos/{id}</code></td><td>メモ詳細取得</td></tr>
+<tr><td style="text-align: center">PATCH</td><td><code>/api/memos/{id}</code></td><td>メモ更新</td></tr>
+<tr><td style="text-align: center">DELETE</td><td><code>/api/memos/{id}</code></td><td>メモ削除</td></tr>
+<tr><td style="text-align: center">POST</td><td><code>/api/memos/{id}/resummarize</code></td><td>再要約</td></tr>
+<tr><td style="text-align: center">GET</td><td><code>/api/memos/{id}/transcription</code></td><td>文字起こしテキスト取得</td></tr>
+<tr><td style="text-align: center">POST</td><td><code>/api/memos/search/semantic</code></td><td>意味検索（AI）</td></tr>
+</tbody></table>
+</div>
+<h4 id="フォルダ-api4個"><a class="header" href="#フォルダ-api4個">フォルダ API（4個）</a></h4>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">メソッド</th><th>エンドポイント</th><th>説明</th></tr></thead><tbody>
+<tr><td style="text-align: center">GET</td><td><code>/api/folders</code></td><td>フォルダ一覧取得</td></tr>
+<tr><td style="text-align: center">POST</td><td><code>/api/folders</code></td><td>フォルダ作成</td></tr>
+<tr><td style="text-align: center">PATCH</td><td><code>/api/folders/{id}</code></td><td>フォルダ更新</td></tr>
+<tr><td style="text-align: center">DELETE</td><td><code>/api/folders/{id}</code></td><td>フォルダ削除</td></tr>
+</tbody></table>
+</div>
+<h4 id="タグ-api3個"><a class="header" href="#タグ-api3個">タグ API（3個）</a></h4>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">メソッド</th><th>エンドポイント</th><th>説明</th></tr></thead><tbody>
+<tr><td style="text-align: center">GET</td><td><code>/api/tags</code></td><td>タグ一覧取得</td></tr>
+<tr><td style="text-align: center">DELETE</td><td><code>/api/tags/{name}</code></td><td>タグ削除</td></tr>
+<tr><td style="text-align: center">POST</td><td><code>/api/tags/merge</code></td><td>タグ統合</td></tr>
+</tbody></table>
+</div>
+<h4 id="バックエンド目標達成率"><a class="header" href="#バックエンド目標達成率">バックエンド目標達成率</a></h4>
+<pre><code>目標: 20 / 20 API（100%）
+├── 認証 API:     5/5  ████████████████████ 100%
+├── 音声メモ API: 1/1  ████████████████████ 100%
+├── メモ API:     7/7  ████████████████████ 100%
+├── フォルダ API: 4/4  ████████████████████ 100%
+└── タグ API:     3/3  ████████████████████ 100%
+</code></pre>
+<hr />
+<h3 id="32-フロントエンド残り8画面"><a class="header" href="#32-フロントエンド残り8画面">3.2 フロントエンド（残り8画面）</a></h3>
+<h4 id="残り実装予定画面"><a class="header" href="#残り実装予定画面">残り実装予定画面</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>カテゴリ</th><th>画面</th><th>パス</th><th>説明</th></tr></thead><tbody>
+<tr><td><strong>認証</strong></td><td>スプラッシュ</td><td><code>/splash</code></td><td>アプリ起動時のロード画面</td></tr>
+<tr><td><strong>メイン</strong></td><td>ホーム</td><td><code>/home</code></td><td>メモ一覧、ディレクトリ表示</td></tr>
+<tr><td><strong>メイン</strong></td><td>検索</td><td><code>/search</code></td><td>キーワード・タグ検索</td></tr>
+<tr><td><strong>メイン</strong></td><td>メモ詳細</td><td><code>/memo/:id</code></td><td>Markdown形式でメモ表示</td></tr>
+<tr><td><strong>録音</strong></td><td>生成結果</td><td><code>/record/result</code></td><td>生成されたメモの確認</td></tr>
+<tr><td><strong>設定</strong></td><td>設定</td><td><code>/settings</code></td><td>設定メニュー</td></tr>
+<tr><td><strong>設定</strong></td><td>プロフィール</td><td><code>/settings/profile</code></td><td>ユーザー情報表示</td></tr>
+<tr><td><strong>設定</strong></td><td>言語設定</td><td><code>/settings/language</code></td><td>文字起こし言語選択</td></tr>
+</tbody></table>
+</div>
+<h4 id="フロントエンド目標達成率"><a class="header" href="#フロントエンド目標達成率">フロントエンド目標達成率</a></h4>
+<pre><code>目標: 12 / 12 画面（100%）
+├── 認証系:   2/2  ████████████████████ 100%
+├── メイン系: 3/3  ████████████████████ 100%
+├── 録音系:   4/4  ████████████████████ 100%
+└── 設定系:   3/3  ████████████████████ 100%
+</code></pre>
+<hr />
+<h2 id="4-開発ロードマップ"><a class="header" href="#4-開発ロードマップ">4. 開発ロードマップ</a></h2>
+<pre><code>┌───────────────────────────────────────────────────────────────────────┐
+│                          開発タイムライン                              │
+├───────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  中間発表 ───────────────────────────────────────► 合評会             │
+│  (12/18)                                           (全機能完成)       │
+│                                                                       │
+│  【バックエンド】                                                     │
+│  ✅ 認証 API (5個)                                                    │
+│  ✅ 音声メモ API (1個)                                                │
+│  ┌────────────────────────────────────────────┐                      │
+│  │  🚧 メモ API (7個)                          │                      │
+│  │  🚧 フォルダ API (4個)                      │                      │
+│  │  🚧 タグ API (3個)                          │                      │
+│  └────────────────────────────────────────────┘                      │
+│                                                                       │
+│  【フロントエンド】                                                   │
+│  ✅ ログイン画面 (1画面)                                              │
+│  ✅ 録音フロー (3画面)                                                │
+│  ┌────────────────────────────────────────────┐                      │
+│  │  🚧 スプラッシュ画面 (1画面)                │                      │
+│  │  🚧 メイン画面 (3画面)                      │                      │
+│  │  🚧 生成結果画面 (1画面)                    │                      │
+│  │  🚧 設定画面 (3画面)                        │                      │
+│  └────────────────────────────────────────────┘                      │
+│                                                ↓                      │
+│                                           全機能完成                  │
+│                                    (20 API + 12 画面)                 │
+│                                                                       │
+└───────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="5-まとめ"><a class="header" href="#5-まとめ">5. まとめ</a></h2>
+<h3 id="現在の進捗状況"><a class="header" href="#現在の進捗状況">現在の進捗状況</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>中間発表時点</th><th>合評会目標</th></tr></thead><tbody>
+<tr><td><strong>バックエンド</strong></td><td>6 / 20 API（30%）</td><td>20 / 20 API（100%）</td></tr>
+<tr><td><strong>フロントエンド</strong></td><td>4 / 12 画面（33%）</td><td>12 / 12 画面（100%）</td></tr>
+</tbody></table>
+</div>
+<h3 id="中間発表時点で完成している機能"><a class="header" href="#中間発表時点で完成している機能">中間発表時点で完成している機能</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>カテゴリ</th><th style="text-align: center">バックエンド</th><th style="text-align: center">フロントエンド</th></tr></thead><tbody>
+<tr><td><strong>認証</strong></td><td style="text-align: center">✅ 完成（5 API）</td><td style="text-align: center">🚧 一部完成（1/2画面）</td></tr>
+<tr><td><strong>音声メモ生成</strong></td><td style="text-align: center">✅ 完成（1 API）</td><td style="text-align: center">🚧 一部完成（3/4画面）</td></tr>
+<tr><td><strong>メモ管理</strong></td><td style="text-align: center">🚧 未着手</td><td style="text-align: center">🚧 未着手</td></tr>
+<tr><td><strong>フォルダ</strong></td><td style="text-align: center">🚧 未着手</td><td style="text-align: center">🚧 未着手</td></tr>
+<tr><td><strong>タグ</strong></td><td style="text-align: center">🚧 未着手</td><td style="text-align: center">🚧 未着手</td></tr>
+<tr><td><strong>設定</strong></td><td style="text-align: center">-</td><td style="text-align: center">🚧 未着手</td></tr>
+</tbody></table>
+</div>
+<h3 id="次のマイルストーンまでの主要タスク"><a class="header" href="#次のマイルストーンまでの主要タスク">次のマイルストーンまでの主要タスク</a></h3>
+<h4 id="バックエンド"><a class="header" href="#バックエンド">バックエンド</a></h4>
+<ol>
+<li>
+<p><strong>メモ CRUD 機能の実装</strong></p>
+<ul>
+<li>一覧取得・詳細取得・更新・削除</li>
+</ul>
+</li>
+<li>
+<p><strong>再要約・文字起こし機能の実装</strong></p>
+<ul>
+<li>既存メモの要約を再生成</li>
+<li>文字起こしテキスト取得</li>
+</ul>
+</li>
+<li>
+<p><strong>意味検索機能の実装</strong></p>
+<ul>
+<li>AIによるセマンティック検索</li>
+</ul>
+</li>
+<li>
+<p><strong>フォルダ機能の実装</strong></p>
+<ul>
+<li>メモの整理・分類機能</li>
+</ul>
+</li>
+<li>
+<p><strong>タグ機能の実装</strong></p>
+<ul>
+<li>タグ一覧・削除・統合</li>
+</ul>
+</li>
+</ol>
+<h4 id="フロントエンド"><a class="header" href="#フロントエンド">フロントエンド</a></h4>
+<ol>
+<li>
+<p><strong>メイン画面の実装</strong></p>
+<ul>
+<li>ホーム（メモ一覧）</li>
+<li>検索画面</li>
+<li>メモ詳細画面</li>
+</ul>
+</li>
+<li>
+<p><strong>録音フローの完成</strong></p>
+<ul>
+<li>生成結果画面</li>
+</ul>
+</li>
+<li>
+<p><strong>認証フローの完成</strong></p>
+<ul>
+<li>スプラッシュ画面</li>
+</ul>
+</li>
+<li>
+<p><strong>設定画面の実装</strong></p>
+<ul>
+<li>設定メニュー</li>
+<li>プロフィール</li>
+<li>言語設定</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="付録-ステータス凡例"><a class="header" href="#付録-ステータス凡例">付録: ステータス凡例</a></h2>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">マーク</th><th>意味</th></tr></thead><tbody>
+<tr><td style="text-align: center">✅</td><td>実装済み</td></tr>
+<tr><td style="text-align: center">🚧</td><td>未実装（MVP必須）</td></tr>
+<tr><td style="text-align: center">📋</td><td>未実装（追加機能）</td></tr>
+<tr><td style="text-align: center">🔮</td><td>将来実装予定</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="voicebooklm-中間発表-1"><a class="header" href="#voicebooklm-中間発表-1">VoiceBookLM 中間発表</a></h1>
+<h2 id="現在実装済み"><a class="header" href="#現在実装済み">現在実装済み</a></h2>
+<ul>
+<li>Google ログイン機能</li>
+<li>音声録音・アップロード</li>
+<li>AI 文字起こし・要約生成</li>
+<li>ログイン画面</li>
+<li>録音〜処理中画面</li>
+</ul>
+<h2 id="合評会までに実装予定"><a class="header" href="#合評会までに実装予定">合評会までに実装予定</a></h2>
+<ul>
+<li>メモ一覧・詳細・編集・削除</li>
+<li>再要約・意味検索</li>
+<li>フォルダ管理</li>
+<li>タグ管理</li>
+<li>ホーム・検索・メモ詳細画面</li>
+<li>設定画面</li>
+</ul>
+<hr />
+<h2 id="全体サマリー"><a class="header" href="#全体サマリー">全体サマリー</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>機能</th><th>現在</th><th>合評会目標</th></tr></thead><tbody>
+<tr><td>認証</td><td>ほぼ完成</td><td>完成</td></tr>
+<tr><td>音声メモ生成</td><td>ほぼ完成</td><td>完成</td></tr>
+<tr><td>メモ管理</td><td>未着手</td><td>完成</td></tr>
+<tr><td>フォルダ</td><td>未着手</td><td>完成</td></tr>
+<tr><td>タグ</td><td>未着手</td><td>完成</td></tr>
+<tr><td>設定</td><td>未着手</td><td>完成</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="voicebooklm-操作説明書"><a class="header" href="#voicebooklm-操作説明書">VoiceBookLM 操作説明書</a></h1>
+<h2 id="1-はじめに"><a class="header" href="#1-はじめに">1. はじめに</a></h2>
+<p>VoiceBookLMは、話すだけで整理されたメモが自動で作られるAI搭載ボイスメモアプリです。
+本書では、アプリの基本的な操作方法について説明します。</p>
+<hr />
+<h2 id="2-アプリ起動ログイン"><a class="header" href="#2-アプリ起動ログイン">2. アプリ起動・ログイン</a></h2>
+<h3 id="21-アプリの起動"><a class="header" href="#21-アプリの起動">2.1 アプリの起動</a></h3>
+<ol>
+<li>ホーム画面で「VoiceBookLM」アイコンをタップします</li>
+<li>ウェルカム画面が表示されます</li>
+</ol>
+<h3 id="22-ログイン"><a class="header" href="#22-ログイン">2.2 ログイン</a></h3>
+<ol>
+<li>ウェルカム画面で「Googleでサインイン」ボタンをタップします</li>
+<li>Googleアカウントを選択してログインします</li>
+<li>ログイン完了後、ホーム画面に遷移します</li>
+</ol>
+<hr />
+<h2 id="3-ホーム画面の操作"><a class="header" href="#3-ホーム画面の操作">3. ホーム画面の操作</a></h2>
+<h3 id="31-画面構成"><a class="header" href="#31-画面構成">3.1 画面構成</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>要素</th><th>説明</th></tr></thead><tbody>
+<tr><td>ヘッダー</td><td>アプリロゴ、検索アイコンを表示</td></tr>
+<tr><td>メモ一覧</td><td>保存されたメモをカード形式で表示</td></tr>
+<tr><td>録音ボタン</td><td>画面下部中央の丸いボタン</td></tr>
+</tbody></table>
+</div>
+<h3 id="32-メモの確認"><a class="header" href="#32-メモの確認">3.2 メモの確認</a></h3>
+<ul>
+<li>メモ一覧から確認したいメモをタップします</li>
+<li>メモ詳細画面で内容を確認できます</li>
+</ul>
+<h3 id="33-メモの検索"><a class="header" href="#33-メモの検索">3.3 メモの検索</a></h3>
+<ol>
+<li>ヘッダーの検索アイコンをタップします</li>
+<li>検索画面でキーワードを入力します</li>
+<li>該当するメモが一覧表示されます</li>
+</ol>
+<hr />
+<h2 id="4-録音操作"><a class="header" href="#4-録音操作">4. 録音操作</a></h2>
+<h3 id="41-録音の開始"><a class="header" href="#41-録音の開始">4.1 録音の開始</a></h3>
+<ol>
+<li>ホーム画面下部の録音ボタン（マイクアイコン）をタップします</li>
+<li>録音画面に遷移し、自動的に録音が開始されます</li>
+<li>画面に録音時間が表示されます</li>
+</ol>
+<h3 id="42-録音の一時停止再開"><a class="header" href="#42-録音の一時停止再開">4.2 録音の一時停止・再開</a></h3>
+<ul>
+<li>一時停止：一時停止ボタンをタップします</li>
+<li>再開：再生ボタンをタップして録音を再開します</li>
+</ul>
+<h3 id="43-録音の完了とai整形"><a class="header" href="#43-録音の完了とai整形">4.3 録音の完了とAI整形</a></h3>
+<ol>
+<li>録音が完了したら「完了してAI整形する」ボタンをタップします</li>
+<li>ホーム画面に戻り、画面下部にAI処理中のトーストが表示されます</li>
+<li>処理完了後、メモ一覧に自動整形されたメモが追加されます</li>
+</ol>
+<h3 id="44-録音のキャンセル"><a class="header" href="#44-録音のキャンセル">4.4 録音のキャンセル</a></h3>
+<ul>
+<li>録音を破棄する場合は「キャンセル」ボタンをタップします</li>
+<li>確認ダイアログで「破棄」を選択すると録音データが削除されます</li>
+</ul>
+<hr />
+<h2 id="5-ai自動整形機能"><a class="header" href="#5-ai自動整形機能">5. AI自動整形機能</a></h2>
+<h3 id="51-自動生成される項目"><a class="header" href="#51-自動生成される項目">5.1 自動生成される項目</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>説明</th></tr></thead><tbody>
+<tr><td>タイトル</td><td>メモ内容から自動生成</td></tr>
+<tr><td>本文</td><td>マークダウン形式で整形</td></tr>
+<tr><td>タグ</td><td>内容に基づいて自動付与</td></tr>
+</tbody></table>
+</div>
+<h3 id="52-処理時間"><a class="header" href="#52-処理時間">5.2 処理時間</a></h3>
+<ul>
+<li>通常30秒以内で処理が完了します</li>
+<li>処理中も他の操作が可能です</li>
+</ul>
+<hr />
+<h2 id="6-メモの管理"><a class="header" href="#6-メモの管理">6. メモの管理</a></h2>
+<h3 id="61-メモの編集"><a class="header" href="#61-メモの編集">6.1 メモの編集</a></h3>
+<ol>
+<li>メモ詳細画面で「編集」ボタンをタップします</li>
+<li>タイトル、本文、タグを編集できます</li>
+<li>「保存」ボタンで変更を保存します</li>
+</ol>
+<h3 id="62-メモの削除"><a class="header" href="#62-メモの削除">6.2 メモの削除</a></h3>
+<ol>
+<li>メモ詳細画面で「削除」ボタンをタップします</li>
+<li>確認ダイアログで「削除」を選択します</li>
+</ol>
+<hr />
+<h2 id="7-トラブルシューティング"><a class="header" href="#7-トラブルシューティング">7. トラブルシューティング</a></h2>
+<h3 id="よくある問題と解決方法"><a class="header" href="#よくある問題と解決方法">よくある問題と解決方法</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>問題</th><th>解決方法</th></tr></thead><tbody>
+<tr><td>録音が開始されない</td><td>マイク権限を確認してください</td></tr>
+<tr><td>AI整形が完了しない</td><td>ネットワーク接続を確認してください</td></tr>
+<tr><td>ログインできない</td><td>Googleアカウント設定を確認してください</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="8-お問い合わせ"><a class="header" href="#8-お問い合わせ">8. お問い合わせ</a></h2>
+<p>アプリに関するお問い合わせは、設定画面の「サポート」からご連絡ください。</p>
+<hr />
+<p><strong>最終更新日：2026年1月20日</strong></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="voicebooklm-ビルド手順書"><a class="header" href="#voicebooklm-ビルド手順書">VoiceBookLM ビルド手順書</a></h1>
+<h2 id="1-概要"><a class="header" href="#1-概要">1. 概要</a></h2>
+<p>VoiceBookLMは以下の2つのリポジトリで構成されています。
+各リポジトリのREADMEに詳細なビルド手順が記載されています。</p>
+<hr />
+<h2 id="2-リポジトリ一覧"><a class="header" href="#2-リポジトリ一覧">2. リポジトリ一覧</a></h2>
+<h3 id="フロントエンドモバイルアプリ"><a class="header" href="#フロントエンドモバイルアプリ">フロントエンド（モバイルアプリ）</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody>
+<tr><td>リポジトリ</td><td><a href="https://github.com/assari-harassment/voicebooklm-frontend">voicebooklm-frontend</a></td></tr>
+<tr><td>技術スタック</td><td>React Native + Expo</td></tr>
+<tr><td>詳細手順</td><td>READMEを参照</td></tr>
+</tbody></table>
+</div>
+<h3 id="バックエンド-1"><a class="header" href="#バックエンド-1">バックエンド</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>内容</th></tr></thead><tbody>
+<tr><td>リポジトリ</td><td><a href="https://github.com/assari-harassment/voicebooklm-backend">voicebooklm-backend</a></td></tr>
+<tr><td>技術スタック</td><td>Spring Boot (Kotlin) + PostgreSQL</td></tr>
+<tr><td>詳細手順</td><td>READMEを参照</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="3-システム構成"><a class="header" href="#3-システム構成">3. システム構成</a></h2>
+<pre><code>┌─────────────────────────────────────────────────────┐
+│                   VoiceBookLM                        │
+├──────────────────────┬──────────────────────────────┤
+│   📱 Frontend        │   🖥️ Backend                  │
+│   React Native       │   Spring Boot                │
+│   + Expo             │   + PostgreSQL               │
+└──────────────────────┴──────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="4-参考リンク"><a class="header" href="#4-参考リンク">4. 参考リンク</a></h2>
+<ul>
+<li>フロントエンド: https://github.com/assari-harassment/voicebooklm-frontend</li>
+<li>バックエンド: https://github.com/assari-harassment/voicebooklm-backend</li>
+</ul>
+<hr />
+<p><strong>最終更新日：2026年1月20日</strong></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="voicebooklm-インストール手順書"><a class="header" href="#voicebooklm-インストール手順書">VoiceBookLM インストール手順書</a></h1>
+<h2 id="1-概要-1"><a class="header" href="#1-概要-1">1. 概要</a></h2>
+<p>VoiceBookLMは以下のプラットフォームで利用可能です。</p>
+<hr />
+<h2 id="2-公開状況"><a class="header" href="#2-公開状況">2. 公開状況</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>プラットフォーム</th><th>状況</th><th>公開予定日</th></tr></thead><tbody>
+<tr><td>🌐 Web版</td><td><strong>公開予定</strong></td><td>2026年1月26日</td></tr>
+<tr><td>🍎 App Store (iOS)</td><td>準備中</td><td>未定</td></tr>
+<tr><td>🤖 Google Play (Android)</td><td>準備中</td><td>未定</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="3-web版"><a class="header" href="#3-web版">3. Web版</a></h2>
+<h3 id="アクセス方法"><a class="header" href="#アクセス方法">アクセス方法</a></h3>
+<p>公開後、以下のURLからアクセスできます：</p>
+<blockquote>
+<p><strong>URL</strong>: （2026年1月26日 公開予定）</p>
+</blockquote>
+<h3 id="動作環境"><a class="header" href="#動作環境">動作環境</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>要件</th></tr></thead><tbody>
+<tr><td>対応ブラウザ</td><td>Chrome、Safari、Firefox、Edge（最新版推奨）</td></tr>
+<tr><td>マイク</td><td>音声録音に必要</td></tr>
+</tbody></table>
+</div>
+<h3 id="利用開始手順"><a class="header" href="#利用開始手順">利用開始手順</a></h3>
+<ol>
+<li>WebブラウザでURLにアクセスします</li>
+<li>「Googleでサインイン」をクリックします</li>
+<li>Googleアカウントでログインします</li>
+<li>ログイン完了後、すぐに利用開始できます</li>
+</ol>
+<hr />
+<h2 id="4-ios版app-store"><a class="header" href="#4-ios版app-store">4. iOS版（App Store）</a></h2>
+<blockquote>
+<p>⏳ <strong>準備中</strong> - 公開日が決まり次第、更新します
+web 公開予定</p>
+</blockquote>
+<h3 id="公開後の予定"><a class="header" href="#公開後の予定">公開後の予定</a></h3>
+<ul>
+<li>App Storeで「VoiceBookLM」を検索してインストール</li>
+</ul>
+<h3 id="動作環境予定"><a class="header" href="#動作環境予定">動作環境（予定）</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>要件</th></tr></thead><tbody>
+<tr><td>対応OS</td><td>iOS 15.0以上</td></tr>
+<tr><td>対応デバイス</td><td>iPhone 8以降</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="5-android版google-play"><a class="header" href="#5-android版google-play">5. Android版（Google Play）</a></h2>
+<blockquote>
+<p>⏳ <strong>準備中</strong> - 公開日が決まり次第、更新します</p>
+</blockquote>
+<h3 id="公開後の予定-1"><a class="header" href="#公開後の予定-1">公開後の予定</a></h3>
+<ul>
+<li>Google Playストアで「VoiceBookLM」を検索してインストール</li>
+</ul>
+<h3 id="動作環境予定-1"><a class="header" href="#動作環境予定-1">動作環境（予定）</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>項目</th><th>要件</th></tr></thead><tbody>
+<tr><td>対応OS</td><td>Android 10.0以上</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="6-初回起動時の設定"><a class="header" href="#6-初回起動時の設定">6. 初回起動時の設定</a></h2>
+<h3 id="権限の許可"><a class="header" href="#権限の許可">権限の許可</a></h3>
+<p>アプリ利用時に以下の権限を許可してください：</p>
+<div class="table-wrapper"><table><thead><tr><th>権限</th><th>用途</th><th>必須</th></tr></thead><tbody>
+<tr><td>マイク</td><td>音声録音</td><td>○</td></tr>
+<tr><td>通知</td><td>AI処理完了通知</td><td>推奨</td></tr>
+</tbody></table>
+</div>
+<h3 id="googleアカウントでログイン"><a class="header" href="#googleアカウントでログイン">Googleアカウントでログイン</a></h3>
+<ol>
+<li>「Googleでサインイン」をタップ/クリックします</li>
+<li>使用するGoogleアカウントを選択します</li>
+<li>ログイン完了後、ホーム画面に遷移します</li>
+</ol>
+<hr />
+<h2 id="7-サポート"><a class="header" href="#7-サポート">7. サポート</a></h2>
+<p>ご不明な点がございましたら、以下までお問い合わせください：</p>
+<ul>
+<li>GitHub Issues: https://github.com/assari-harassment/voicebooklm-frontend/issues</li>
+</ul>
+<hr />
+<p><strong>最終更新日：2026年1月20日</strong></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="./mermaid-init.js"></script>
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
