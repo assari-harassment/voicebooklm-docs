@@ -5,3 +5,6 @@ title = "ボイスメモアプリのシステムドキュメント" # 適切な�
 
 [output.html]
 additional-js = ["./mermaid-init.js"]
+
+[preprocessor.plantuml]
+plantuml-cmd = "https://www.plantuml.com/plantuml"

@@ -11,11 +11,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
-      - name: Install mdbook
+
+      - name: Install mdbook and plugins
         run: |
           mkdir mdbook
-          curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.37/mdbook-v0.4.37-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=./mdbook
+          curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.5.2/mdbook-v0.5.2-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=./mdbook
+          curl -sSLO https://github.com/sytsereitsma/mdbook-plantuml/releases/download/v2.0.0/mdbook-plantuml_2.0.0-1_amd64.deb
+          sudo dpkg -i mdbook-plantuml_2.0.0-1_amd64.deb
           echo "$(pwd)/mdbook" >> $GITHUB_PATH
 
       - name: Build book
