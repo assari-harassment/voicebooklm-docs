@@ -2,20 +2,30 @@
 
 voicebooklmのドキュメントです。mdbookで構築しています。
 
+- **Web(リリースURL)**: https://voicenotelm.app
+
+## githubリポジトリ
+- **フロントエンド**: https://github.com/assari-harassment/voicebooklm-frontend
+- **バックエンド**: https://github.com/assari-harassment/voicebooklm-backend
+
 ## セットアップ
 
 ### 必要なツール
 
-- Node.js 22.11（[asdf](https://asdf-vm.com/) または [mise](https://mise.jdx.dev/) 推奨）
+- Node.js 22.11（asdf または mise 推奨）
 - [mdbook](https://rust-lang.github.io/mdBook/)
+- [mdbook-plantuml](https://github.com/sytsereitsma/mdbook-plantuml)
 
 ### インストール
 
 ```bash
-# asdf または mise でNode.jsをインストール
+# Node.js
 asdf install  # または mise install
 
-# 依存関係をインストール
+# mdbook と mdbook-plantuml
+cargo install mdbook mdbook-plantuml
+
+# npm依存関係
 npm install
 ```
 
